@@ -69,3 +69,19 @@ body {
 .nav-links li a:hover {
   text-decoration: underline;
 }
+
+/* === Location Output Box (W3-1) === */
+.location-box {
+  background-color: #e0f7fa;
+  padding: 1rem 1.5rem;
+  border-left: 5px solid #00796b;
+  margin: 2rem;
+  border-radius: 8px;
+  width: fit-content;
+}
+
+.location-box h3 {
+  margin: 0;
+  color: #004d40;
+  font-size: 1.2rem;
+}
