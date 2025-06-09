@@ -169,8 +169,7 @@ class _HomeScreenState extends State<HomeScreen> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                    builder: (_) => PortfolioScreen(onBalanceUpdate: (value) {}),
+                  MaterialPageRoute(builder: (_) => PortfolioScreen(onBalanceUpdate: (_) {}),
                   ),
                 );
               },
@@ -181,7 +180,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   padding: const EdgeInsets.all(20),
                   child: Column(
                     children: [
-                      const Text('Portfolio Balance', style: TextStyle(fontSize: 16, color: Colors.grey)),
+                      const Text('Portfolio Balance', style: TextStyle(fontSize: 16, color: Colors.black)),
                       const SizedBox(height: 8),
                       Text('\$${widget.portfolioBalance.toStringAsFixed(2)}'),
                       const Text('+3.475%', style: TextStyle(fontSize: 16, color: Colors.green)),
