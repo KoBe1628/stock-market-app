@@ -1,0 +1,398 @@
+import 'dart:convert';
+import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
+import 'portfolio.dart';
+
+class HomeScreen extends StatefulWidget {
+  final double portfolioBalance;
+  const HomeScreen({super.key, required this.portfolioBalance});
+
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  String? _country;
+  String? _flagAsset;
+
+  List<Map<String, dynamic>> stockData = [];
+  bool isStockLoading = true;
+
+  List<Map<String, dynamic>> newsList = [];
+  bool isNewsLoading = true;
+
+  List<Map<String, dynamic>> coinData = [];
+  bool isCoinLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    detectCountry();
+    fetchMarketMovers();
+    fetchNews();
+    fetchCoins();
+
+  }
+
+  Future<void> detectCountry() async {
+    try {
+      final hasPermission = await Geolocator.checkPermission();
+      if (hasPermission == LocationPermission.denied) {
+        await Geolocator.requestPermission();
+      }
+
+      final position = await Geolocator.getCurrentPosition();
+      final placemarks = await placemarkFromCoordinates(position.latitude, position.longitude);
+
+      if (placemarks.isNotEmpty) {
+        final country = placemarks.first.country ?? 'Unknown';
+        setState(() {
+          _country = country;
+          _flagAsset = _getFlagForCountry(country);
+        });
+      }
+    } catch (e) {
+      debugPrint('Location error: $e');
+    }
+  }
+
+  String? _getFlagForCountry(String countryName) {
+    final map = {
+      'Germany': 'assets/flags/germany.png',
+      'United States': 'assets/flags/us.png',
+      'France': 'assets/flags/france.png',
+      'United Kingdom': 'assets/flags/uk.png',
+      'India': 'assets/flags/india.png',
+    };
+    return map[countryName];
+  }
+
+  Future<void> fetchMarketMovers() async {
+    const apiKey = 'd10nv91r01qlsaca9k70d10nv91r01qlsaca9k7g';
+    final symbols = ['AAPL', 'GOOGL', 'TSLA', 'MSFT', 'NFLX', 'PFE'];
+
+    try {
+      List<Map<String, dynamic>> fetchedData = [];
+      for (String symbol in symbols) {
+        final uri = Uri.parse('https://finnhub.io/api/v1/quote?symbol=$symbol&token=$apiKey');
+        final response = await http.get(uri);
+        final data = jsonDecode(response.body);
+
+        if (data != null && data['c'] != null && data['pc'] != null) {
+          final double current = data['c'];
+          final double prevClose = data['pc'];
+          if (prevClose == 0) continue;
+          final double changePercent = ((current - prevClose) / prevClose) * 100;
+
+          fetchedData.add({
+            'symbol': symbol,
+            'change_percent': changePercent,
+          });
+        }
+      }
+      setState(() {
+        stockData = fetchedData;
+        isStockLoading = false;
+      });
+    } catch (e) {
+      debugPrint('❌ Error fetching stock data: $e');
+      setState(() => isStockLoading = false);
+    }
+  }
+
+  Future<void> fetchNews() async {
+    const apiKey = '62e6dc207d3644ccaa8d5a315196cdda';
+    final uri = Uri.parse('https://newsapi.org/v2/top-headlines?country=us&pageSize=10&apiKey=$apiKey');
+
+    try {
+      final response = await http.get(uri);
+      final data = jsonDecode(response.body);
+
+      if (data['articles'] != null) {
+        setState(() {
+          newsList = List<Map<String, dynamic>>.from(data['articles']);
+          isNewsLoading = false;
+        });
+      }
+    } catch (e) {
+      debugPrint('❌ Error fetching news: $e');
+      setState(() => isNewsLoading = false);
+    }
+  }
+
+  Future<void> fetchCoins() async {
+    final uri = Uri.parse(
+      'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin,ethereum,solana,cardano,binancecoin,dogecoin&order=market_cap_desc&sparkline=false',
+    );
+
+    try {
+      final response = await http.get(uri);
+      final data = jsonDecode(response.body);
+
+      setState(() {
+        coinData = List<Map<String, dynamic>>.from(data);
+        isCoinLoading = false;
+      });
+    } catch (e) {
+      debugPrint('❌ Error fetching coin data: $e');
+      setState(() => isCoinLoading = false);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Home'),
+        actions: [
+          const Icon(Icons.notifications_none),
+          const SizedBox(width: 16),
+          const Icon(Icons.more_vert),
+          const SizedBox(width: 16),
+        ],
+      ),
+
+      body: RefreshIndicator(
+        onRefresh: () async {
+          await fetchMarketMovers();
+          await fetchNews();
+          await fetchCoins();
+        },
+        child: ListView(
+          padding: const EdgeInsets.all(16),
+          children: [
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => PortfolioScreen(onBalanceUpdate: (value) {}),
+                  ),
+                );
+              },
+              child: Card(
+                elevation: 2,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                child: Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    children: [
+                      const Text('Portfolio Balance', style: TextStyle(fontSize: 16, color: Colors.grey)),
+                      const SizedBox(height: 8),
+                      Text('\$${widget.portfolioBalance.toStringAsFixed(2)}'),
+                      const Text('+3.475%', style: TextStyle(fontSize: 16, color: Colors.green)),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 20),
+            const Text('Check out todays news', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            const SizedBox(height: 8),
+            SizedBox(
+              height: 140,
+              child: isNewsLoading
+                  ? const Center(child: CircularProgressIndicator())
+                  : ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: newsList.length,
+                itemBuilder: (_, index) {
+                  final news = newsList[index];
+                  final url = news['url'];
+
+                  return GestureDetector(
+                    onTap: () async {
+                      final uri = Uri.parse(url);
+                      if (await canLaunchUrl(uri)) {
+                        await launchUrl(uri, mode: LaunchMode.externalApplication);
+                      }
+                    },
+                    child: Container(
+                      width: 220,
+                      margin: const EdgeInsets.only(right: 12),
+                      child: Card(
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Container(
+                              height: 80,
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                color: Colors.grey.shade300,
+                                image: news['urlToImage'] != null
+                                    ? DecorationImage(
+                                  image: NetworkImage(news['urlToImage']),
+                                  fit: BoxFit.cover,
+                                )
+                                    : null,
+                              ),
+                              child: news['urlToImage'] == null
+                                  ? const Center(child: Icon(Icons.image, size: 40))
+                                  : null,
+                            ),
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  news['title'] ?? 'No title',
+                                  style: const TextStyle(fontWeight: FontWeight.bold),
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+            const SizedBox(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text('Popular Stocks in Your Region', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                if (_flagAsset != null)
+                  CircleAvatar(radius: 12, backgroundImage: AssetImage(_flagAsset!)),
+              ],
+            ),
+            const SizedBox(height: 12),
+            const Text('Market Movers', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+            const SizedBox(height: 8),
+            SizedBox(
+              height: 120,
+              child: isStockLoading
+                  ? const Center(child: CircularProgressIndicator())
+                  : ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: stockData.length,
+                itemBuilder: (context, index) {
+                  final stock = stockData[index];
+                  final name = stock['symbol'];
+                  final rawChange = stock['change_percent'];
+                  final change = rawChange != null ? rawChange.toStringAsFixed(2) : '0.00';
+                  final isPositive = double.tryParse(change) != null && double.parse(change) >= 0;
+                  final color = isPositive ? Colors.green : Colors.red;
+                  final logoPath = 'assets/logos/market/${name.toLowerCase()}.png';
+                  return _imageCard(logoPath, name, '${isPositive ? '+' : ''}$change%', color);
+                },
+              ),
+            ),
+            const SizedBox(height: 20),
+            const Text('Popular Coins', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600)),
+            const SizedBox(height: 8),
+            SizedBox(
+              height: 120,
+              child: isCoinLoading
+                  ? const Center(child: CircularProgressIndicator())
+                  : ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: coinData.length,
+                itemBuilder: (context, index) {
+                  final coin = coinData[index];
+                  final name = coin['name'];
+                  final image = coin['image'];
+                  final priceChange = coin['price_change_percentage_24h'] ?? 0.0;
+                  final color = priceChange >= 0 ? Colors.green : Colors.red;
+                  final changeText = '${priceChange.toStringAsFixed(2)}%';
+
+                  return Container(
+                    width: 100,
+                    margin: const EdgeInsets.only(right: 8),
+                    child: Card(
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                      elevation: 2,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 6),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            CircleAvatar(backgroundImage: NetworkImage(image), radius: 20),
+                            const SizedBox(height: 8),
+                            Text(name, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13), textAlign: TextAlign.center),
+                            const SizedBox(height: 4),
+                            Text(changeText, style: TextStyle(color: color, fontSize: 12)),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+            const SizedBox(height: 20),
+            Card(
+              color: const Color(0xFFA2FF6B),
+              elevation: 0,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Row(
+                  children: const [
+                    Icon(Icons.star, size: 40, color: Colors.deepPurple),
+                    SizedBox(width: 12),
+                    Expanded(
+                      child: Text.rich(
+                        TextSpan(
+                          children: [
+                            TextSpan(text: 'Get ', style: TextStyle(fontSize: 16)),
+                            TextSpan(text: 'BeStock Pro', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.deepPurple)),
+                            TextSpan(text: ' now 50% off', style: TextStyle(fontSize: 16)),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  static Widget _imageCard(String imagePath, String name, String change, Color color) {
+    return Container(
+      width: 100,
+      margin: const EdgeInsets.only(right: 8),
+      child: Card(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        elevation: 2,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 6),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                width: 40,
+                height: 40,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  shape: BoxShape.circle,
+                  image: DecorationImage(
+                    image: AssetImage(imagePath),
+                    fit: BoxFit.contain,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(name, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13), textAlign: TextAlign.center),
+              const SizedBox(height: 4),
+              Text(change, style: TextStyle(color: color, fontSize: 12)),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
