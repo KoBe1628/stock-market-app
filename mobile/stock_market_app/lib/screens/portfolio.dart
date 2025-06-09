@@ -13,6 +13,8 @@ class PortfolioScreen extends StatefulWidget {
 }
 
 class _PortfolioScreenState extends State<PortfolioScreen> {
+  final Map<String, dynamic> profitData = {};
+
   List<PieChartSectionData> _generatePieSections() {
     final total = totalBalance;
     if (total == 0) return [];
@@ -39,7 +41,7 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
       'TSLA': Colors.red,
       'NFLX': Colors.purple,
       'BTC': Colors.orange,
-      'ETH': Colors.black,
+      'ETH': Colors.green,
       'SOL': Colors.teal,
     };
     return colorMap[symbol] ?? Colors.grey;
@@ -66,12 +68,12 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
   }
 
   final List<Map<String, dynamic>> holdings = [
-    {'symbol': 'AAPL', 'shares': 10.0, 'type': 'stock'},
-    {'symbol': 'TSLA', 'shares': 5.0, 'type': 'stock'},
-    {'symbol': 'NFLX', 'shares': 4.0, 'type': 'stock'},
-    {'symbol': 'BTC', 'shares': 0.05, 'type': 'coin'},
-    {'symbol': 'ETH', 'shares': 0.5, 'type': 'coin'},
-    {'symbol': 'SOL', 'shares': 22.1, 'type': 'coin'},
+    {'symbol': 'AAPL', 'shares': 10.0, 'type': 'stock', 'avgPrice': 150.0},
+    {'symbol': 'TSLA', 'shares': 5.0, 'type': 'stock', 'avgPrice': 200.0},
+    {'symbol': 'NFLX', 'shares': 4.0, 'type': 'stock', 'avgPrice': 300.0},
+    {'symbol': 'BTC', 'shares': 0.05, 'type': 'coin', 'avgPrice': 50000.0},
+    {'symbol': 'ETH', 'shares': 0.5, 'type': 'coin', 'avgPrice': 3000.0},
+    {'symbol': 'SOL', 'shares': 22.1, 'type': 'coin', 'avgPrice': 100.0},
   ];
 
   Map<String, double> latestPrices = {};
@@ -113,6 +115,20 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
       fetched['ETH'] = coinJson['ethereum']['usd'].toDouble();
       fetched['SOL'] = coinJson['solana']['usd'].toDouble();
 
+      for (var item in holdings) {
+        final symbol = item['symbol'];
+        final avgPrice = item['avgPrice'] ?? 0.0;
+        final shares = item['shares'];
+        final currentPrice = fetched[symbol] ?? 0.0;
+        final profit = (currentPrice - avgPrice) * shares;
+        final percent = avgPrice != 0 ? ((currentPrice - avgPrice) / avgPrice) * 100 : 0;
+
+        profitData[symbol] = {
+          'profit': profit,
+          'percent': percent,
+        };
+      }
+
       setState(() {
         latestPrices = fetched;
         isLoading = false;
@@ -140,6 +156,10 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
     final shares = item['shares'];
     final price = latestPrices[symbol] ?? 0.0;
     final total = shares * price;
+    final profit = profitData[symbol]?['profit'] ?? 0.0;
+    final percent = profitData[symbol]?['percent'] ?? 0.0;
+    final profitColor = profit >= 0 ? Colors.green : Colors.red;
+
     return Card(
       child: ListTile(
         leading: Image.asset(
@@ -148,7 +168,16 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
           height: 32,
         ),
         title: Text(symbol, style: const TextStyle(fontWeight: FontWeight.bold)),
-        subtitle: Text('$shares units'),
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('$shares units'),
+            Text(
+              '\$${profit.toStringAsFixed(2)} (${percent.toStringAsFixed(2)}%)',
+              style: TextStyle(color: profitColor, fontSize: 12),
+            ),
+          ],
+        ),
         trailing: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           mainAxisAlignment: MainAxisAlignment.center,
