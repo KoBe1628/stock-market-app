@@ -39,7 +39,7 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
       'TSLA': Colors.red,
       'NFLX': Colors.purple,
       'BTC': Colors.orange,
-      'ETH': Colors.green,
+      'ETH': Colors.black,
       'SOL': Colors.teal,
     };
     return colorMap[symbol] ?? Colors.grey;
