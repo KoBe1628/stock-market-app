@@ -1,0 +1,36 @@
+name: bestox
+description: A new Flutter project.
+
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.3.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.2
+  fl_chart: ^0.63.0 # ✅ Interaktif grafikler için bu paket
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^2.0.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/fonts/
+    - assets/images/
+
+  fonts:
+    - family: ChangaOne
+      fonts:
+        - asset: assets/fonts/ChangaOne-Regular.ttf
+        - asset: assets/fonts/ChangaOne-Italic.ttf
+          style: italic
