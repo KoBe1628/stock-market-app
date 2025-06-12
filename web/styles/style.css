@@ -84,22 +84,75 @@ body {
 }
 
 /* === W3-2: Stock Data Box === */
+/* Stock Box */
 .stock-box {
-  background-color: #f1f8e9;
-  padding: 1rem 1.5rem;
-  border-left: 5px solid #558b2f;
-  margin: 2rem;
-  border-radius: 8px;
+  background-color: #f4fdf0;
+  padding: 1.5rem;
+  border-left: 6px solid #2ecc71;
+  border-radius: 10px;
   width: fit-content;
+  margin: 2rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 .stock-box h3 {
-  margin: 0 0 0.5rem;
-  color: #33691e;
+  margin: 0 0 1rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #175d1d;
 }
 
 .stock-box ul {
+  list-style: none;
+  padding: 0;
   margin: 0;
-  padding-left: 1.2rem;
 }
 
+.stock-box li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  font-size: 1rem;
+  border-bottom: 1px solid #ddd;
+}
+
+.stock-box li:last-child {
+  border-bottom: none;
+}
+
+.stock-box span {
+  font-weight: bold;
+}
+
+/* Optional: nicer color tones for change values */
+.stock-box .positive {
+  color: #1e8e3e;
+}
+
+.stock-box .negative {
+  color: #e53935;
+}
+
+.stock-box .neutral {
+  color: #888;
+}
+
+/* === W4: Price Change Indicators === */
+.positive {
+  color: green;
+  font-weight: bold;
+  margin-left: 1rem;
+}
+
+.negative {
+  color: red;
+  font-weight: bold;
+  margin-left: 1rem;
+}
+
+.neutral {
+  color: gray;
+  font-weight: bold;
+  margin-left: 1rem;
+}
