@@ -16,25 +16,45 @@ class _RegisterPageState extends State<RegisterPage> {
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
 
+  String? emailError;
+  String? passwordError;
+  String? confirmError;
+  String? usernameError;
+
+  bool isLoading = false;
+
+  final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+
   final Color background = const Color(0xFFF5F6FA);
   final Color inputBackground = const Color(0xFFE9EDF4);
   final Color green = const Color(0xFF195C2F);
   final Color textDark = const Color(0xFF111111);
 
+  bool get isFormValid =>
+      emailRegex.hasMatch(emailController.text) &&
+          passwordController.text.length >= 8 &&
+          passwordController.text == confirmPasswordController.text &&
+          usernameController.text.isNotEmpty;
+
+  void validateInputs() {
+    setState(() {
+      emailError = emailRegex.hasMatch(emailController.text) ? null : 'Invalid email';
+      passwordError = passwordController.text.length >= 8 ? null : 'Password too short';
+      confirmError = confirmPasswordController.text == passwordController.text
+          ? null
+          : 'Passwords do not match';
+      usernameError = usernameController.text.isNotEmpty ? null : 'Username required';
+    });
+  }
+
   Future<void> registerUser() async {
+    validateInputs();
+    if (!isFormValid) return;
+
     final email = emailController.text.trim();
-    final password = passwordController.text.trim();
-    final confirmPassword = confirmPasswordController.text.trim();
+    final password = passwordController.text;
 
-    if (email.isEmpty || password.isEmpty || confirmPassword.isEmpty) {
-      showError('Please fill all fields');
-      return;
-    }
-
-    if (password != confirmPassword) {
-      showError('Passwords do not match');
-      return;
-    }
+    setState(() => isLoading = true);
 
     try {
       final response = await http.post(
@@ -46,7 +66,6 @@ class _RegisterPageState extends State<RegisterPage> {
       final data = jsonDecode(response.body);
 
       if (response.statusCode == 201) {
-        // Success
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(data['message'])),
         );
@@ -58,13 +77,51 @@ class _RegisterPageState extends State<RegisterPage> {
         showError(data['error'] ?? 'Something went wrong');
       }
     } catch (e) {
-      showError('Error: $e');
+      showError('Connection error: $e');
+    } finally {
+      setState(() => isLoading = false);
     }
   }
 
   void showError(String message) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text(message), backgroundColor: Colors.red),
+    );
+  }
+
+  Widget buildField({
+    required TextEditingController controller,
+    required String hint,
+    required String? errorText,
+    bool obscure = false,
+    void Function()? onChanged,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        TextField(
+          controller: controller,
+          obscureText: obscure,
+          onChanged: (_) => validateInputs(),
+          decoration: InputDecoration(
+            hintText: hint,
+            filled: true,
+            fillColor: inputBackground,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+          ),
+        ),
+        if (errorText != null)
+          Padding(
+            padding: const EdgeInsets.only(top: 4, left: 4),
+            child: Text(
+              errorText,
+              style: const TextStyle(color: Colors.red, fontSize: 12),
+            ),
+          ),
+        const SizedBox(height: 16),
+      ],
     );
   }
 
@@ -96,60 +153,32 @@ class _RegisterPageState extends State<RegisterPage> {
                   style: TextStyle(fontSize: 32, fontWeight: FontWeight.w600),
                 ),
                 const SizedBox(height: 24),
-                TextField(
+                buildField(
                   controller: usernameController,
-                  decoration: InputDecoration(
-                    hintText: 'Username (not used yet)',
-                    filled: true,
-                    fillColor: inputBackground,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
+                  hint: 'Username',
+                  errorText: usernameError,
                 ),
-                const SizedBox(height: 16),
-                TextField(
+                buildField(
                   controller: emailController,
-                  decoration: InputDecoration(
-                    hintText: 'Email',
-                    filled: true,
-                    fillColor: inputBackground,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
+                  hint: 'Email',
+                  errorText: emailError,
                 ),
-                const SizedBox(height: 16),
-                TextField(
+                buildField(
                   controller: passwordController,
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    hintText: 'Password',
-                    filled: true,
-                    fillColor: inputBackground,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
+                  hint: 'Password',
+                  errorText: passwordError,
+                  obscure: true,
                 ),
-                const SizedBox(height: 16),
-                TextField(
+                buildField(
                   controller: confirmPasswordController,
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    hintText: 'Confirm Password',
-                    filled: true,
-                    fillColor: inputBackground,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
+                  hint: 'Confirm Password',
+                  errorText: confirmError,
+                  obscure: true,
                 ),
-                const SizedBox(height: 24),
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
-                    onPressed: registerUser,
+                    onPressed: isFormValid && !isLoading ? registerUser : null,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: green,
                       padding: const EdgeInsets.symmetric(vertical: 16),
@@ -157,7 +186,9 @@ class _RegisterPageState extends State<RegisterPage> {
                         borderRadius: BorderRadius.circular(12),
                       ),
                     ),
-                    child: const Text(
+                    child: isLoading
+                        ? const CircularProgressIndicator(color: Colors.white)
+                        : const Text(
                       'Register',
                       style: TextStyle(
                         fontSize: 16,
