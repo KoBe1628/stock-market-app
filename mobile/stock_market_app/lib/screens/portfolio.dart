@@ -133,9 +133,10 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
         latestPrices = fetched;
         isLoading = false;
       });
+
       widget.onBalanceUpdate(totalBalance);
     } catch (e) {
-      debugPrint('❌ Error fetching prices: $e');
+      debugPrint('❌ Error fetching prices: \$e');
       setState(() => isLoading = false);
     }
   }
@@ -171,7 +172,7 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('$shares units'),
+            Text('\$shares units'),
             Text(
               '\$${profit.toStringAsFixed(2)} (${percent.toStringAsFixed(2)}%)',
               style: TextStyle(color: profitColor, fontSize: 12),
