@@ -12,59 +12,28 @@ import 'screens/login.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   final prefs = await SharedPreferences.getInstance();
-  final token = prefs.getString('token'); // ✅ get token
-
-  runApp(StockMarketApp(isLoggedIn: token != null)); // ✅ check token
+  final token = prefs.getString('token');
+  runApp(MyApp(isLoggedIn: token != null));
 }
 
-class StockMarketApp extends StatefulWidget {
+class MyApp extends StatelessWidget {
   final bool isLoggedIn;
 
-  const StockMarketApp({required this.isLoggedIn, super.key});
-
-  @override
-  State<StockMarketApp> createState() => _StockMarketAppState();
-}
-
-class _StockMarketAppState extends State<StockMarketApp> {
-  bool isDarkMode = false;
-
-  void toggleTheme() {
-    setState(() => isDarkMode = !isDarkMode);
-  }
+  const MyApp({super.key, required this.isLoggedIn});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Stock Market App',
-      theme: ThemeData(
-        brightness: Brightness.light,
-        primarySwatch: Colors.green,
-      ),
-      darkTheme: ThemeData(
-        brightness: Brightness.dark,
-        primarySwatch: Colors.green,
-      ),
-      themeMode: isDarkMode ? ThemeMode.dark : ThemeMode.light,
       debugShowCheckedModeBanner: false,
-      home: widget.isLoggedIn
-          ? MainNavigation(toggleTheme: toggleTheme, isDarkMode: isDarkMode)
-          : const LoginPage(),
+      home: isLoggedIn ? const MainNavigation() : const LoginPage(),
     );
   }
 }
 
 class MainNavigation extends StatefulWidget {
-  final VoidCallback toggleTheme;
-  final bool isDarkMode;
-
-  const MainNavigation({
-    super.key,
-    required this.toggleTheme,
-    required this.isDarkMode,
-  });
+  const MainNavigation({super.key});
 
   @override
   State<MainNavigation> createState() => _MainNavigationState();
@@ -72,6 +41,7 @@ class MainNavigation extends StatefulWidget {
 
 class _MainNavigationState extends State<MainNavigation> {
   int _currentIndex = 0;
+  bool isDarkMode = false;
   double portfolioBalance = 0.0;
   Map<String, double> latestPrices = {};
 
@@ -134,25 +104,41 @@ class _MainNavigationState extends State<MainNavigation> {
     }
   }
 
+  void toggleTheme() {
+    setState(() => isDarkMode = !isDarkMode);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: _pages[_currentIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        onTap: (index) => setState(() => _currentIndex = index),
-        type: BottomNavigationBarType.fixed,
-        selectedItemColor: Colors.green,
-        unselectedItemColor: Colors.grey,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.explore), label: 'Explore'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.swap_horiz), label: 'Transfer'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.pie_chart), label: 'Portfolio'),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
-        ],
+    return MaterialApp(
+      theme: ThemeData(
+        brightness: Brightness.light,
+        primarySwatch: Colors.green,
+      ),
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+        primarySwatch: Colors.green,
+      ),
+      themeMode: isDarkMode ? ThemeMode.dark : ThemeMode.light,
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        body: _pages[_currentIndex],
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: _currentIndex,
+          onTap: (index) => setState(() => _currentIndex = index),
+          type: BottomNavigationBarType.fixed,
+          selectedItemColor: Colors.green,
+          unselectedItemColor: Colors.grey,
+          items: const [
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+            BottomNavigationBarItem(icon: Icon(Icons.explore), label: 'Explore'),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.swap_horiz), label: 'Transfer'),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.pie_chart), label: 'Portfolio'),
+            BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
+          ],
+        ),
       ),
     );
   }
@@ -165,8 +151,8 @@ class _MainNavigationState extends State<MainNavigation> {
       setState(() => portfolioBalance = value);
     }),
     ProfileScreen(
-      toggleTheme: widget.toggleTheme,
-      isDarkMode: widget.isDarkMode,
+      toggleTheme: toggleTheme,
+      isDarkMode: isDarkMode,
     ),
   ];
 }

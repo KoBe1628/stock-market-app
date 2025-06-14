@@ -67,8 +67,6 @@ class _LoginPageState extends State<LoginPage> {
           context,
           MaterialPageRoute(
             builder: (_) => MainNavigation(
-              toggleTheme: () {},
-              isDarkMode: false,
             ),
           ),
         );
@@ -184,7 +182,16 @@ class _LoginPageState extends State<LoginPage> {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (_) => const RegisterPage()),
+                      PageRouteBuilder(
+                        transitionDuration: const Duration(milliseconds: 400),
+                        pageBuilder: (_, __, ___) => const RegisterPage(),
+                        transitionsBuilder: (_, animation, __, child) {
+                          return FadeTransition(
+                            opacity: animation,
+                            child: child,
+                          );
+                        },
+                      ),
                     );
                   },
                   child: Text(

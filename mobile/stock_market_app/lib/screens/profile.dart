@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'login.dart'; // Make sure this is the correct path
+import 'login.dart';
 
-class ProfileScreen extends StatefulWidget {
+class ProfileScreen extends StatelessWidget {
   final VoidCallback toggleTheme;
   final bool isDarkMode;
 
@@ -12,14 +12,10 @@ class ProfileScreen extends StatefulWidget {
     required this.isDarkMode,
   });
 
-  @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
-}
-
-class _ProfileScreenState extends State<ProfileScreen> {
-  Future<void> _logout() async {
+  Future<void> _logout(BuildContext context) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setBool('isLoggedIn', false);
+    await prefs.remove('token');
 
     Navigator.pushAndRemoveUntil(
       context,
@@ -44,16 +40,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
           // Dark Mode Switch
           SwitchListTile(
             title: const Text("Dark Mode"),
-            value: widget.isDarkMode,
-            onChanged: (value) {
-              widget.toggleTheme();
-            },
+            value: isDarkMode,
+            onChanged: (_) => toggleTheme(),
           ),
           const SizedBox(height: 20),
 
           // Logout Button
           ElevatedButton(
-            onPressed: _logout,
+            onPressed: () => _logout(context),
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.red,
               padding: const EdgeInsets.symmetric(vertical: 14),

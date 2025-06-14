@@ -69,9 +69,18 @@ class _RegisterPageState extends State<RegisterPage> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(data['message'])),
         );
-        Navigator.pushReplacement(
+        Navigator.push(
           context,
-          MaterialPageRoute(builder: (_) => const LoginPage()),
+          PageRouteBuilder(
+            transitionDuration: const Duration(milliseconds: 400),
+            pageBuilder: (_, __, ___) => const LoginPage(),
+            transitionsBuilder: (_, animation, __, child) {
+              return FadeTransition(
+                opacity: animation,
+                child: child,
+              );
+            },
+          ),
         );
       } else {
         showError(data['error'] ?? 'Something went wrong');
@@ -201,9 +210,18 @@ class _RegisterPageState extends State<RegisterPage> {
                 const SizedBox(height: 32),
                 GestureDetector(
                   onTap: () {
-                    Navigator.pushReplacement(
+                    Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (_) => const LoginPage()),
+                      PageRouteBuilder(
+                        transitionDuration: const Duration(milliseconds: 200),
+                        pageBuilder: (_, __, ___) => const LoginPage(),
+                        transitionsBuilder: (_, animation, __, child) {
+                          return FadeTransition(
+                            opacity: animation,
+                            child: child,
+                          );
+                        },
+                      ),
                     );
                   },
                   child: Text(

@@ -183,7 +183,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       const Text(
                         'Portfolio Balance',
-                        style: TextStyle(fontSize: 24),
+                        style: TextStyle(fontSize: 20),
                       ),
                       const SizedBox(height: 8),
                       Text('18963.12', style: TextStyle(fontSize: 18),),

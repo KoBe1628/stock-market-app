@@ -42,15 +42,7 @@ class _ProVersionScreenState extends State<ProVersionScreen> {
               text: TextSpan(
                 style: Theme.of(context).textTheme.titleLarge,
                 children: [
-                  const TextSpan(text: 'Get '),
-                  TextSpan(
-                    text: 'BeStox',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).primaryColor,
-                    ),
-                  ),
-                  const TextSpan(text: ' Pro'),
+
                 ],
               ),
             ),

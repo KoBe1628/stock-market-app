@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class TransferScreen extends StatefulWidget {
   const TransferScreen({super.key});
@@ -8,114 +10,207 @@ class TransferScreen extends StatefulWidget {
 }
 
 class _TransferScreenState extends State<TransferScreen> {
-  String spend = '';
-  String receive = '0';
+  final List<String> assets = [
+    'BTC',
+    'ETH',
+    'SOL',
+    'AAPL',
+    'TSLA',
+    'NFLX',
+    'GOOGL',
+    'META',
+    'MSFT',
+    'PFE'
+  ];
+  final List<String> fiats = ['USD', 'EUR'];
 
-  void onKeyTap(String value) {
-    setState(() {
-      if (value == '←') {
-        spend = spend.isNotEmpty ? spend.substring(0, spend.length - 1) : '';
-      } else {
-        spend += value;
+  String fromAsset = 'BTC';
+  String toFiat = 'USD';
+  bool isBuying = true;
+
+  double enteredAmount = 0.0;
+  double convertedAmount = 0.0;
+
+  Map<String, double> latestPrices = {};
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchPrices();
+  }
+
+  Future<void> fetchPrices() async {
+    try {
+      const coingeckoUrl =
+          'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana&vs_currencies=usd,eur';
+      final stockSymbols = ['AAPL', 'TSLA', 'NFLX', 'GOOGL', 'META', 'MSFT', 'PFE'];
+      const finnhubKey = 'd10nv91r01qlsaca9k70d10nv91r01qlsaca9k7g';
+
+      final res = await http.get(Uri.parse(coingeckoUrl));
+      final coinData = jsonDecode(res.body);
+
+      latestPrices['BTC_USD'] = coinData['bitcoin']['usd'].toDouble();
+      latestPrices['BTC_EUR'] = coinData['bitcoin']['eur'].toDouble();
+      latestPrices['ETH_USD'] = coinData['ethereum']['usd'].toDouble();
+      latestPrices['ETH_EUR'] = coinData['ethereum']['eur'].toDouble();
+      latestPrices['SOL_USD'] = coinData['solana']['usd'].toDouble();
+      latestPrices['SOL_EUR'] = coinData['solana']['eur'].toDouble();
+
+      for (var symbol in stockSymbols) {
+        final uri = Uri.parse(
+            'https://finnhub.io/api/v1/quote?symbol=$symbol&token=$finnhubKey');
+        final stockRes = await http.get(uri);
+        final data = jsonDecode(stockRes.body);
+        latestPrices['${symbol}_USD'] = data['c']?.toDouble() ?? 0.0;
+        latestPrices['${symbol}_EUR'] = (data['c'] * 0.93).toDouble(); // est.
       }
 
-      double amount = double.tryParse(spend) ?? 0;
-      receive = (amount * 0.9).toStringAsFixed(2); // example: 10% fee
+      setState(() => isLoading = false);
+    } catch (e) {
+      debugPrint('❌ Error fetching prices: $e');
+    }
+  }
+
+  void onAmountChanged(String value) {
+    setState(() {
+      enteredAmount = double.tryParse(value) ?? 0.0;
+      String key = '${fromAsset}_$toFiat';
+      double rate = latestPrices[key] ?? 0.0;
+      convertedAmount = enteredAmount * rate;
     });
+  }
+
+  void swapDirection() {
+    setState(() => isBuying = !isBuying);
+  }
+
+  String getImagePath(String symbol) {
+    final lower = symbol.toLowerCase();
+    if (['btc', 'eth', 'sol'].contains(lower)) {
+      return 'assets/logos/coins/${_coinImageFileName(lower)}';
+    } else {
+      return 'assets/logos/market/${lower}.png';
+    }
+  }
+
+  String _coinImageFileName(String symbol) {
+    switch (symbol) {
+      case 'btc':
+        return 'bitcoin.png';
+      case 'eth':
+        return 'ethereum.png';
+      case 'sol':
+        return 'solana.png';
+      default:
+        return '$symbol.png';
+    }
+  }
+
+  Widget buildAssetDropdown() {
+    return DropdownButton<String>(
+      value: fromAsset,
+      isExpanded: true,
+      items: assets.map((e) {
+        final path = getImagePath(e);
+        return DropdownMenuItem(
+          value: e,
+          child: Row(
+            children: [
+              Image.asset(path, width: 24, height: 24),
+              const SizedBox(width: 8),
+              Text(e),
+            ],
+          ),
+        );
+      }).toList(),
+      onChanged: (val) => setState(() => fromAsset = val!),
+    );
+  }
+
+  Widget buildFiatDropdown() {
+    return DropdownButton<String>(
+      value: toFiat,
+      isExpanded: true,
+      items: fiats.map((e) {
+        final flagPath = e == 'USD'
+            ? 'assets/flags/us.png'
+            : 'assets/flags/germany.png';
+        return DropdownMenuItem(
+          value: e,
+          child: Row(
+            children: [
+              Image.asset(flagPath, width: 24, height: 24),
+              const SizedBox(width: 8),
+              Text(e),
+            ],
+          ),
+        );
+      }).toList(),
+      onChanged: (val) => setState(() => toFiat = val!),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    final buttons = [
-      '1', '2', '3',
-      '4', '5', '6',
-      '7', '8', '9',
-      ',', '0', '←',
-    ];
+    final theme = Theme.of(context);
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Buy'),
-        centerTitle: true,
-        leading: const BackButton(),
-      ),
-      body: Column(
-        children: [
-          const SizedBox(height: 20),
-          _infoCard(title: 'Spend', value: spend.isEmpty ? '10 - 100,000' : spend),
-          _infoCard(title: 'Receive', value: receive),
-          const SizedBox(height: 10),
-          _buildNumberPad(buttons),
-          const SizedBox(height: 10),
-          _buildPaymentLogos(),
-        ],
-      ),
-    );
-  }
-
-  Widget _infoCard({required String title, required String value}) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 4)],
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(title, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-          Text(value, style: const TextStyle(fontSize: 16)),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildNumberPad(List<String> keys) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 40),
-      child: GridView.builder(
-        shrinkWrap: true,
-        itemCount: keys.length,
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
-          mainAxisSpacing: 10,
-          crossAxisSpacing: 10,
-        ),
-        itemBuilder: (_, index) {
-          final key = keys[index];
-          return ElevatedButton(
-            onPressed: () => onKeyTap(key),
-            style: ElevatedButton.styleFrom(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-              backgroundColor: Colors.grey[200],
-              foregroundColor: Colors.black,
-              padding: const EdgeInsets.all(20),
+      appBar: AppBar(title: const Text('Transfer')),
+      body: isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Expanded(child: buildAssetDropdown()),
+                IconButton(
+                  icon: const Icon(Icons.swap_horiz),
+                  onPressed: swapDirection,
+                ),
+                Expanded(child: buildFiatDropdown()),
+              ],
             ),
-            child: Text(key, style: const TextStyle(fontSize: 18)),
-          );
-        },
-      ),
-    );
-  }
+            const SizedBox(height: 16),
+            TextField(
+              keyboardType: TextInputType.number,
+              decoration: const InputDecoration(
+                  labelText: 'Enter amount'),
+              onChanged: onAmountChanged,
+            ),
+            const SizedBox(height: 20),
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Text(isBuying ? 'You get:' : 'You send:'),
+            ),
+            const SizedBox(height: 4),
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.grey.shade200,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Text(
+                convertedAmount.toStringAsFixed(2),
+                style: theme.textTheme.titleLarge,
 
-  Widget _buildPaymentLogos() {
-    final logos = [
-      'assets/Cards/visa.png',
-      'assets/Cards/mastercard.png',
-      'assets/Cards/discover.png',
-      'assets/Cards/amex.png',
-    ];
-
-
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: logos.map((logo) {
-          return Image.asset(logo, width: 60, height: 40, fit: BoxFit.contain);
-        }).toList(),
+              ),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                // Add action here
+              },
+              style: ElevatedButton.styleFrom(
+                  backgroundColor:
+                  isBuying ? Colors.green : Colors.red),
+              child: Text(isBuying ? 'Buy Now' : 'Sell Now'),
+            ),
+          ],
+        ),
       ),
     );
   }
