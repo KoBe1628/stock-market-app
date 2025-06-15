@@ -8,11 +8,12 @@ body {
 
 /* === NAVIGATION STYLES (Bekhzod - W1) === */
 .navbar {
-  background-color: #2ecc71;
+  background-color: white;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 1rem 2rem;
+  border-bottom: solid 1px #d2d5d8;
 }
 
 .logo {
@@ -318,4 +319,273 @@ body {
   border-radius: 8px;
   font-weight: bold;
   cursor: pointer;
+}
+
+/* === Portfolio Page Styles === */
+
+.portfolio-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.portfolio-section,
+.watchlist-section {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+  padding: 1.5rem;
+  margin: 2rem auto;
+  max-width: 1000px;
+}
+
+.portfolio-header h3,
+.watchlist-header h3 {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.buy-btn {
+  background-color: #14b866;
+  color: white;
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  width: fit-content;
+}
+
+.add-btn {
+  background-color: #1a73e8;
+  color: white;
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  margin-left: auto;
+  display: block;
+}
+
+.buy-btn:hover {
+  background-color: #119955;
+}
+
+.add-btn:hover {
+  background-color: #0c63db;
+}
+
+.portfolio-metrics {
+  display: flex;
+  justify-content: space-between;
+  background: #eaf0ff;
+  padding: 1rem;
+  border-radius: 8px;
+  margin: 1rem 0;
+  font-size: 1rem;
+}
+
+.portfolio-metrics h3 {
+  margin-top: 0.25rem;
+  font-size: 1.1rem;
+}
+
+.asset-table,
+.watchlist-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.asset-table th,
+.asset-table td,
+.watchlist-table th,
+.watchlist-table td {
+  padding: 0.75rem;
+  border-bottom: 1px solid #eee;
+  text-align: left;
+}
+
+.asset-table th,
+.watchlist-table th {
+  background: #f8f8f8;
+  color: #333;
+  font-weight: 600;
+}
+
+.asset-table td img,
+.watchlist-table td img {
+  width: 24px;
+  vertical-align: middle;
+  margin-right: 0.5rem;
+}
+
+.green {
+  color: #14b866;
+  font-weight: bold;
+}
+
+.red {
+  color: #d64545;
+  font-weight: bold;
+}
+
+.btn {
+  padding: 0.4rem 0.75rem;
+  font-size: 0.85rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.btn-remove {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.btn-remove:hover {
+  background-color: #c0392b;
+}
+
+.account-summary {
+  max-width: 1000px;
+  margin: 2rem auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 2rem;
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.user-info p,
+.balance-info p,
+.card-profit span {
+  margin: 0.3rem 0;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.balance-info h2 {
+  margin-top: 0.25rem;
+  font-size: 1.5rem;
+}
+
+.virtual-card {
+  background: linear-gradient(135deg, #1f2c47, #2c3e50);
+  color: white;
+  padding: 1rem;
+  border-radius: 10px;
+  width: 100%;
+}
+
+.card-name,
+.card-number,
+.card-profit {
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+
+.card-profit strong {
+  color: #14b866;
+}
+
+footer {
+  background-color: #fff;
+  border-top: 1px solid #eee;
+  margin-top: 3rem;
+  padding: 2rem 1rem 0;
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  max-width: 1000px;
+  margin: 0 auto;
+  gap: 2rem;
+}
+
+.footer-links h5 {
+  margin-bottom: 0.75rem;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.footer-links ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 0.9rem;
+  color: #666;
+  line-height: 1.6;
+}
+
+.footer-note {
+  text-align: center;
+  margin-top: 2rem;
+  padding: 1rem 0;
+  font-size: 0.85rem;
+  color: white;
+  border-top: 1px solid #eee;
+  background-color: #3e3e3e;
+}
+
+.balance-info h2 {
+  margin-top: 0.25rem;
+  font-size: 1.5rem;
+}
+
+.virtual-card {
+  background: linear-gradient(135deg, #1f2c47, #2c3e50);
+  color: white;
+  padding: 1rem;
+  border-radius: 10px;
+  width: 100%;
+}
+
+.card-name,
+.card-number,
+.card-profit {
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+
+.card-profit strong {
+  color: #14b866;
+}
+
+.watchlist-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+  .portfolio-header,
+  .portfolio-metrics,
+  .account-summary {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .add-btn,
+  .buy-btn {
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+
+  .footer-links {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
 }
