@@ -1,11 +1,11 @@
-//  This will be a  PortfolioScreen that shows fake holdings with real-time prices
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:fl_chart/fl_chart.dart';
+import 'watchlist_service.dart';
 
 class PortfolioScreen extends StatefulWidget {
-  final void Function(double) onBalanceUpdate;
+  final void Function(double balance, double invested) onBalanceUpdate;
   const PortfolioScreen({super.key, required this.onBalanceUpdate});
 
   @override
@@ -14,58 +14,8 @@ class PortfolioScreen extends StatefulWidget {
 
 class _PortfolioScreenState extends State<PortfolioScreen> {
   final Map<String, dynamic> profitData = {};
-
-  List<PieChartSectionData> _generatePieSections() {
-    final total = totalBalance;
-    if (total == 0) return [];
-
-    return holdings.map((asset) {
-      final symbol = asset['symbol'];
-      final value = (latestPrices[symbol] ?? 0.0) * asset['shares'];
-      final percentage = (value / total) * 100;
-
-      return PieChartSectionData(
-        color: _getColorForSymbol(symbol),
-        value: percentage,
-        title: '${percentage.toStringAsFixed(1)}%',
-        radius: 50,
-        titleStyle: const TextStyle(
-            fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white),
-      );
-    }).toList();
-  }
-
-  Color _getColorForSymbol(String symbol) {
-    const colorMap = {
-      'AAPL': Colors.blue,
-      'TSLA': Colors.red,
-      'NFLX': Colors.purple,
-      'BTC': Colors.orange,
-      'ETH': Colors.green,
-      'SOL': Colors.teal,
-    };
-    return colorMap[symbol] ?? Colors.grey;
-  }
-
-  Widget _buildLegend() {
-    return Wrap(
-      spacing: 12,
-      runSpacing: 8,
-      children: holdings.map((asset) {
-        final symbol = asset['symbol'];
-        final color = _getColorForSymbol(symbol);
-
-        return Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(width: 12, height: 12, color: color),
-            const SizedBox(width: 6),
-            Text(symbol, style: const TextStyle(fontSize: 12)),
-          ],
-        );
-      }).toList(),
-    );
-  }
+  List<String> watchlist = [];
+  Map<String, double> watchlistPrices = {};
 
   final List<Map<String, dynamic>> holdings = [
     {'symbol': 'AAPL', 'shares': 10.0, 'type': 'stock', 'avgPrice': 150.0},
@@ -91,7 +41,54 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => fetchPrices());
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      fetchPrices();
+      loadWatchlist();
+    });
+  }
+
+  Future<void> loadWatchlist() async {
+    final items = await WatchlistService.getWatchlist();
+    setState(() => watchlist = items);
+    fetchWatchlistPrices();
+  }
+
+  Future<void> fetchWatchlistPrices() async {
+    Map<String, double> fetched = {};
+
+    for (String symbol in watchlist) {
+      try {
+        if (["BTC", "ETH", "SOL"].contains(symbol)) {
+          final res = await http.get(Uri.parse(
+              'https://api.coingecko.com/api/v3/simple/price?ids=${_coinId(symbol)}&vs_currencies=usd'));
+          final json = jsonDecode(res.body);
+          fetched[symbol] = json[_coinId(symbol)]['usd'].toDouble();
+        } else {
+          final uri = Uri.parse(
+              'https://finnhub.io/api/v1/quote?symbol=$symbol&token=d10nv91r01qlsaca9k70d10nv91r01qlsaca9k7g');
+          final res = await http.get(uri);
+          final json = jsonDecode(res.body);
+          fetched[symbol] = json['c']?.toDouble() ?? 0.0;
+        }
+      } catch (e) {
+        debugPrint('❌ Failed to fetch $symbol: $e');
+      }
+    }
+
+    setState(() => watchlistPrices = fetched);
+  }
+
+  String _coinId(String symbol) {
+    switch (symbol) {
+      case 'BTC':
+        return 'bitcoin';
+      case 'ETH':
+        return 'ethereum';
+      case 'SOL':
+        return 'solana';
+      default:
+        return '';
+    }
   }
 
   Future<void> fetchPrices() async {
@@ -134,9 +131,13 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
         isLoading = false;
       });
 
-      widget.onBalanceUpdate(totalBalance);
+      final invested = holdings.fold(0.0, (sum, item) {
+        return sum + (item['avgPrice'] * item['shares']);
+      });
+
+      widget.onBalanceUpdate(totalBalance, invested);
     } catch (e) {
-      debugPrint('❌ Error fetching prices: \$e');
+      debugPrint('❌ Error fetching prices: $e');
       setState(() => isLoading = false);
     }
   }
@@ -172,7 +173,7 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('\$shares units'),
+            Text('$shares units'),
             Text(
               '\$${profit.toStringAsFixed(2)} (${percent.toStringAsFixed(2)}%)',
               style: TextStyle(color: profitColor, fontSize: 12),
@@ -191,6 +192,72 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
     );
   }
 
+  Widget _buildWatchlistTile(String symbol, double price) {
+    return Card(
+      child: ListTile(
+        leading: Text(symbol, style: const TextStyle(fontWeight: FontWeight.bold)),
+        title: Text('\$${price.toStringAsFixed(2)}'),
+        trailing: IconButton(
+          icon: const Icon(Icons.delete_outline, color: Colors.red),
+          onPressed: () async {
+            await WatchlistService.removeFromWatchlist(symbol);
+            loadWatchlist();
+          },
+        ),
+      ),
+    );
+  }
+
+  List<PieChartSectionData> _generatePieSections() {
+    final total = totalBalance;
+    if (total == 0) return [];
+
+    return holdings.map((asset) {
+      final symbol = asset['symbol'];
+      final value = (latestPrices[symbol] ?? 0.0) * asset['shares'];
+      final percentage = (value / total) * 100;
+
+      return PieChartSectionData(
+        color: _getColorForSymbol(symbol),
+        value: percentage,
+        title: '${percentage.toStringAsFixed(1)}%',
+        radius: 50,
+        titleStyle: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.white),
+      );
+    }).toList();
+  }
+
+  Color _getColorForSymbol(String symbol) {
+    const colorMap = {
+      'AAPL': Colors.blue,
+      'TSLA': Colors.red,
+      'NFLX': Colors.purple,
+      'BTC': Colors.orange,
+      'ETH': Colors.green,
+      'SOL': Colors.teal,
+    };
+    return colorMap[symbol] ?? Colors.grey;
+  }
+
+  Widget _buildLegend() {
+    return Wrap(
+      spacing: 12,
+      runSpacing: 8,
+      children: holdings.map((asset) {
+        final symbol = asset['symbol'];
+        final color = _getColorForSymbol(symbol);
+        return Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(width: 12, height: 12, color: color),
+            const SizedBox(width: 6),
+            Text(symbol, style: const TextStyle(fontSize: 12)),
+          ],
+        );
+      }).toList(),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final stockHoldings = holdings.where((h) => h['type'] == 'stock').toList();
@@ -201,7 +268,10 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
       body: isLoading
           ? const Center(child: CircularProgressIndicator())
           : RefreshIndicator(
-        onRefresh: fetchPrices,
+        onRefresh: () async {
+          await fetchPrices();
+          await loadWatchlist();
+        },
         child: ListView(
           padding: const EdgeInsets.all(16),
           children: [
@@ -220,7 +290,7 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text('Shiny Flakes', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+                        const Text('Tom Anderson', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
                         const Text('@jamal1233', style: TextStyle(color: Colors.grey)),
                         const SizedBox(height: 8),
                         Text('Current Balance\n\$${totalBalance.toStringAsFixed(2)}', style: const TextStyle(fontSize: 16)),
@@ -253,6 +323,15 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
             const Text('Your Coins', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             const SizedBox(height: 8),
             ...coinHoldings.map(_buildAssetTile).toList(),
+            if (watchlist.isNotEmpty) ...[
+              const SizedBox(height: 20),
+              const Text('Your Watchlist', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              const SizedBox(height: 8),
+              ...watchlist.map((symbol) {
+                final price = watchlistPrices[symbol] ?? 0.0;
+                return _buildWatchlistTile(symbol, price);
+              }).toList(),
+            ],
           ],
         ),
       ),

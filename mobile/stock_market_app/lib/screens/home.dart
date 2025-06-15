@@ -9,7 +9,9 @@ import 'pro_version_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   final double portfolioBalance;
-  const HomeScreen({super.key, required this.portfolioBalance});
+  final double invested;
+
+  const HomeScreen({super.key, required this.portfolioBalance, required this.invested});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -141,6 +143,12 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final bool hasBalance = widget.portfolioBalance > 0 && widget.invested > 0;
+    final double change = hasBalance
+        ? ((widget.portfolioBalance - widget.invested) / widget.invested) * 100
+        : 0;
+    final bool isPositive = change >= 0;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Home'),
@@ -168,7 +176,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (_) => PortfolioScreen(onBalanceUpdate: (_) {}),
+                    builder: (_) => PortfolioScreen(onBalanceUpdate: (_, __) {}),
                   ),
                 );
               },
@@ -186,10 +194,19 @@ class _HomeScreenState extends State<HomeScreen> {
                         style: TextStyle(fontSize: 20),
                       ),
                       const SizedBox(height: 8),
-                      Text('18963.12', style: TextStyle(fontSize: 18),),
-                      const Text(
-                        '+3.475%',
-                        style: TextStyle(fontSize: 16, color: Colors.green),
+                      Text(
+                        widget.portfolioBalance > 0
+                            ? '\$${widget.portfolioBalance.toStringAsFixed(2)}'
+                            : 'Loading...',
+                        style: const TextStyle(fontSize: 18),
+                      ),
+                    if (hasBalance)
+                      Text(
+                        '${isPositive ? '+' : ''}${change.toStringAsFixed(2)}% overall',
+                         style: TextStyle(
+                           fontSize: 16,
+                           color: isPositive ? Colors.green : Colors.red,
+                        ),
                       ),
                     ],
                   ),

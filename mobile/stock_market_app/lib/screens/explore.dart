@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'watchlist_service.dart';
 
 class ExploreScreen extends StatefulWidget {
   const ExploreScreen({super.key});
@@ -207,46 +208,80 @@ class _ExploreScreenState extends State<ExploreScreen> {
 
   Widget _buildStockTile(Map<String, dynamic> stock) {
     final change = stock['change_percent'];
-    final positive = change >= 0;
+    final symbol = stock['symbol'];
+    final positive = (change ?? 0) >= 0;
 
-    return Card(
-      child: ListTile(
-        leading: Image.asset(
-          'assets/logos/market/${stock['symbol'].toLowerCase()}.png',
-          width: 36,
-          errorBuilder: (_, __, ___) =>
-          const Icon(Icons.show_chart, color: Colors.grey),
-        ),
-        title: Text(stock['symbol']),
-        subtitle: Text('\$${stock['price'].toStringAsFixed(2)}'),
-        trailing: Text(
-          '${change.toStringAsFixed(2)}%',
-          style: TextStyle(
-              color: positive ? Colors.green : Colors.red,
-              fontWeight: FontWeight.bold),
-        ),
-      ),
+    return FutureBuilder<bool>(
+      future: WatchlistService.isInWatchlist(symbol),
+      builder: (context, snapshot) {
+        final isInWatchlist = snapshot.data ?? false;
+
+        return Card(
+          child: ListTile(
+            leading: Image.asset(
+              'assets/logos/market/${symbol.toLowerCase()}.png',
+              width: 36,
+              errorBuilder: (_, __, ___) =>
+              const Icon(Icons.show_chart, color: Colors.grey),
+            ),
+            title: Text(symbol),
+            subtitle: Text('\$${stock['price'].toStringAsFixed(2)}'),
+            trailing: IconButton(
+              icon: Icon(
+                isInWatchlist ? Icons.star : Icons.star_border,
+                color: Colors.orange,
+              ),
+              onPressed: () async {
+                if (isInWatchlist) {
+                  await WatchlistService.removeFromWatchlist(symbol);
+                } else {
+                  await WatchlistService.addToWatchlist(symbol);
+                }
+                setState(() {});
+              },
+            ),
+          ),
+        );
+      },
     );
   }
-
   Widget _buildCoinTile(Map<String, dynamic> coin) {
+    final symbol = coin['symbol']?.toUpperCase() ?? '';
+    final price = coin['current_price'];
     final change = coin['price_change_percentage_24h'];
-    final positive = change >= 0;
+    final positive = (change ?? 0) >= 0;
 
-    return Card(
-      child: ListTile(
-        leading: CircleAvatar(
-          backgroundImage: NetworkImage(coin['image']),
-        ),
-        title: Text(coin['name']),
-        subtitle: Text('\$${coin['current_price']}'),
-        trailing: Text(
-          '${change.toStringAsFixed(2)}%',
-          style: TextStyle(
-              color: positive ? Colors.green : Colors.red,
-              fontWeight: FontWeight.bold),
-        ),
-      ),
+    return FutureBuilder<bool>(
+      future: WatchlistService.isInWatchlist(symbol),
+      builder: (context, snapshot) {
+        final isInWatchlist = snapshot.data ?? false;
+
+        return Card(
+          child: ListTile(
+            leading: CircleAvatar(
+              backgroundImage: NetworkImage(coin['image']),
+            ),
+            title: Text(symbol),
+            subtitle: price != null
+                ? Text('\$${price.toStringAsFixed(2)}')
+                : const Text('N/A'),
+            trailing: IconButton(
+              icon: Icon(
+                isInWatchlist ? Icons.star : Icons.star_border,
+                color: Colors.orange,
+              ),
+              onPressed: () async {
+                if (isInWatchlist) {
+                  await WatchlistService.removeFromWatchlist(symbol);
+                } else {
+                  await WatchlistService.addToWatchlist(symbol);
+                }
+                setState(() {});
+              },
+            ),
+          ),
+        );
+      },
     );
   }
 }

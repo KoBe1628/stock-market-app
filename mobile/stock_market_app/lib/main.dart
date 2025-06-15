@@ -43,15 +43,16 @@ class _MainNavigationState extends State<MainNavigation> {
   int _currentIndex = 0;
   bool isDarkMode = false;
   double portfolioBalance = 0.0;
+  double portfolioInvested = 0.0;
   Map<String, double> latestPrices = {};
 
   final List<Map<String, dynamic>> holdings = [
-    {'symbol': 'AAPL', 'shares': 10.0, 'type': 'stock'},
-    {'symbol': 'TSLA', 'shares': 5.0, 'type': 'stock'},
-    {'symbol': 'NFLX', 'shares': 22.0, 'type': 'stock'},
-    {'symbol': 'BTC', 'shares': 0.71, 'type': 'coin'},
-    {'symbol': 'ETH', 'shares': 0.5, 'type': 'coin'},
-    {'symbol': 'SOL', 'shares': 22.1, 'type': 'coin'},
+    {'symbol': 'AAPL', 'shares': 10.0, 'type': 'stock', 'avgPrice': 150.0},
+    {'symbol': 'TSLA', 'shares': 5.0, 'type': 'stock', 'avgPrice': 200.0},
+    {'symbol': 'NFLX', 'shares': 22.0, 'type': 'stock', 'avgPrice': 300.0},
+    {'symbol': 'BTC', 'shares': 0.71, 'type': 'coin', 'avgPrice': 50000.0},
+    {'symbol': 'ETH', 'shares': 0.5, 'type': 'coin', 'avgPrice': 3000.0},
+    {'symbol': 'SOL', 'shares': 22.1, 'type': 'coin', 'avgPrice': 100.0},
   ];
 
   @override
@@ -88,15 +89,20 @@ class _MainNavigationState extends State<MainNavigation> {
       fetched['SOL'] = coinJson['solana']['usd'].toDouble();
 
       double total = 0.0;
+      double invested = 0.0;
       for (var item in holdings) {
         final symbol = item['symbol'];
         final shares = item['shares'];
         final price = fetched[symbol] ?? 0.0;
         total += shares * price;
+
+        final avgPrice = item['avgPrice'] ?? 0.0;
+        invested += avgPrice * shares;
       }
 
       setState(() {
         portfolioBalance = total;
+        portfolioInvested = invested;
         latestPrices = fetched;
       });
     } catch (e) {
@@ -110,6 +116,28 @@ class _MainNavigationState extends State<MainNavigation> {
 
   @override
   Widget build(BuildContext context) {
+    final pages = [
+      HomeScreen(
+        portfolioBalance: portfolioBalance,
+        invested: portfolioInvested,
+      ),
+      const ExploreScreen(),
+      const TransferScreen(),
+      PortfolioScreen(
+        onBalanceUpdate: (balance, invested) {
+          setState(() {
+            portfolioBalance = balance;
+            portfolioInvested = invested;
+          });
+        },
+      ),
+      ProfileScreen(
+        toggleTheme: toggleTheme,
+        isDarkMode: isDarkMode,
+        balance: portfolioBalance,
+      ),
+    ];
+
     return MaterialApp(
       theme: ThemeData(
         brightness: Brightness.light,
@@ -122,7 +150,7 @@ class _MainNavigationState extends State<MainNavigation> {
       themeMode: isDarkMode ? ThemeMode.dark : ThemeMode.light,
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        body: _pages[_currentIndex],
+        body: pages[_currentIndex],
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: _currentIndex,
           onTap: (index) => setState(() => _currentIndex = index),
@@ -142,17 +170,4 @@ class _MainNavigationState extends State<MainNavigation> {
       ),
     );
   }
-
-  late final List<Widget> _pages = [
-    HomeScreen(portfolioBalance: portfolioBalance),
-    const ExploreScreen(),
-    const TransferScreen(),
-    PortfolioScreen(onBalanceUpdate: (value) {
-      setState(() => portfolioBalance = value);
-    }),
-    ProfileScreen(
-      toggleTheme: toggleTheme,
-      isDarkMode: isDarkMode,
-    ),
-  ];
 }
