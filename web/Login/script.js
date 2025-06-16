@@ -4,3 +4,5 @@ document.querySelector (".login-form").addEventListener("submit", function (e) {
     alert("Login successful!");
 
 });
+
+<button onclick = "window.location.href = '' " > Create new account </button>
