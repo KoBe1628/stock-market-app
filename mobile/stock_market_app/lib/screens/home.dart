@@ -76,29 +76,48 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> fetchMarketMovers() async {
     const apiKey = 'd10nv91r01qlsaca9k70d10nv91r01qlsaca9k7g';
     final symbols = ['AAPL', 'GOOGL', 'TSLA', 'MSFT', 'NFLX', 'PFE'];
+
+    List<Map<String, dynamic>> fetched = [];
+
     try {
-      List<Map<String, dynamic>> fetched = [];
       for (var sym in symbols) {
-        final uri = Uri.parse(
-          'https://finnhub.io/api/v1/quote?symbol=$sym&token=$apiKey',
-        );
+        final uri = Uri.parse('https://finnhub.io/api/v1/quote?symbol=$sym&token=$apiKey');
         final res = await http.get(uri);
-        final data = jsonDecode(res.body);
-        if (data['c'] != null && data['pc'] != null) {
-          double curr = data['c'];
-          double prev = data['pc'];
+
+        // Debug logs:
+        print('📦 Response for $sym: ${res.statusCode}');
+        print('🧾 Body: ${res.body}');
+
+        if (res.statusCode == 200) {
+          final data = jsonDecode(res.body);
+
+          final curr = data['c'];
+          final prev = data['pc'];
+
+          if (curr == null || prev == null) {
+            print('⚠️ Missing data for $sym');
+            continue;
+          }
+
           if (prev != 0) {
             double pct = ((curr - prev) / prev) * 100;
-            fetched.add({'symbol': sym, 'change_percent': pct});
+            fetched.add({
+              'symbol': sym,
+              'change_percent': pct,
+            });
           }
+        } else {
+          print('❌ Failed to fetch $sym: ${res.reasonPhrase}');
         }
       }
+
       setState(() {
         stockData = fetched;
         isStockLoading = false;
       });
-    } catch (e) {
-      debugPrint('❌ Error fetching stocks: $e');
+    } catch (e, stackTrace) {
+      print('❌ Exception in fetchMarketMovers: $e');
+      print('📍 Stacktrace: $stackTrace');
       setState(() => isStockLoading = false);
     }
   }
