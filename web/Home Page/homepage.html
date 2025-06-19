@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Buy USDC - BeStox</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="navbar">
+    <div class="logo">Be<span>Stox</span></div>
+    <input type="text" class="search-bar" placeholder="Search...">
+    <nav class="nav-links">
+      <a href="#">Transfer</a>
+      <a href="#">Portfolio</a>
+      <a href="#">Profile</a>
+    </nav>
+  </header>
+
+  <main class="container-main">
+
+
+    <!-- Left Section: Popular Coins and Info -->
+    <div class="left-section">
+      <h2 class="popular"> Popular Coins</h2>
+      <div class="popular-coins">
+        <div class="coin">
+          <img src="bitcoin.png" alt="Bitcoin">
+          <div>
+            <div class="positive">+4.23%</div>
+            <strong>Bitcoin</strong>
+          </div>
+        </div>
+        <div class="coin">
+          <img src="dogecoin.png" alt="Dogecoin">
+          <div>
+            <div class="negative">-2.45%</div>
+            <strong>Doge Coin</strong>
+          </div>
+        </div>
+        <div class="coin">
+          <img src="ethereum.png" alt="Ethereum">
+          <div>
+            <div class="positive">+1.52%</div>
+            <strong>Ethereum</strong>
+          </div>
+        </div>
+        <div class="coin">
+          <img src="tether.png" alt="Tether">
+          <div>
+            <div class="positive">+0.42%</div>
+            <strong>Tether</strong>
+          </div>
+        </div>
+      </div>
+
+      <!-- Info Section -->
+      <div class="info-box">
+        <h4>What is USDC?</h4>
+        <p>
+          USD Coin (USDC) is a stablecoin backed 1:1 by real USD. Use it to store value or buy crypto safely. Selling USDC lets you withdraw EUR directly to your payment method.
+        </p>
+      </div>
+    </div>
+
+    <!-- Right Section: Buy/Sell Form -->
+    <div class="right-section">
+      <div class="container-small">
+        <h2>Buy or Sell USDC</h2>
+
+        <div class="tabs">
+          <button class="active buy">Buy USDC</button>
+          <button class="sell">Sell USDC</button>
+        </div>
+
+        <p>Exchange Rate: 1 USDC ≈ 0.95 EUR</p>
+
+        <label for="spend">You Spend</label>
+        <input type="number" id="spend" placeholder="10 - 10,000 EUR">
+
+        <label for="receive">You Receive</label>
+        <input type="text" id="receive" disabled>
+
+        <label for="payment">Payment Method</label>
+        <select id="payment">
+          <option>Apple Pay</option>
+          <option>Visa / Mastercard</option>
+          <option>Bank Transfer</option>
+        </select>
+
+        <div class="supported-cards">
+          <img src="visa.png" alt="Visa">
+          <img src="mastercard.png" alt="MasterCard">
+          <img src="discover.png" alt="Discover">
+          <img src="amex.png" alt="American Express">
+        </div>
+
+        <button class="submit-btn">Buy USDC</button>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-section">
+      <h4>About Us</h4>
+      <ul>
+        <li>Our Story</li>
+        <li>Press</li>
+        <li>Blog</li>
+        <li>Awards</li>
+      </ul>
+    </div>
+
+    <div class="footer-section">
+      <h4>Services</h4>
+      <ul>
+        <li>Stock Trading</li>
+        <li>Crypto Trading</li>
+        <li>Portfolio Tracking</li>
+        <li>Market Insights</li>
+      </ul>
+    </div>
+
+    <div class="footer-section">
+      <h4>Support</h4>
+      <ul>
+        <li>Help Center</li>
+        <li>FAQs</li>
+        <li>Contact Us</li>
+        <li>Live Chat</li>
+      </ul>
+    </div>
+
+    <div class="footer-section">
+      <h4>Legal</h4>
+      <ul>
+        <li>Privacy & Policy</li>
+        <li>Terms & Conditions</li>
+        <li>Security</li>
+        <li>Disclosures</li>
+      </ul>
+    </div>
+
+    <div class="footer-section">
+      <h4>Follow Us</h4>
+      <ul>
+        <li>Facebook</li>
+        <li>Twitter</li>
+        <li>LinkedIn</li>
+        <li>Instagram</li>
+      </ul>
+    </div>
+  </footer>
+
+  <div class="copyright">
+    © 2025 BeStox. All rights reserved.
+  </div>
+<script src="script.js"></script>
+
+
+</body>
+</html>
