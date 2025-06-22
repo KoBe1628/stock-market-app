@@ -241,7 +241,7 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
 
   Widget _buildLegend() {
     return Wrap(
-      spacing: 12,
+      spacing: 22,
       runSpacing: 8,
       children: holdings.map((asset) {
         final symbol = asset['symbol'];
@@ -308,8 +308,8 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
               child: PieChart(
                 PieChartData(
                   sections: _generatePieSections(),
-                  centerSpaceRadius: 40,
-                  sectionsSpace: 2,
+                  centerSpaceRadius: 50,
+                  sectionsSpace: 1,
                 ),
               ),
             ),
