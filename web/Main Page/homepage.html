@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BeStox Home</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet"/>
+</head>
+<body>
+  <header class="navbar">
+    <div class="logo">Be<span>Stox</span></div>
+    <input type="text" class="search-bar" placeholder="Search..." />
+    <nav class="nav-links">
+      <a href="#">Transfer</a>
+      <a href="#">Portfolio</a>
+      <a href="#">Profile</a>
+    </nav>
+  </header>
+
+  <main class="dashboard-container">
+    <div class="column-left">
+      <div class="center-wrapper">
+        <section class="popular-section">
+          <h3>Popular Coins</h3>
+          <div class="coin-row"><img src="b.png" alt=""> Bitcoin <span>BTC</span> <div class="price">$4,781.15</div> <span class="positive">+4.23%</span></div>
+          <div class="coin-row"><img src="e.png" alt=""> Ethereum <span>ETH</span> <div class="price">$3,247.20</div> <span class="negative">-2.46%</span></div>
+          <div class="coin-row"><img src="t.png" alt=""> Tether <span>TR</span> <div class="price">$941.80</div> <span class="negative">-3.17%</span></div>
+          <div class="coin-row"><img src="d.png" alt=""> DogeCoin <span>DOGE</span> <div class="price">$1,351.23</div> <span class="positive">+2.67%</span></div>
+        </section>
+
+        <section class="market-movers">
+          <h3>Market Movers</h3>
+          <div class="movers-grid">
+            <div class="mover-card negative">
+              <img src="netflix.png" alt="Netflix">
+              <div class="percent">-3.323%</div>
+              <div class="name">Netflix</div>
+            </div>
+            <div class="mover-card positive">
+              <img src="nike.png" alt="Nike">
+              <div class="percent">+5.148%</div>
+              <div class="name">Nike</div>
+            </div>
+            <div class="mover-card positive">
+              <img src="apple.png" alt="Apple">
+              <div class="percent">+1.521%</div>
+              <div class="name">Apple</div>
+            </div>
+            <div class="mover-card positive">
+              <img src="amazon.png" alt="Amazon">
+              <div class="percent">+2.127%</div>
+              <div class="name">Amazon</div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <div class="column-right">
+      <div class="top-right-row">
+        <div class="portfolio-card">
+          <div class="card-content">
+            <div class="card-header">
+              <h2>Bekhzod Kodirov</h2>
+              <div class="chip"></div>
+            </div>
+            <div class="card-number">**** **** **** 1234</div>
+            <div class="card-footer">
+              <span>Portfolio Balance</span>
+              <span class="amount">$24,839.00</span>
+              <span class="growth positive">(+3.475%) ⬈</span>
+            </div>
+          </div>
+        </div>
+
+        <section class="promo-banner">
+          <p class="promo-text">
+            Get <span class="pro-green italic">Be</span><span class="pro-green italic">Stox</span>
+            <span class="pro-red">Pro</span> now 50% off
+          </p>
+          <img src="promo-chest.png" alt="Promo Chest" class="promo-img" />
+        </section>
+      </div>
+
+      <section class="news-section">
+        <h2>Today's News</h2>
+        <div class="news-scroll-wrapper">
+          <div id="news-carousel" class="news-carousel"></div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-section">
+      <h4>About Us</h4>
+      <ul>
+        <li>Our Story</li>
+        <li>Press</li>
+        <li>Blog</li>
+        <li>Awards</li>
+      </ul>
+    </div>
+    <div class="footer-section">
+      <h4>Services</h4>
+      <ul>
+        <li>Stock Trading</li>
+        <li>Crypto Trading</li>
+        <li>Portfolio Tracking</li>
+        <li>Market Insights</li>
+      </ul>
+    </div>
+    <div class="footer-section">
+      <h4>Support</h4>
+      <ul>
+        <li>Help Center</li>
+        <li>FAQs</li>
+        <li>Contact Us</li>
+        <li>Live Chat</li>
+      </ul>
+    </div>
+    <div class="footer-section">
+      <h4>Legal</h4>
+      <ul>
+        <li>Privacy & Policy</li>
+        <li>Terms & Conditions</li>
+        <li>Security</li>
+        <li>Disclosures</li>
+      </ul>
+    </div>
+    <div class="footer-section">
+      <h4>Follow Us</h4>
+      <ul>
+        <li>Facebook</li>
+        <li>Twitter</li>
+        <li>LinkedIn</li>
+        <li>Instagram</li>
+      </ul>
+    </div>
+  </footer>
+
+  <div class="copyright">
+    © 2025 BeStox. All rights reserved.
+  </div>
+
+  <script src="./script.js"></script>
+</body>
+</html>

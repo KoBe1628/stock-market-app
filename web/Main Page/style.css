@@ -1,0 +1,389 @@
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background-color: #f3f3f3;
+}
+
+.navbar {
+  background-color: white;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+}
+
+.logo {
+  font-weight: bold;
+  font-style: italic;
+  color: #2cb742;
+  font-size: 2rem;
+}
+
+.search-bar {
+  width: 500px;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.nav-links a {
+  margin-left: 1.5rem;
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+}
+
+.dashboard-container {
+  display: flex;
+  padding: 2rem;
+  gap: 2rem;
+}
+
+#####.center-wrapper {
+  max-width: 800px;        /* Adjust to desired width */
+  margin: 0 auto;          /* Centers the wrapper */
+  padding: 20px;
+  }
+
+.column-left {
+  flex: 0.8;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.column-right {
+  flex: 0.8;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+
+
+
+.popular-section,
+.market-movers,
+.balance-card,
+.news-section,
+.promo-banner {
+  background: white;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  margin-left:200px;
+}
+
+.coin-row {
+  background-color: #f8f8f8;
+  border-radius: 10px;
+  padding: 15px 20px;
+  margin-bottom: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0, 1, 1, 0.5);
+  font-size: 18px;
+}
+
+
+.popular-section img {
+  width: 40px;  /* or 48px depending on your design */
+  height: 40px;
+  object-fit: contain;
+  margin-right: 10px; /* optional spacing from text */
+  vertical-align: middle; /* aligns with text */
+}
+
+
+.price {
+  margin: 0 0.5rem;
+  text-align: right;
+}
+
+.positive {
+  color: green;
+  text-align: right;
+}
+
+.negative {
+  color: red;
+}
+
+.market-movers {
+  margin-top: 20px;
+  text-align:center;
+}
+
+.market-movers h3 {
+  font-weight: 700;
+  font-size: 20px;
+  color: #1e1e2f;
+  margin-bottom: 10px;
+
+
+}
+
+.movers-grid {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.mover-card {
+  background-color: #e0e0e0;
+  border-radius: 12px;
+  box-shadow: 0 3px 6px rgba(0, 1, 1, 0.5);
+  padding: 0.5rem;
+  text-align: center;
+  width: 120px;
+  margin-left: 40px;
+  margin-right: auto;
+
+}
+
+.mover-card img {
+  height: 40px;
+  margin-bottom: 10px;
+}
+
+.mover-card .percent {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.mover-card.positive .percent {
+  color: #28a745;
+}
+
+.mover-card.negative .percent {
+  color: #dc3545;
+}
+
+.mover-card .name {
+  font-size: 18px;
+  color: #333;
+}
+
+
+.portfolio-card {
+
+  margin-left: -10px;
+  background: linear-gradient(to bottom, #0a0f2c, #1b2f7a);
+  color: white;
+  border-radius: 16px;
+  padding: 20px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+
+}
+
+.card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-header h2 {
+  font-size: 20px;
+  margin: 0;
+}
+
+.chip {
+  width: 50px;
+  height: 30px;
+  background-color: #ddd;
+  border-radius: 8px;
+}
+
+.card-number {
+  letter-spacing: 3px;
+  font-size: 18px;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+}
+
+.card-footer .amount {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.card-footer .growth.positive {
+  color: #00cc44;
+}
+
+.news-section {
+  margin-left: -10px ;
+  padding: 20px;
+  max-width: 1000px; /* Make the section narrower */
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  text-align: center; /* Center the heading */
+}
+
+
+.news-scroll-container {
+  overflow-x: auto;
+  scrollbar-height: thin;
+}
+
+.news-carousel {
+  display: flex;
+  gap: 16px;
+  width: max-content;
+}
+
+.news-card {
+  min-width: 250px;
+  max-width: 250px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  flex-shrink: 0;
+}
+
+.news-card img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.news-card a {
+  text-decoration: none;
+  color: #222;
+  font-weight: bold;
+  display: block;
+  margin-top: 10px;
+}
+
+.news-scroll-wrapper {
+  overflow-x: auto;
+  max-width: 800px; /* or whatever fits 3 cards */
+  margin: 0 auto;
+  padding-bottom: 10px;
+  scrollbar-color: #999 #f0f0f0; /* Custom scrollbar color for Firefox */
+  scrollbar-width: thin;
+}
+
+.news-scroll-wrapper::-webkit-scrollbar {
+  height: 8px;
+}
+
+.news-scroll-wrapper::-webkit-scrollbar-track {
+  background: #f0f0f0;
+  border-radius: 10px;
+}
+
+.news-scroll-wrapper::-webkit-scrollbar-thumb {
+  background-color: #999;
+  border-radius: 10px;
+}
+
+@media (max-width: 768px) {
+  .news-scroll-wrapper {
+    max-width: 100%;
+  }
+}
+
+.top-right-row {
+  max-width: 1000px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+
+.promo-banner {
+
+  flex:1;
+  margin-left: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 16px 24px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  margin-top: 30px;
+  max-width: 100%;
+  gap:10px;
+
+
+}
+
+.promo-text {
+  font-size: 18px;
+  font-weight: 500;
+  color: #222;
+  margin-left: 35px;
+}
+
+.pro-green {
+  color: #0abf53;
+  font-weight: bold;
+  font-style: italic;
+}
+
+.pro-red {
+  color: #f44336;
+  font-weight: bold;
+}
+
+.promo-img {
+  height: 60px;
+  width: 60px;
+  margin-left: none;
+  margin-right: 90px;
+  margin-top: 5px;
+  margin-bottom: 20px;
+}
+
+
+
+
+
+footer {
+  background: #fff;
+  padding: 2rem;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  border-top: 1px solid #ddd;
+}
+
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-section ul li {
+  margin-bottom: 0.5rem;
+}
+
+.copyright {
+  background: #222;
+  color: white;
+  text-align: center;
+  padding: 1rem;
+  font-size: 0.85rem;
+}
