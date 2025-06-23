@@ -1,34 +1,19 @@
-<button onclick = "window.location.href = '' " > Already have an account? Log in  </button>
-
-document.querySelector(".login-form").addEventListener("submit", async function (e) {
+// script.js - for Sign Up page
+document.querySelector('.login-form').addEventListener('submit', function (e) {
   e.preventDefault();
 
-  const username = document.querySelector("input[placeholder='Username']").value;
-  const email = document.querySelector("input[placeholder='Email Address']").value;
-  const password = document.querySelector("input[placeholder='Password']").value;
-  const confirmPassword = document.querySelector("input[placeholder='Confirm Password']").value;
+  const username = e.target[0].value;
+  const email = e.target[1].value;
+  const password = e.target[2].value;
+  const confirmPassword = e.target[3].value;
 
   if (password !== confirmPassword) {
-    alert("Passwords do not match.");
+    alert('Passwords do not match!');
     return;
   }
 
-  try {
-    const response = await fetch("https://stocks-backend-9lwx.onrender.com/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, email, password }),
-    });
-
-    const result = await response.json();
-
-    if (response.ok) {
-      alert("Registration successful!");
-      // Optionally redirect to login
-    } else {
-      alert(result.message || "Registration failed.");
-    }
-  } catch (error) {
-    alert("Error connecting to server.");
-  }
+  // Save user to localStorage
+  localStorage.setItem('user', JSON.stringify({ username, email, password }));
+  alert('Registration successful! Redirecting to login...');
+  window.location.href = '../Login/login.html';
 });
