@@ -1,0 +1,591 @@
+/* === BASE STYLES === */
+body {
+  margin: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+/* === NAVIGATION STYLES (Bekhzod - W1) === */
+.navbar {
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  border-bottom: solid 1px #d2d5d8;
+}
+
+.logo {
+  font-size: 2rem;
+  font-weight: bold;
+  font-style: italic;
+  color: #0b132b;
+}
+
+.logo .highlight {
+  font-style: normal;
+}
+
+.left-section {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.search-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-container input {
+  border: none;
+  border-radius: 999px;
+  padding: 0.5rem 2.5rem 0.5rem 1rem;
+  background-color: #e2e8f0;
+  outline: none;
+  font-size: 1rem;
+}
+
+.search-container .search-icon {
+  position: absolute;
+  right: 10px;
+  color: #444;
+  pointer-events: none;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+}
+
+.nav-links li a {
+  color: #111;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.nav-links li a:hover {
+  text-decoration: underline;
+}
+
+/* === Location Output Box (W3-1) === */
+.location-box {
+  background-color: #e0f7fa;
+  padding: 1rem 1.5rem;
+  border-left: 5px solid #00796b;
+}
+
+.location-box h3 {
+  margin: 0;
+  color: #004d40;
+  font-size: 1.2rem;
+}
+
+/* === W3-2: Stock Data Box === */
+/* Stock Box */
+.stock-box {
+  background-color: #f4fdf0;
+  padding: 1.5rem;
+  border-left: 6px solid #2ecc71;
+  border-radius: 10px;
+  width: fit-content;
+  margin: 2rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.stock-box h3 {
+  margin: 0 0 1rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #175d1d;
+}
+
+.stock-box ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.stock-box li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  font-size: 1rem;
+  border-bottom: 1px solid #ddd;
+}
+
+.stock-box li:last-child {
+  border-bottom: none;
+}
+
+.stock-box span {
+  font-weight: bold;
+}
+
+/* Optional: nicer color tones for change values */
+.stock-box .positive {
+  color: #1e8e3e;
+}
+
+.stock-box .negative {
+  color: #e53935;
+}
+
+.stock-box .neutral {
+  color: #888;
+}
+
+/* === W4: Price Change Indicators === */
+.positive {
+  color: green;
+  font-weight: bold;
+  margin-left: 1rem;
+}
+
+.negative {
+  color: red;
+  font-weight: bold;
+  margin-left: 1rem;
+}
+
+.neutral {
+  color: gray;
+  font-weight: bold;
+  margin-left: 1rem;
+}
+
+/* === Coin Detail Page === */
+.detail-page {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: auto;
+  font-family: "Inter", sans-serif;
+}
+
+/* Header + Back Button */
+.detail-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.detail-header h2 {
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+.back-btn {
+  font-size: 1.25rem;
+  cursor: pointer;
+}
+
+/* Info Row (Name + Price + Change) */
+.coin-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.coin-info img {
+  width: 36px;
+  height: 36px;
+}
+
+.coin-info h3 {
+  font-size: 1.2rem;
+  margin: 0;
+}
+
+.price {
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+
+.price-change {
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+.price-change.positive {
+  color: green;
+}
+
+.price-change.negative {
+  color: red;
+}
+
+/* Chart */
+.chart {
+  margin-bottom: 1.5rem;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.chart img {
+  width: 100%;
+  max-width: 600px;
+}
+
+/* Mini-Interval Labels */
+.chart-intervals {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: #555;
+  margin-top: 0.25rem;
+}
+
+/* Stats Table */
+.stats {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+}
+
+.stats-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.4rem 0;
+}
+
+.stats-row:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+/* Buy/Sell Panel */
+.trade-panel {
+  margin-top: 2rem;
+  background: white;
+  padding: 1.5rem;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  max-width: 350px;
+}
+
+.trade-options {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.trade-options button {
+  flex: 1;
+  padding: 0.5rem;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+.trade-options button.active {
+  background-color: #2ecc71;
+  color: white;
+}
+
+.trade-options button:not(.active) {
+  background-color: #f0f0f0;
+}
+
+.trade-panel label {
+  font-size: 0.85rem;
+  margin-top: 1rem;
+  display: block;
+}
+
+.trade-panel input,
+.trade-panel select {
+  width: 100%;
+  padding: 0.4rem;
+  margin-top: 0.2rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.buy-btn {
+  margin-top: 1rem;
+  background-color: #2ecc71;
+  color: white;
+  padding: 0.5rem;
+  border: none;
+  width: 100%;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* === Portfolio Page Styles === */
+
+.portfolio-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.portfolio-section,
+.watchlist-section {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+  padding: 1.5rem;
+  margin: 2rem auto;
+  max-width: 1000px;
+}
+
+.portfolio-header h3,
+.watchlist-header h3 {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.buy-btn {
+  background-color: #14b866;
+  color: white;
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  width: fit-content;
+}
+
+.add-btn {
+  background-color: #1a73e8;
+  color: white;
+  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  margin-left: auto;
+  display: block;
+}
+
+.buy-btn:hover {
+  background-color: #119955;
+}
+
+.add-btn:hover {
+  background-color: #0c63db;
+}
+
+.portfolio-metrics {
+  display: flex;
+  justify-content: space-between;
+  background: #eaf0ff;
+  padding: 1rem;
+  border-radius: 8px;
+  margin: 1rem 0;
+  font-size: 1rem;
+}
+
+.portfolio-metrics h3 {
+  margin-top: 0.25rem;
+  font-size: 1.1rem;
+}
+
+.asset-table,
+.watchlist-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.asset-table th,
+.asset-table td,
+.watchlist-table th,
+.watchlist-table td {
+  padding: 0.75rem;
+  border-bottom: 1px solid #eee;
+  text-align: left;
+}
+
+.asset-table th,
+.watchlist-table th {
+  background: #f8f8f8;
+  color: #333;
+  font-weight: 600;
+}
+
+.asset-table td img,
+.watchlist-table td img {
+  width: 24px;
+  vertical-align: middle;
+  margin-right: 0.5rem;
+}
+
+.green {
+  color: #14b866;
+  font-weight: bold;
+}
+
+.red {
+  color: #d64545;
+  font-weight: bold;
+}
+
+.btn {
+  padding: 0.4rem 0.75rem;
+  font-size: 0.85rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.btn-remove {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.btn-remove:hover {
+  background-color: #c0392b;
+}
+
+.account-summary {
+  max-width: 1000px;
+  margin: 2rem auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 2rem;
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.user-info p,
+.balance-info p,
+.card-profit span {
+  margin: 0.3rem 0;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.balance-info h2 {
+  margin-top: 0.25rem;
+  font-size: 1.5rem;
+}
+
+.virtual-card {
+  background: linear-gradient(135deg, #1f2c47, #2c3e50);
+  color: white;
+  padding: 1rem;
+  border-radius: 10px;
+  width: 100%;
+}
+
+.card-name,
+.card-number,
+.card-profit {
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+
+.card-profit strong {
+  color: #14b866;
+}
+
+footer {
+  background-color: #fff;
+  border-top: 1px solid #eee;
+  margin-top: 3rem;
+  padding: 2rem 1rem 0;
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  max-width: 1000px;
+  margin: 0 auto;
+  gap: 2rem;
+}
+
+.footer-links h5 {
+  margin-bottom: 0.75rem;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.footer-links ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 0.9rem;
+  color: #666;
+  line-height: 1.6;
+}
+
+.footer-note {
+  text-align: center;
+  margin-top: 2rem;
+  padding: 1rem 0;
+  font-size: 0.85rem;
+  color: white;
+  border-top: 1px solid #eee;
+  background-color: #3e3e3e;
+}
+
+.balance-info h2 {
+  margin-top: 0.25rem;
+  font-size: 1.5rem;
+}
+
+.virtual-card {
+  background: linear-gradient(135deg, #1f2c47, #2c3e50);
+  color: white;
+  padding: 1rem;
+  border-radius: 10px;
+  width: 100%;
+}
+
+.card-name,
+.card-number,
+.card-profit {
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+
+.card-profit strong {
+  color: #14b866;
+}
+
+.watchlist-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 768px) {
+  .portfolio-header,
+  .portfolio-metrics,
+  .account-summary {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .add-btn,
+  .buy-btn {
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+
+  .footer-links {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+}
