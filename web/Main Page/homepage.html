@@ -23,35 +23,60 @@
       <div class="center-wrapper">
         <section class="popular-section">
           <h3>Popular Coins</h3>
-          <div class="coin-row"><img src="b.png" alt=""> Bitcoin <span>BTC</span> <div class="price">$4,781.15</div> <span class="positive">+4.23%</span></div>
-          <div class="coin-row"><img src="e.png" alt=""> Ethereum <span>ETH</span> <div class="price">$3,247.20</div> <span class="negative">-2.46%</span></div>
-          <div class="coin-row"><img src="t.png" alt=""> Tether <span>TR</span> <div class="price">$941.80</div> <span class="negative">-3.17%</span></div>
-          <div class="coin-row"><img src="d.png" alt=""> DogeCoin <span>DOGE</span> <div class="price">$1,351.23</div> <span class="positive">+2.67%</span></div>
+          <div class="coin-row">
+  <img src="b.png" alt=""> Bitcoin <span>BTC</span>
+  <div class="price" id="price-btc">$--</div>
+  <span id="change-btc">--%</span>
+</div>
+
+<div class="coin-row">
+  <img src="e.png" alt=""> Ethereum <span>ETH</span>
+  <div class="price" id="price-eth">$--</div>
+  <span id="change-eth">--%</span>
+</div>
+
+<div class="coin-row">
+  <img src="t.png" alt=""> Tether <span>TR</span>
+  <div class="price" id="price-tr">$--</div>
+  <span id="change-tr">--%</span>
+</div>
+
+<div class="coin-row">
+  <img src="d.png" alt=""> DogeCoin <span>DOGE</span>
+  <div class="price" id="price-doge">$--</div>
+  <span id="change-doge">--%</span>
+</div>
+
         </section>
 
         <section class="market-movers">
           <h3>Market Movers</h3>
           <div class="movers-grid">
-            <div class="mover-card negative">
-              <img src="netflix.png" alt="Netflix">
-              <div class="percent">-3.323%</div>
-              <div class="name">Netflix</div>
-            </div>
-            <div class="mover-card positive">
-              <img src="nike.png" alt="Nike">
-              <div class="percent">+5.148%</div>
-              <div class="name">Nike</div>
-            </div>
-            <div class="mover-card positive">
-              <img src="apple.png" alt="Apple">
-              <div class="percent">+1.521%</div>
-              <div class="name">Apple</div>
-            </div>
-            <div class="mover-card positive">
-              <img src="amazon.png" alt="Amazon">
-              <div class="percent">+2.127%</div>
-              <div class="name">Amazon</div>
-            </div>
+
+            <div class="mover-card" data-symbol="NFLX">
+  <img src="netflix.png" alt="Netflix">
+  <div class="percent" id="netflix-change">--%</div>
+  <div class="name">Netflix</div>
+</div>
+
+<div class="mover-card" data-symbol="NKE">
+  <img src="nike.png" alt="Nike">
+  <div class="percent" id="nike-change">--%</div>
+  <div class="name">Nike</div>
+</div>
+
+<div class="mover-card" data-symbol="AAPL">
+  <img src="apple.png" alt="Apple">
+  <div class="percent" id="apple-change">--%</div>
+  <div class="name">Apple</div>
+</div>
+
+<div class="mover-card" data-symbol="AMZN">
+  <img src="amazon.png" alt="Amazon">
+  <div class="percent" id="amazon-change">--%</div>
+  <div class="name">Amazon</div>
+</div>
+
           </div>
         </section>
       </div>
@@ -74,13 +99,15 @@
           </div>
         </div>
 
-        <section class="promo-banner">
-          <p class="promo-text">
-            Get <span class="pro-green italic">Be</span><span class="pro-green italic">Stox</span>
-            <span class="pro-red">Pro</span> now 50% off
-          </p>
-          <img src="promo-chest.png" alt="Promo Chest" class="promo-img" />
-        </section>
+       <a href="../Pro Page/propage.html" class="promo-link">
+  <section class="promo-banner">
+    <p class="promo-text">
+      Get <span class="pro-green italic">Be</span><span class="pro-green italic">Stox</span>
+      <span class="pro-red">Pro</span> now 50% off</p>
+    <img src="promo-chest.png" alt="Promo Chest" class="promo-img" />
+  </section>
+</a>
+
       </div>
 
       <section class="news-section">
@@ -145,5 +172,48 @@
   </div>
 
   <script src="./script.js"></script>
+<script>
+  async function fetchCryptoPrices() {
+    try {
+      const res = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,tether,dogecoin&vs_currencies=usd&include_24hr_change=true');
+      const data = await res.json();
+
+      // BTC
+      document.getElementById("price-btc").textContent = `$${data.bitcoin.usd.toFixed(2)}`;
+      updateChange("change-btc", data.bitcoin.usd_24h_change);
+
+      // ETH
+      document.getElementById("price-eth").textContent = `$${data.ethereum.usd.toFixed(2)}`;
+      updateChange("change-eth", data.ethereum.usd_24h_change);
+
+      // TR
+      document.getElementById("price-tr").textContent = `$${data.tether.usd.toFixed(2)}`;
+      updateChange("change-tr", data.tether.usd_24h_change);
+
+      // DOGE
+      document.getElementById("price-doge").textContent = `$${data.dogecoin.usd.toFixed(4)}`;
+      updateChange("change-doge", data.dogecoin.usd_24h_change);
+
+    } catch (err) {
+      console.error("Price fetch error:", err);
+    }
+  }
+
+  function updateChange(id, change) {
+    const el = document.getElementById(id);
+    const formatted = change.toFixed(2) + "%";
+    el.textContent = formatted;
+    el.className = change >= 0 ? "positive" : "negative";
+  }
+
+  fetchCryptoPrices();
+  setInterval(fetchCryptoPrices, 30000); // every 30 seconds
+
+
+
+</script>
+
+</script>
+
 </body>
 </html>

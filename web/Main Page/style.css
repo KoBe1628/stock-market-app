@@ -36,7 +36,7 @@ body {
 
 .dashboard-container {
   display: flex;
-  padding: 2rem;
+  padding: 2rem 10rem 2rem 2rem;
   gap: 2rem;
 }
 
@@ -47,16 +47,26 @@ body {
   }
 
 .column-left {
+
+
   flex: 0.8;
   display: flex;
   flex-direction: column;
   gap: 2rem;
 }
 .column-right {
+
   flex: 0.8;
   display: flex;
   flex-direction: column;
   gap: 2rem;
+}
+
+.column-right {
+max-width:850px;
+margin:0 auto;
+padding:0 1rem;
+
 }
 
 
@@ -129,19 +139,27 @@ body {
   display: flex;
   gap: 20px;
   flex-wrap: wrap;
+  flex-wrap: nowrap;
+
 }
 
 .mover-card {
   background-color: #e0e0e0;
   border-radius: 12px;
   box-shadow: 0 3px 6px rgba(0, 1, 1, 0.5);
-  padding: 0.5rem;
+  padding: 1rem;
   text-align: center;
   width: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.4rem;
   margin-left: 40px;
   margin-right: auto;
-
+  min-width:120px;
 }
+
 
 .mover-card img {
   height: 40px;
@@ -229,7 +247,7 @@ body {
 .news-section {
   margin-left: -10px ;
   padding: 20px;
-  max-width: 1000px; /* Make the section narrower */
+  max-width: 850px; /* Make the section narrower */
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
@@ -251,11 +269,14 @@ body {
 .news-card {
   min-width: 250px;
   max-width: 250px;
-  background-color: #f9f9f9;
+  background-color: #f0f2f5;
+  border: 1px solid #ddd;
   border-radius: 10px;
-  padding: 10px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  padding: 6px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
   flex-shrink: 0;
+
+
 }
 
 .news-card img {
@@ -275,8 +296,8 @@ body {
 
 .news-scroll-wrapper {
   overflow-x: auto;
-  max-width: 800px; /* or whatever fits 3 cards */
-  margin: 0 auto;
+  max-width: 835px; /* or whatever fits 3 cards */
+  margin: 10 10;
   padding-bottom: 10px;
   scrollbar-color: #999 #f0f0f0; /* Custom scrollbar color for Firefox */
   scrollbar-width: thin;
@@ -317,6 +338,7 @@ body {
 
   flex:1;
   margin-left: 10px;
+  margin-right: 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -332,10 +354,12 @@ body {
 }
 
 .promo-text {
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 500;
   color: #222;
-  margin-left: 35px;
+  margin-left: 20px;
+  margin-right: 15px;
+
 }
 
 .pro-green {
@@ -352,11 +376,17 @@ body {
 .promo-img {
   height: 60px;
   width: 60px;
-  margin-left: none;
-  margin-right: 90px;
+  margin-left: -10px;
+  margin-right:none;
   margin-top: 5px;
   margin-bottom: 20px;
 }
+.promo-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
 
 
 
