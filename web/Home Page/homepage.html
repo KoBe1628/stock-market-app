@@ -21,8 +21,6 @@
   </header>
 
   <main class="container-main">
-
-
     <!-- Left Section: Popular Coins and Info -->
     <div class="left-section">
       <h2 class="popular"> Popular Coins</h2>
@@ -30,28 +28,28 @@
         <div class="coin">
           <img src="bitcoin.png" alt="Bitcoin">
           <div>
-            <div class="positive">+4.23%</div>
+            <div id="change-btc" class="change">--%</div>
             <strong>Bitcoin</strong>
           </div>
         </div>
         <div class="coin">
           <img src="dogecoin.png" alt="Dogecoin">
           <div>
-            <div class="negative">-2.45%</div>
+            <div id="change-doge" class="change">--%</div>
             <strong>Doge Coin</strong>
           </div>
         </div>
         <div class="coin">
           <img src="ethereum.png" alt="Ethereum">
           <div>
-            <div class="positive">+1.52%</div>
+            <div id="change-eth" class="change">--%</div>
             <strong>Ethereum</strong>
           </div>
         </div>
         <div class="coin">
           <img src="tether.png" alt="Tether">
           <div>
-            <div class="positive">+0.42%</div>
+            <div id="change-usdt" class="change">--%</div>
             <strong>Tether</strong>
           </div>
         </div>
@@ -76,7 +74,7 @@
           <button class="sell">Sell USDC</button>
         </div>
 
-        <p>Exchange Rate: 1 USDC ≈ 0.95 EUR</p>
+        <p id="exchange-rate-text">Exchange Rate: 1 USDC ≈ ... EUR</p>
 
         <label for="spend">You Spend</label>
         <input type="number" id="spend" placeholder="10 - 10,000 EUR">
@@ -114,7 +112,6 @@
         <li>Awards</li>
       </ul>
     </div>
-
     <div class="footer-section">
       <h4>Services</h4>
       <ul>
@@ -124,7 +121,6 @@
         <li>Market Insights</li>
       </ul>
     </div>
-
     <div class="footer-section">
       <h4>Support</h4>
       <ul>
@@ -134,7 +130,6 @@
         <li>Live Chat</li>
       </ul>
     </div>
-
     <div class="footer-section">
       <h4>Legal</h4>
       <ul>
@@ -144,7 +139,6 @@
         <li>Disclosures</li>
       </ul>
     </div>
-
     <div class="footer-section">
       <h4>Follow Us</h4>
       <ul>
@@ -159,10 +153,7 @@
   <div class="copyright">
     © 2025 BeStox. All rights reserved.
   </div>
+
 <script src="script.js"></script>
-
-
 </body>
 </html>
-
-
