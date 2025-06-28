@@ -1,3 +1,5 @@
+console.log("Home JS is loaded"); // Confirm it's running
+
 // === API KEYS ===
 const NEWS_API_KEY = "bb407e0ae5664bcc1b8edf572ce91b10";
 const FINNHUB_API_KEY = "d1d6or1r01qic6lhho80d1d6or1r01qic6lhho8g";

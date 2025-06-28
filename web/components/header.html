@@ -1,18 +1,30 @@
 <header class="header">
   <div class="logo">Be<span>Stox</span></div>
-  <input
-    class="search-bar"
-    type="text"
-    placeholder="Search stocks, cryptos, companies..."
-  />
+
+  <!-- Search input and dropdown -->
+  <div class="search-wrapper">
+    <input
+      type="text"
+      id="search-input"
+      placeholder="Search stocks, cryptos, companies..."
+      autocomplete="off"
+    />
+    <ul id="search-dropdown">
+      <!-- This will show even if empty -->
+    </ul>
+  </div>
+
   <select class="currency-dropdown">
     <option>USD</option>
     <option>EUR</option>
   </select>
+
   <nav>
     <a href="home.html">Home</a>
     <a href="transfer.html">Transfer</a>
     <a href="portfolio-watchlist.html">Portfolio</a>
     <a href="profile.html">Profile</a>
   </nav>
+
+  <script src="../../web/scripts/header.js"></script>
 </header>
