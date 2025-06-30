@@ -55,6 +55,87 @@ body {
   pointer-events: none;
 }
 
+/* === Search Dropdown Styling (WUS-9) === */
+.search-wrapper {
+  position: relative;
+  width: 280px;
+  margin: 0 1rem;
+}
+
+#search-input {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+}
+
+.search-wrapper input {
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  padding: 10px 15px;
+  font-size: 16px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+
+#search-dropdown {
+  position: absolute;
+  top: 110%;
+  left: 0;
+  right: 0;
+  z-index: 999;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  list-style: none;
+  padding: 0;
+  margin: 4px 0 0;
+  display: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+#search-dropdown li {
+  padding: 10px 16px;
+  cursor: pointer;
+  border-bottom: 1px solid #eee;
+  transition: background 0.2s;
+}
+
+#search-dropdown li:last-child {
+  border-bottom: none;
+}
+
+#search-dropdown li:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+#search-dropdown li.active {
+  background-color: #f0f0f0;
+}
+
+.dropdown-list {
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  margin-top: 5px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.dropdown-list li {
+  padding: 10px 16px;
+  transition: background 0.2s ease;
+}
+
+.dropdown-list li:hover,
+.dropdown-list li.highlight {
+  background-color: #eaeff9;
+  font-weight: 500;
+}
+
+.dropdown-list li:last-child {
+  border-bottom: none;
+}
 .nav-links {
   list-style: none;
   display: flex;
@@ -571,6 +652,38 @@ footer {
 }
 
 @media (max-width: 768px) {
+  .search-wrapper {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 16px;
+    position: relative;
+  }
+
+  .search-wrapper input {
+    width: 100%;
+    font-size: 16px;
+    padding: 12px;
+    border-radius: 12px;
+  }
+
+  #search-dropdown {
+    width: 100%;
+    top: 100%;
+    left: 0;
+    right: 0;
+    font-size: 16px;
+    border-radius: 12px;
+  }
+
+  #search-dropdown li {
+    padding: 14px 16px;
+    border-bottom: 1px solid #eee;
+  }
+
+  #search-dropdown li:last-child {
+    border-bottom: none;
+  }
+
   .portfolio-header,
   .portfolio-metrics,
   .account-summary {
