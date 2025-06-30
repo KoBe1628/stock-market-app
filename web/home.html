@@ -21,7 +21,10 @@
           <p>Global Market Performance</p>
           <h3>$2,547.20</h3>
           <p class="green">+3.475%</p>
-          <p>Based on your detected location: <strong>Germany</strong> 🇩🇪</p>
+          <p>
+            Based on your detected location:
+            <strong id="user-location">Loading…</strong>
+          </p>
         </div>
 
         <div class="news-feed">
@@ -74,7 +77,7 @@
 
     <!-- Footer -->
     <div id="footer-placeholder"></div>
-
+    <!-- Scripts  -->
     <script>
       fetch("components/header.html")
         .then((res) => res.text())
@@ -91,6 +94,11 @@
         .then((res) => res.text())
         .then((data) => {
           document.getElementById("footer-placeholder").innerHTML = data;
+
+          // Once footer is loaded, load location detection script
+          const locScript = document.createElement("script");
+          locScript.src = "scripts/location.js";
+          document.body.appendChild(locScript);
         });
     </script>
     <script src="scripts/home.js"></script>
