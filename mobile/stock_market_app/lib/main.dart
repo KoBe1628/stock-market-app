@@ -1,17 +1,21 @@
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
+// import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'screens/home.dart';
 import 'screens/explore.dart';
 import 'screens/transfer.dart';
 import 'screens/portfolio.dart';
 import 'screens/profile.dart';
 import 'screens/login.dart';
+import 'package:stock_market_app/secrets.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // await dotenv.load();
   final prefs = await SharedPreferences.getInstance();
   final token = prefs.getString('token');
   runApp(MyApp(isLoggedIn: token != null));
@@ -62,7 +66,7 @@ class _MainNavigationState extends State<MainNavigation> {
   }
 
   Future<void> fetchPortfolioBalance() async {
-    const finnhubKey = 'd10nv91r01qlsaca9k70d10nv91r01qlsaca9k7g';
+    final finnhubKey = finnhubApiKey;
     const coingeckoUrl =
         'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana&vs_currencies=usd';
 
@@ -122,7 +126,11 @@ class _MainNavigationState extends State<MainNavigation> {
         invested: portfolioInvested,
       ),
       const ExploreScreen(),
-      const TransferScreen(),
+      TransferScreen(
+        symbol: 'AAPL',
+        isCrypto: false,
+        action: 'buy',
+      ),
       PortfolioScreen(
         onBalanceUpdate: (balance, invested) {
           setState(() {

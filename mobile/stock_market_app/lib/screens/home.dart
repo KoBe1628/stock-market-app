@@ -6,6 +6,9 @@ import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
 import 'portfolio.dart';
 import 'pro_version_screen.dart';
+// import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:stock_market_app/secrets.dart';
+
 
 class HomeScreen extends StatefulWidget {
   final double portfolioBalance;
@@ -74,7 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> fetchMarketMovers() async {
-    const apiKey = 'd10nv91r01qlsaca9k70d10nv91r01qlsaca9k7g';
+    final apiKey = finnhubApiKey;
     final symbols = ['AAPL', 'GOOGL', 'TSLA', 'MSFT', 'NFLX', 'PFE'];
 
     List<Map<String, dynamic>> fetched = [];
@@ -123,7 +126,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> fetchNews() async {
-    const apiKey = '62e6dc207d3644ccaa8d5a315196cdda';
+    final apiKey = newsApiKey;
     final uri = Uri.parse(
       'https://newsapi.org/v2/top-headlines?country=us&pageSize=10&apiKey=$apiKey',
     );

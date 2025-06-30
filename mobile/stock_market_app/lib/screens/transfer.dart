@@ -1,9 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+// import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:stock_market_app/secrets.dart';
+
 
 class TransferScreen extends StatefulWidget {
-  const TransferScreen({super.key});
+  final String symbol;
+  final bool isCrypto;
+  final String action;
+
+  const TransferScreen({
+    super.key,
+    required this.symbol,
+    required this.isCrypto,
+    required this.action,});
 
   @override
   State<TransferScreen> createState() => _TransferScreenState();
@@ -45,7 +56,7 @@ class _TransferScreenState extends State<TransferScreen> {
       const coingeckoUrl =
           'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana&vs_currencies=usd,eur';
       final stockSymbols = ['AAPL', 'TSLA', 'NFLX', 'GOOGL', 'META', 'MSFT', 'PFE'];
-      const finnhubKey = 'd10nv91r01qlsaca9k70d10nv91r01qlsaca9k7g';
+      final finnhubKey = finnhubApiKey;
 
       final res = await http.get(Uri.parse(coingeckoUrl));
       final coinData = jsonDecode(res.body);
@@ -107,6 +118,8 @@ class _TransferScreenState extends State<TransferScreen> {
     }
   }
 
+
+
   Widget buildAssetDropdown() {
     return DropdownButton<String>(
       value: fromAsset,
@@ -156,7 +169,8 @@ class _TransferScreenState extends State<TransferScreen> {
     final theme = Theme.of(context);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Transfer')),
+      appBar: AppBar(title: Text('${widget.action.toUpperCase()} ${widget.symbol.toUpperCase()}'),
+      ),
       body: isLoading
           ? const Center(child: CircularProgressIndicator())
           : Padding(

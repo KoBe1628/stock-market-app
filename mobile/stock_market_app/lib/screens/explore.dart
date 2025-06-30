@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'watchlist_service.dart';
+import 'details_page.dart';
+// import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:stock_market_app/secrets.dart';
+
 
 class ExploreScreen extends StatefulWidget {
   const ExploreScreen({super.key});
@@ -17,7 +21,9 @@ class _ExploreScreenState extends State<ExploreScreen> {
 
   final List<String> stockSymbols = ['AAPL', 'GOOGL', 'TSLA', 'MSFT'];
   final List<String> defaultCoinIds = ['bitcoin', 'ethereum', 'solana', 'dogecoin'];
-  final String finnhubApiKey = 'd10nv91r01qlsaca9k70d10nv91r01qlsaca9k7g';
+  void fetchData() {
+    print(finnhubApiKey); // this uses the imported constant
+  }
 
   @override
   void initState() {
@@ -140,10 +146,10 @@ class _ExploreScreenState extends State<ExploreScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF9F9F9),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: Colors.white,
-        iconTheme: const IconThemeData(color: Colors.black),
+        backgroundColor: Theme.of(context).appBarTheme.backgroundColor ?? Theme.of(context).scaffoldBackgroundColor,
+        iconTheme: IconThemeData(color: Theme.of(context).iconTheme.color),
         elevation: 1,
       ),
       body: Padding(
@@ -162,7 +168,10 @@ class _ExploreScreenState extends State<ExploreScreen> {
                 hintText: 'Search ...',
                 prefixIcon: const Icon(Icons.search),
                 filled: true,
-                fillColor: Colors.white,
+                fillColor: Theme.of(context).inputDecorationTheme.fillColor
+                    ?? (Theme.of(context).brightness == Brightness.dark
+                        ? Colors.grey[800]
+                        : Colors.white),
                 contentPadding: const EdgeInsets.symmetric(horizontal: 20),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(30),
@@ -182,15 +191,17 @@ class _ExploreScreenState extends State<ExploreScreen> {
                 child: ListView(
                   children: [
                     if (stockResults.isNotEmpty) ...[
-                      const Text('Stocks',
-                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                      Text('Stocks',
+                        style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+                      ),
                       const SizedBox(height: 10),
                       ...stockResults.map((s) => _buildStockTile(s)),
                       const SizedBox(height: 20),
                     ],
                     if (coinResults.isNotEmpty) ...[
-                      const Text('Coins',
-                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                      Text('Coins',
+                        style: Theme.of(context).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+                      ),
                       const SizedBox(height: 10),
                       ...coinResults.map((c) => _buildCoinTile(c)),
                     ],
@@ -207,9 +218,9 @@ class _ExploreScreenState extends State<ExploreScreen> {
   }
 
   Widget _buildStockTile(Map<String, dynamic> stock) {
-    final change = stock['change_percent'];
+    final change = stock['change_percent'] ?? 0.0;
     final symbol = stock['symbol'];
-    final positive = (change ?? 0) >= 0;
+    final price = stock['price']?.toDouble() ?? 0.0;
 
     return FutureBuilder<bool>(
       future: WatchlistService.isInWatchlist(symbol),
@@ -218,6 +229,19 @@ class _ExploreScreenState extends State<ExploreScreen> {
 
         return Card(
           child: ListTile(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => DetailsPage(
+                    symbol: symbol,
+                    isCrypto: false,  // because it's a stock!
+                    price: price,
+                    change: change.toDouble(),
+                  ),
+                ),
+              );
+            },
             leading: Image.asset(
               'assets/logos/market/${symbol.toLowerCase()}.png',
               width: 36,
@@ -225,7 +249,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
               const Icon(Icons.show_chart, color: Colors.grey),
             ),
             title: Text(symbol),
-            subtitle: Text('\$${stock['price'].toStringAsFixed(2)}'),
+            subtitle: Text('\$${price.toStringAsFixed(2)}'),
             trailing: IconButton(
               icon: Icon(
                 isInWatchlist ? Icons.star : Icons.star_border,
@@ -245,26 +269,37 @@ class _ExploreScreenState extends State<ExploreScreen> {
       },
     );
   }
+
   Widget _buildCoinTile(Map<String, dynamic> coin) {
-    final symbol = coin['symbol']?.toUpperCase() ?? '';
-    final price = coin['current_price'];
-    final change = coin['price_change_percentage_24h'];
-    final positive = (change ?? 0) >= 0;
+    final symbol = coin['id'] ?? ''; // for CoinGecko you may need `id`!
+    final price = (coin['current_price'] ?? 0).toDouble();
+    final change = (coin['price_change_percentage_24h'] ?? 0).toDouble();
 
     return FutureBuilder<bool>(
-      future: WatchlistService.isInWatchlist(symbol),
+      future: WatchlistService.isInWatchlist(symbol.toUpperCase()),
       builder: (context, snapshot) {
         final isInWatchlist = snapshot.data ?? false;
 
         return Card(
           child: ListTile(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => DetailsPage(
+                    symbol: symbol,
+                    isCrypto: true,
+                    price: price,
+                    change: change,
+                  ),
+                ),
+              );
+            },
             leading: CircleAvatar(
               backgroundImage: NetworkImage(coin['image']),
             ),
-            title: Text(symbol),
-            subtitle: price != null
-                ? Text('\$${price.toStringAsFixed(2)}')
-                : const Text('N/A'),
+            title: Text(symbol.toUpperCase()),
+            subtitle: Text('\$${price.toStringAsFixed(2)}'),
             trailing: IconButton(
               icon: Icon(
                 isInWatchlist ? Icons.star : Icons.star_border,
@@ -272,9 +307,9 @@ class _ExploreScreenState extends State<ExploreScreen> {
               ),
               onPressed: () async {
                 if (isInWatchlist) {
-                  await WatchlistService.removeFromWatchlist(symbol);
+                  await WatchlistService.removeFromWatchlist(symbol.toUpperCase());
                 } else {
-                  await WatchlistService.addToWatchlist(symbol);
+                  await WatchlistService.addToWatchlist(symbol.toUpperCase());
                 }
                 setState(() {});
               },

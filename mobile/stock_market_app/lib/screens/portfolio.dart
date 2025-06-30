@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:fl_chart/fl_chart.dart';
 import 'watchlist_service.dart';
+// import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:stock_market_app/secrets.dart';
+
 
 class PortfolioScreen extends StatefulWidget {
   final void Function(double balance, double invested) onBalanceUpdate;
@@ -64,8 +67,10 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
           final json = jsonDecode(res.body);
           fetched[symbol] = json[_coinId(symbol)]['usd'].toDouble();
         } else {
+          final apiKey = finnhubApiKey;
           final uri = Uri.parse(
-              'https://finnhub.io/api/v1/quote?symbol=$symbol&token=d10nv91r01qlsaca9k70d10nv91r01qlsaca9k7g');
+            'https://finnhub.io/api/v1/quote?symbol=$symbol&token=$apiKey',
+          );
           final res = await http.get(uri);
           final json = jsonDecode(res.body);
           fetched[symbol] = json['c']?.toDouble() ?? 0.0;
@@ -92,7 +97,7 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
   }
 
   Future<void> fetchPrices() async {
-    const finnhubKey = 'd10nv91r01qlsaca9k70d10nv91r01qlsaca9k7g';
+    final finnhubKey = finnhubApiKey;
     const coingeckoUrl = 'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana&vs_currencies=usd';
 
     try {
