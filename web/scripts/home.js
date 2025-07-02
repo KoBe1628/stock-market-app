@@ -40,11 +40,40 @@ document.addEventListener("DOMContentLoaded", () => {
 async function fetchNews() {
   try {
     const response = await fetch(NEWS_ENDPOINT);
+    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
     const data = await response.json();
+    if (!data.articles || !Array.isArray(data.articles))
+      throw new Error("Invalid news format");
     loadNewsFeed(data);
   } catch (error) {
     console.error("Error fetching news:", error);
-    loadNewsFeed({ articles: [] });
+    // Fallback mock news data
+    const fallbackData = {
+      articles: [
+        {
+          title: "Markets rally as tech leads rebound",
+          url: "https://www.example.com/news1",
+          image: "https://via.placeholder.com/100",
+          source: { name: "Fallback Times" },
+          publishedAt: new Date().toISOString(),
+        },
+        {
+          title: "Investors eye inflation report this week",
+          url: "https://www.example.com/news2",
+          image: "https://via.placeholder.com/100",
+          source: { name: "Backup News" },
+          publishedAt: new Date().toISOString(),
+        },
+        {
+          title: "Crypto markets stabilize after recent dip",
+          url: "https://www.example.com/news3",
+          image: "https://via.placeholder.com/100",
+          source: { name: "Mock Media" },
+          publishedAt: new Date().toISOString(),
+        },
+      ],
+    };
+    loadNewsFeed(fallbackData);
   }
 }
 
@@ -93,17 +122,25 @@ function loadNewsFeed(data) {
 // === STOCKS (via Finnhub) ===
 async function fetchStocks() {
   const results = [];
+
   for (const symbol of STOCK_SYMBOLS) {
     try {
       const url = `https://finnhub.io/api/v1/quote?symbol=${symbol}&token=${FINNHUB_API_KEY}`;
       const res = await fetch(url);
       const data = await res.json();
+
+      // Validate expected response keys
+      if (!data || typeof data.c !== "number" || typeof data.pc !== "number") {
+        throw new Error("Invalid stock data format");
+      }
+
       results.push({ symbol, ...data });
     } catch (err) {
-      console.warn("Fallback stock:", symbol, err);
-      results.push({ symbol, c: 100, pc: 95 });
+      console.warn(`Fallback stock data used for ${symbol}:`, err);
+      results.push({ symbol, c: 100 + Math.random() * 10, pc: 95 });
     }
   }
+
   loadStockCards(results);
 }
 
@@ -131,17 +168,24 @@ function loadStockCards(stocks) {
 // === CRYPTO (via Finnhub using Binance symbols) ===
 async function fetchCrypto() {
   const results = [];
+
   for (const symbol of CRYPTO_SYMBOLS) {
     try {
       const url = `https://finnhub.io/api/v1/quote?symbol=BINANCE:${symbol}&token=${FINNHUB_API_KEY}`;
       const res = await fetch(url);
       const data = await res.json();
+
+      if (!data || typeof data.c !== "number" || typeof data.pc !== "number") {
+        throw new Error("Invalid crypto data format");
+      }
+
       results.push({ symbol, ...data });
     } catch (err) {
-      console.warn("Fallback crypto:", symbol, err);
-      results.push({ symbol, c: 100, pc: 92 });
+      console.warn(`Fallback crypto data used for ${symbol}:`, err);
+      results.push({ symbol, c: 100 + Math.random() * 20, pc: 92 });
     }
   }
+
   loadCryptoCards(results);
 }
 
