@@ -85,6 +85,17 @@ padding:0 1rem;
   margin-left:200px;
 }
 
+.coin-row-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+.coin-row-link:hover .coin-row {
+  background-color: #f4f4f4; /* Optional hover effect */
+  cursor: pointer;
+}
+
+
 .coin-row {
   background-color: #f8f8f8;
   border-radius: 10px;

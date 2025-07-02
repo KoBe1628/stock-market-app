@@ -6,69 +6,34 @@ body {
   color: #333;
 }
 
-/* === NAVIGATION STYLES (Bekhzod - W1) === */
 .navbar {
   background-color: white;
+  padding: 1rem 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 2rem;
-  border-bottom: solid 1px #d2d5d8;
+  border-bottom: 1px solid #ddd;
 }
 
 .logo {
-  font-size: 2rem;
   font-weight: bold;
   font-style: italic;
-  color: #0b132b;
+  color: #2cb742;
+  font-size: 2rem;
 }
 
-.logo .highlight {
-  font-style: normal;
+.search-bar {
+  width: 500px;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
-.left-section {
-  display: flex;
-  align-items: center;
-  gap: 2rem;
-}
-
-.search-container {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-
-.search-container input {
-  border: none;
-  border-radius: 999px;
-  padding: 0.5rem 2.5rem 0.5rem 1rem;
-  background-color: #e2e8f0;
-  outline: none;
-  font-size: 1rem;
-}
-
-.search-container .search-icon {
-  position: absolute;
-  right: 10px;
-  color: #444;
-  pointer-events: none;
-}
-
-.nav-links {
-  list-style: none;
-  display: flex;
-  gap: 1.5rem;
-}
-
-.nav-links li a {
-  color: #111;
+.nav-links a {
+  margin-left: 1.5rem;
   text-decoration: none;
+  color: #333;
   font-weight: 500;
-}
-
-.nav-links li a:hover {
-  text-decoration: underline;
 }
 
 /* === Location Output Box (W3-1) === */
