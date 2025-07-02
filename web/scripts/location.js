@@ -1,48 +1,50 @@
 console.log("Location script loaded");
 
-const OPEN_CAGE_API_KEY = "a69998c78f374bc3ba1ef54a27afeeea";
+const locationContainer = document.getElementById("location-placeholder");
 
-function updateLocationText(country, flagEmoji) {
-  const locationElement = document.getElementById("user-location");
-  if (locationElement) {
-    locationElement.innerHTML = `${country} ${flagEmoji}`;
-  }
-}
-
-function getFlagEmoji(countryCode) {
-  // Turn country code into emoji: e.g., "DE" → 🇩🇪
-  return countryCode
-    .toUpperCase()
-    .replace(/./g, (char) => String.fromCodePoint(127397 + char.charCodeAt()));
-}
-
-function detectUserLocation() {
-  if (!navigator.geolocation) {
-    console.warn("Geolocation is not supported by this browser.");
+async function fetchUserLocation() {
+  if (!locationContainer) {
+    console.warn("Location placeholder element not found.");
     return;
   }
 
-  navigator.geolocation.getCurrentPosition(
-    async (position) => {
-      const { latitude, longitude } = position.coords;
-
-      try {
-        const response = await fetch(
-          `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=${OPEN_CAGE_API_KEY}`
-        );
-
-        const data = await response.json();
-        const country = data.results[0].components.country;
-        const countryCode = data.results[0].components["ISO_3166-1_alpha-2"];
-        updateLocationText(country, getFlagEmoji(countryCode));
-      } catch (error) {
-        console.error("Error with OpenCage reverse geocoding:", error);
-      }
-    },
-    (error) => {
-      console.warn("Geolocation error:", error.message);
+  try {
+    if (!navigator.geolocation) {
+      throw new Error("Geolocation not supported by your browser.");
     }
-  );
+
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        const { latitude, longitude } = position.coords;
+
+        try {
+          const apiKey = "a69998c78f374bc3ba1ef54a27afeeea";
+          const url = `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=${apiKey}`;
+
+          const response = await fetch(url);
+          if (!response.ok)
+            throw new Error(`OpenCage API error: ${response.status}`);
+
+          const data = await response.json();
+          const country = data.results?.[0]?.components?.country || "Unknown";
+          const countryCode =
+            data.results?.[0]?.components?.country_code?.toUpperCase() || "";
+
+          locationContainer.innerHTML = `<strong>${country}</strong> <span style="font-size: 0.75rem;">${countryCode}</span>`;
+        } catch (apiError) {
+          console.error("API error:", apiError.message);
+          locationContainer.innerHTML = `<span style="color: #999;">Could not fetch country info</span>`;
+        }
+      },
+      (geoError) => {
+        console.error("Geolocation error:", geoError.message);
+        locationContainer.innerHTML = `<span style="color: #999;">Location access denied</span>`;
+      }
+    );
+  } catch (err) {
+    console.error("General error:", err.message);
+    locationContainer.innerHTML = `<span style="color: #999;">Location unavailable</span>`;
+  }
 }
 
-detectUserLocation();
+fetchUserLocation();
