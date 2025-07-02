@@ -6,22 +6,22 @@
     <title>BeStox - Portfolio</title>
     <link rel="stylesheet" href="styles/style.css" />
   </head>
-  <body>
+  <body data-page="portfolio">
     <!-- Navigation -->
-    <header>
-      <nav class="navbar">
-        <div class="logo">BeStox</div>
-        <div class="search-container">
-          <input type="text" placeholder="Search..." />
-          <span class="search-icon">🔍</span>
-        </div>
-        <ul class="nav-links">
-          <li><a href="#">Transfer</a></li>
-          <li><a href="#">Portfolio</a></li>
-          <li><a href="#">Profile</a></li>
-        </ul>
-      </nav>
-    </header>
+    <header class="navbar">
+    <div class="logo">Be<span>Stox</span></div>
+    <div class="search-location-wrapper">
+  <input type="text" class="search-bar" placeholder="Search..." />
+  <div id="location-display" class="location-info">Detecting location...</div>
+    </div>
+    <nav class="nav-links">
+      <a href="Main Page/homepage.html" data-page = "home">Home</a>
+      <a href="Home Page/homepage.html" data-page = "buy">Buy USDC</a>
+      <a href="#">Transfer</a>
+      <a href="portfolio-watchlist.html" data-page = "portfolio">Portfolio</a>
+      <a href="#">Profile</a>
+    </nav>
+  </header>
 
     <main class="portfolio-page">
       <!-- Account Overview -->

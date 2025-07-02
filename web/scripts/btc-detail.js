@@ -133,3 +133,25 @@ async function renderBTCChartWithFallback() {
 }
 
 window.addEventListener("load", renderBTCChartWithFallback);
+
+
+document.addEventListener("DOMContentLoaded", async () => {
+  const locationEl = document.getElementById("location-display");
+
+  try {
+    const res = await fetch("https://api.country.is/");
+    const data = await res.json();
+
+    const countryCode = data.country; // 2-letter code
+    const flagUrl = `https://flagsapi.com/${countryCode}/flat/24.png`;
+
+    locationEl.innerHTML = `
+      <img src="${flagUrl}" alt="${countryCode} flag" />
+      ${countryCode}
+    `;
+  } catch (err) {
+    locationEl.textContent = "Location unavailable";
+    console.error("Location detection error:", err);
+  }
+});
+

@@ -7,14 +7,18 @@
   <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet"/>
 </head>
-<body>
+<body data-page="pro">
   <header class="navbar">
     <div class="logo">Be<span>Stox</span></div>
-    <input type="text" class="search-bar" placeholder="Search..." />
+    <div class="search-location-wrapper">
+  <input type="text" class="search-bar" placeholder="Search..." />
+  <div id="location-display" class="location-info">Detecting location...</div>
+    </div>
     <nav class="nav-links">
-      <a href="../Home Page/homepage.html">Buy USDC</a>
-      <a href="#">Transfer</a>
-      <a href="#">Portfolio</a>
+      <a href="../Main Page/homepage.html" data-page = "home">Home</a>
+      <a href="../Home Page/homepage.html" data-page = "buy">Buy USDC</a>
+      <a href="../Pro Page/propage.html" data-page="pro">Pro</a>
+      <a href="../portfolio-watchlist.html" data-page = "portfolio">Portfolio</a>
       <a href="#">Profile</a>
     </nav>
   </header>
@@ -104,5 +108,26 @@
   </div>
 
   <script src="script.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", async () => {
+  const locationEl = document.getElementById("location-display");
+
+  try {
+    const res = await fetch("https://api.country.is/");
+    const data = await res.json();
+
+    const countryCode = data.country; // 2-letter code
+    const flagUrl = `https://flagsapi.com/${countryCode}/flat/24.png`;
+
+    locationEl.innerHTML = `
+      <img src="${flagUrl}" alt="${countryCode} flag" />
+      ${countryCode}
+    `;
+  } catch (err) {
+    locationEl.textContent = "Location unavailable";
+    console.error("Location detection error:", err);
+  }
+});
+</script>
 </body>
 </html>

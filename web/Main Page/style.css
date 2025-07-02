@@ -34,6 +34,37 @@ body {
   font-weight: 500;
 }
 
+
+.nav-links a.active-page {
+  color: #00c853;
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+
+.search-location-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.location-info {
+  display: flex;
+  align-items: center;
+  font-size: 0.9rem;
+  color: #444;
+  font-weight: 500;
+}
+
+.location-info img {
+  width: 20px;
+  height: 14px;
+  object-fit: cover;
+  margin-right: 4px;
+}
+
+
+
 .dashboard-container {
   display: flex;
   padding: 2rem 10rem 2rem 2rem;

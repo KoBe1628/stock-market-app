@@ -83,3 +83,15 @@ async function fetchMarketMovers() {
 
 fetchMarketMovers();
 setInterval(fetchMarketMovers, 30000);
+
+
+
+
+
+
+
+
+
+
+
+
