@@ -109,3 +109,5 @@ function updateCoin(idSuffix, price, change) {
 
 fetchCryptoPrices();
 setInterval(fetchCryptoPrices, 30000); // every 30 sec
+
+

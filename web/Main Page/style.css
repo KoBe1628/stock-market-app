@@ -459,3 +459,29 @@ footer {
   padding: 1rem;
   font-size: 0.85rem;
 }
+
+
+.search-dropdown {
+  position: absolute;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-top: none;
+  max-height: 250px;
+  overflow-y: auto;
+  width: 500px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 999;
+  font-size: 14px;
+  display: none;
+}
+
+.search-dropdown div {
+  padding: 10px;
+  cursor: pointer;
+  border-bottom: 1px solid #eee;
+}
+
+.search-dropdown div:hover {
+  background-color: #f2f2f2;
+}
+

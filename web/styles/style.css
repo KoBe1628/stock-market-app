@@ -576,8 +576,4 @@ footer {
     margin-top: 0.5rem;
   }
 
-  .footer-links {
-    flex-direction: column;
-    gap: 1.5rem;
-  }
-}
+

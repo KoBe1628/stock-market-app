@@ -11,9 +11,15 @@
   <header class="navbar">
     <div class="logo">Be<span>Stox</span></div>
   <div class="search-location-wrapper">
-  <input type="text" class="search-bar" placeholder="Search..." />
-  <div id="location-display" class="location-info">Detecting location...</div>
-</div>
+    <input type="text" id="search-input" class="search-bar" placeholder="Search..." autocomplete="off" />
+    <div id="search-suggestions" class="search-dropdown"></div>
+    <div id="location-display" class="location-info">Detecting location...</div>
+
+
+
+  </div>
+
+
 
     <nav class="nav-links">
       <a href="../Main Page/homepage.html" data-page = "home">Home</a>
@@ -32,25 +38,25 @@
         <section class="popular-section">
           <h3>Popular Coins</h3>
           <a href = "../detail.html" class ="coin-row-link">
-          <div class="coin-row">
+          <div class="coin-row" data-symbol="BTC" data-type="coin">
   <img src="b.png" alt=""> Bitcoin <span>BTC</span>
   <div class="price" id="price-btc">$--</div>
   <span id="change-btc">--%</span>
 </div>
           </a>
-<div class="coin-row">
+<div class="coin-row" data-symbol="ETH" data-type="coin">
   <img src="e.png" alt=""> Ethereum <span>ETH</span>
   <div class="price" id="price-eth">$--</div>
   <span id="change-eth">--%</span>
 </div>
 
-<div class="coin-row">
+<div class="coin-row" data-symbol="TR" data-type="coin">
   <img src="t.png" alt=""> Tether <span>TR</span>
   <div class="price" id="price-tr">$--</div>
   <span id="change-tr">--%</span>
 </div>
 
-<div class="coin-row">
+<div class="coin-row" data-symbol="DOGE" data-type="coin">
   <img src="d.png" alt=""> DogeCoin <span>DOGE</span>
   <div class="price" id="price-doge">$--</div>
   <span id="change-doge">--%</span>
@@ -62,25 +68,25 @@
           <h3>Market Movers</h3>
           <div class="movers-grid">
 
-            <div class="mover-card" data-symbol="NFLX">
+            <div class="mover-card" data-symbol="NFLX" data-type="stock">
   <img src="netflix.png" alt="Netflix">
   <div class="percent" id="netflix-change">--%</div>
   <div class="name">Netflix</div>
 </div>
 
-<div class="mover-card" data-symbol="NKE">
+<div class="mover-card" data-symbol="NKE" data-type="stock">
   <img src="nike.png" alt="Nike">
   <div class="percent" id="nike-change">--%</div>
   <div class="name">Nike</div>
 </div>
 
-<div class="mover-card" data-symbol="AAPL">
+<div class="mover-card" data-symbol="AAPL" data-type="stock">
   <img src="apple.png" alt="Apple">
   <div class="percent" id="apple-change">--%</div>
   <div class="name">Apple</div>
 </div>
 
-<div class="mover-card" data-symbol="AMZN">
+<div class="mover-card" data-symbol="AMZN" data-type="stock">
   <img src="amazon.png" alt="Amazon">
   <div class="percent" id="amazon-change">--%</div>
   <div class="name">Amazon</div>

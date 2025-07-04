@@ -55,12 +55,6 @@ body {
   font-weight: 500;
 }
 
-.nav-links a.active-page {
-  color: #00c853;
-  font-weight: 700;
-  text-decoration: underline;
-}
-
 /* Main section */
 .pro-main {
   padding: 2rem;
