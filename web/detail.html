@@ -5,21 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>BeStox - BTC Detail</title>
     <link rel="stylesheet" href="styles/style.css" />
+    <link rel="stylesheet" href="styles/shared.css" />
   </head>
   <body>
-    <!-- Navigation Bar -->
-    <nav class="navbar">
-      <div class="logo">BeStox</div>
-      <div class="search-container">
-        <input type="text" placeholder="Search..." />
-        <span class="search-icon">🔍</span>
-      </div>
-      <ul class="nav-links">
-        <li><a href="#">Transfer</a></li>
-        <li><a href="#">Portfolio</a></li>
-        <li><a href="#">Profile</a></li>
-      </ul>
-    </nav>
+    <!-- Header -->
+    <div id="header-placeholder"></div>
 
     <main class="detail-page">
       <!-- Back + Title -->
@@ -113,9 +103,30 @@
 
         <button class="buy-btn">Buy BTC</button>
       </div>
+
+      <!-- Footer -->
+      <div id="footer-placeholder"></div>
     </main>
     <!-- Chart.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="scripts/detail.js"></script>
+    <script>
+      fetch("components/header.html")
+        .then((res) => res.text())
+        .then((data) => {
+          document.getElementById("header-placeholder").innerHTML = data;
+
+          // Load header.js AFTER injecting header HTML
+          const script = document.createElement("script");
+          script.src = "scripts/header.js";
+          document.body.appendChild(script);
+        });
+
+      fetch("components/footer.html")
+        .then((res) => res.text())
+        .then((data) => {
+          document.getElementById("footer-placeholder").innerHTML = data;
+        });
+    </script>
   </body>
 </html>
