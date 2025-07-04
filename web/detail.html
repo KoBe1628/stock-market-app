@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BeStox - BTC Detail</title>
+    <link rel="stylesheet" href="styles/style.css" />
+    <link rel="stylesheet" href="styles/shared.css" />
+  </head>
+  <body>
+    <!-- Header -->
+    <div id="header-placeholder"></div>
+
+    <main class="detail-page">
+      <!-- Back + Title -->
+      <!-- Warning for fallback -->
+      <div
+        id="fallback-warning"
+        style="
+          display: none;
+          background-color: #fff3cd;
+          color: #856404;
+          padding: 8px 16px;
+          border: 1px solid #ffeeba;
+          border-radius: 5px;
+          margin-bottom: 12px;
+        "
+      >
+        ⚠️ This data is from fallback (mock) data due to API error.
+      </div>
+
+      <div class="detail-header">
+        <h2>
+          <a href="home.html" id="back-link">←</a>
+          <span id="page-title">Detail Page</span>
+        </h2>
+      </div>
+
+      <!-- Coin Info -->
+      <div class="coin-info">
+        <img
+          src="/assets/icons/btc.png"
+          id="btc-logo"
+          alt="Asset Icon"
+          onerror="this.onerror=null;this.src='/assets/icons/default.png';"
+        />
+        <h3 id="btc-name">BTC Bitcoin</h3>
+        <span id="btc-price" class="price">$84,146.70</span>
+        <span id="btc-change" class="price-change positive">+0.29%</span>
+      </div>
+
+      <button id="watchlist-btn">Add to Watchlist</button>
+
+      <!-- Chart -->
+      <div class="chart">
+        <canvas id="btcChart" width="100%" height="60"></canvas>
+        <div class="chart-intervals">
+          <span>Today</span>
+          <span>7 Days</span>
+          <span>30 Days</span>
+          <span>90 Days</span>
+          <span>180 Days</span>
+        </div>
+      </div>
+
+      <!-- Stats Table -->
+      <div class="stats">
+        <div class="stats-row">
+          <span>Price</span><span id="btc-price-stats">$84,146.70</span>
+        </div>
+        <div class="stats-row">
+          <span>Change</span><span id="btc-change-stats">+4.35%</span>
+        </div>
+        <div class="stats-row">
+          <span>24h Volume</span><span id="btc-volume">$25.6B</span>
+        </div>
+        <div class="stats-row">
+          <span>Market Cap</span><span id="btc-marketcap">$1,883.67B</span>
+        </div>
+      </div>
+
+      <!-- Trade Panel -->
+      <div class="trade-panel">
+        <div class="trade-options">
+          <button class="active">Buy</button>
+          <button>Sell</button>
+        </div>
+
+        <label for="buy-amount">You Buy</label>
+        <input id="buy-amount" type="number" placeholder="0" />
+        <div class="unit-label">BTC Bitcoin</div>
+
+        <label for="spend-amount">You Spend</label>
+        <input id="spend-amount" type="text" placeholder="10 - 100,000" />
+        <div class="unit-label">$</div>
+
+        <label for="payment-method">Payment Method</label>
+        <select id="payment-method">
+          <option>Apple Pay</option>
+          <option>PayPal</option>
+          <option>Credit Card</option>
+        </select>
+
+        <button class="buy-btn">Buy BTC</button>
+      </div>
+
+      <!-- Footer -->
+      <div id="footer-placeholder"></div>
+    </main>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="scripts/detail.js"></script>
+    <script>
+      fetch("components/header.html")
+        .then((res) => res.text())
+        .then((data) => {
+          document.getElementById("header-placeholder").innerHTML = data;
+
+          // Load header.js AFTER injecting header HTML
+          const script = document.createElement("script");
+          script.src = "scripts/header.js";
+          document.body.appendChild(script);
+        });
+
+      fetch("components/footer.html")
+        .then((res) => res.text())
+        .then((data) => {
+          document.getElementById("footer-placeholder").innerHTML = data;
+        });
+    </script>
+  </body>
+</html>

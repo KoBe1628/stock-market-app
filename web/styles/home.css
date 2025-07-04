@@ -1,0 +1,427 @@
+body {
+  margin: 0;
+  font-family: "Segoe UI", sans-serif;
+  background: #f5f6f8;
+  color: #1c1e21;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 32px;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.logo {
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: #10b981;
+}
+
+.header nav {
+  display: flex;
+  gap: 24px;
+  font-weight: 500;
+}
+
+.search-bar {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 0.95rem;
+}
+
+.currency-dropdown {
+  margin-left: 12px;
+  padding: 8px;
+  font-size: 0.9rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.currency-dropdown {
+  padding: 6px;
+  border-radius: 4px;
+}
+
+nav a {
+  margin-left: 20px;
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px 24px;
+}
+
+/* Page Title */
+
+h1,
+h2 {
+  margin-bottom: 12px;
+}
+
+.page-title {
+  opacity: 0;
+  transform: translateY(8px);
+  animation: fadeSlide 0.9s ease forwards;
+}
+
+@keyframes fadeSlide {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/* -------------- */
+
+/* ----------------News--------------- */
+.snapshot-news-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 32px;
+  gap: 2rem;
+}
+
+.snapshot-box,
+.news-feed {
+  background: white;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  width: 48%;
+}
+
+.news-card {
+  display: flex;
+  align-items: flex-start;
+  background-color: #f5f6f8;
+  padding: 12px;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+}
+
+.news-card-link {
+  display: flex;
+  text-decoration: none;
+  color: inherit;
+  width: 100%;
+}
+
+.news-image {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-right: 12px;
+}
+
+.news-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.news-title {
+  font-weight: bold;
+  margin-bottom: 4px;
+  font-size: 16px;
+}
+
+.news-source {
+  font-size: 0.85rem;
+  color: #555;
+}
+
+.view-all-news {
+  margin-top: 12px;
+  padding: 8px 16px;
+  background-color: #222;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* ----------------------------------------------- */
+
+.market-movers,
+.popular-crypto {
+  margin-bottom: 32px;
+}
+
+.movers-grid,
+.crypto-grid {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.mover,
+.crypto {
+  background: #fff;
+  padding: 16px;
+  flex: 1 0 150px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+}
+
+.mover img,
+.crypto img {
+  border-radius: 50%;
+  vertical-align: middle;
+  width: 24px;
+  height: 24px;
+}
+
+/* Optional: subtle fade-in animation when cards appear */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.movers-grid .mover,
+.crypto-grid .crypto {
+  animation: fadeInUp 0.4s ease both;
+}
+
+.mover:hover,
+.crypto:hover {
+  transform: translateY(-4px) scale(1.03);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* Bounce on hover */
+.mover:hover,
+.crypto:hover {
+  transform: scale(1.05);
+  animation: bounce 0.4s ease;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+@keyframes bounce {
+  0% {
+    transform: scale(1);
+  }
+  30% {
+    transform: scale(1.05);
+  }
+  60% {
+    transform: scale(0.98);
+  }
+  100% {
+    transform: scale(1.02);
+  }
+}
+
+/* Staggered entrance */
+.movers-grid .mover,
+.crypto-grid .crypto {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+.movers-grid .mover:nth-child(1) {
+  animation-delay: 0.1s;
+}
+.movers-grid .mover:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.movers-grid .mover:nth-child(3) {
+  animation-delay: 0.3s;
+}
+.movers-grid .mover:nth-child(4) {
+  animation-delay: 0.4s;
+}
+
+.crypto-grid .crypto:nth-child(1) {
+  animation-delay: 0.1s;
+}
+.crypto-grid .crypto:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.crypto-grid .crypto:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.green {
+  color: #14b866;
+}
+.red {
+  color: #e02424;
+}
+
+.promo {
+  background: linear-gradient(to right, #14b866, #00a86b);
+  color: white;
+  text-align: center;
+  padding: 32px;
+  border-radius: 16px;
+  margin-bottom: 40px;
+}
+
+.btn-upgrade {
+  margin-top: 12px;
+  background: white;
+  color: #14b866;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+.footer {
+  background: #1c1e21;
+  color: #fff;
+  padding: 40px 24px;
+}
+
+.footer-links {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.footer-links div ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-links h5 {
+  margin-bottom: 12px;
+}
+
+.footer-links li {
+  margin-bottom: 4px;
+}
+
+footer .copyright {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 14px;
+  color: #bbb;
+}
+
+/* Tablet (601px to 1024px) */
+@media (max-width: 1024px) {
+  .main-container {
+    padding: 20px;
+  }
+
+  .section-flex {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .snapshot,
+  .news {
+    width: 100%;
+  }
+
+  .market-section {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .market-section .card {
+    width: 45%;
+    margin: 10px 0;
+  }
+}
+
+/* Mobile (up to 600px) */
+@media (max-width: 600px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .header nav {
+    margin-left: 0;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .snapshot-news-container {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .snapshot-box,
+  .news-feed {
+    width: 100%;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+    text-align: center;
+  }
+
+  .snapshot,
+  .news {
+    padding: 15px;
+  }
+
+  .market-section .card {
+    width: 100%;
+  }
+
+  .market-section {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .upgrade-cta {
+    padding: 20px;
+    text-align: center;
+  }
+
+  footer {
+    flex-direction: column;
+    text-align: center;
+    padding: 20px;
+  }
+
+  footer .footer-links {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .footer-note {
+    margin-top: 20px;
+  }
+}

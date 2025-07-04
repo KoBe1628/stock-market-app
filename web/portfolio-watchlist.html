@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BeStox - Portfolio</title>
+    <link rel="stylesheet" href="styles/style.css" />
+    <link rel="stylesheet" href="styles/shared.css" />
+  </head>
+  <body>
+    <!-- Header -->
+    <div id="header-placeholder"></div>
+
+    <main class="portfolio-page">
+      <!-- Account Overview -->
+      <section class="account-summary">
+        <div class="user-info">
+          <p class="username">Bekhzod KODIROV <span>@userbtc2024</span></p>
+          <p>Member Since: 5/24/2023</p>
+          <p>Account Type: Registered User</p>
+        </div>
+        <div class="balance-info">
+          <p>Current Balance</p>
+          <h2>$24,839.00</h2>
+        </div>
+        <div class="virtual-card">
+          <p class="card-name">Bekhzod Kodirov</p>
+          <div class="card-chip"></div>
+          <div class="card-number">**** **** **** 1234</div>
+          <div class="card-profit">
+            <span>Profit:</span>
+            <strong class="green">$2,439.00 | +2.6%</strong>
+          </div>
+        </div>
+      </section>
+
+      <!-- Portfolio Overview -->
+      <section class="portfolio-section">
+        <div class="portfolio-header">
+          <h3>My Portfolio</h3>
+          <button class="buy-btn">+ Buy New Assets</button>
+        </div>
+        <div class="portfolio-metrics">
+          <div>
+            <span>Total Portfolio Value</span>
+            <h3>$208,230.00</h3>
+          </div>
+          <div>
+            <span>Today's Change</span>
+            <h3 class="green">+$170.50 (+0.78%)</h3>
+          </div>
+        </div>
+        <table class="asset-table">
+          <thead>
+            <tr>
+              <th>Assets</th>
+              <th>Quantity</th>
+              <th>Avg. Cost</th>
+              <th>Current Price</th>
+              <th>Change</th>
+              <th>Total Value</th>
+            </tr>
+          </thead>
+          <tbody id="portfolio-table-body">
+            <tr>
+              <td>🪙 BTC</td>
+              <td>2.6</td>
+              <td>$88,000.00</td>
+              <td>$84,146.70</td>
+              <td class="green">+1.25%</td>
+              <td>$197,842.00</td>
+            </tr>
+            <tr>
+              <td>🚗 Tesla</td>
+              <td>20</td>
+              <td>$270.00</td>
+              <td>$270.40</td>
+              <td class="green">+0.21%</td>
+              <td>$5,408.00</td>
+            </tr>
+            <tr>
+              <td>🍎 Apple</td>
+              <td>29</td>
+              <td>$320.00</td>
+              <td>$315.00</td>
+              <td class="red">-2.26%</td>
+              <td>$3,852.00</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Watchlist Section -->
+      <section class="watchlist-section">
+        <div class="watchlist-header">
+          <h3>My Watchlist</h3>
+          <button class="add-btn">+ Add to Watchlist</button>
+        </div>
+        <table class="watchlist-table">
+          <thead>
+            <tr>
+              <th>Assets</th>
+              <th>Current Price</th>
+              <th>Change</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="watchlist-table-body">
+            <!-- JS will populate -->
+          </tbody>
+        </table>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <div id="footer-placeholder"></div>
+
+    <!-- Scripts -->
+    <script>
+      fetch("components/header.html")
+        .then((res) => res.text())
+        .then((data) => {
+          document.getElementById("header-placeholder").innerHTML = data;
+
+          // Load header.js AFTER injecting header HTML
+          const script = document.createElement("script");
+          script.src = "scripts/header.js";
+          document.body.appendChild(script);
+        });
+
+      fetch("components/footer.html")
+        .then((res) => res.text())
+        .then((data) => {
+          document.getElementById("footer-placeholder").innerHTML = data;
+        });
+    </script>
+
+    <script src="scripts/portfolio-watchlist.js"></script>
+  </body>
+</html>

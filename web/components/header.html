@@ -1,0 +1,44 @@
+<header class="header">
+  <div class="logo">Be<span>Stox</span></div>
+
+  <!-- Search input and dropdown -->
+  <div class="search-wrapper">
+    <input
+      type="text"
+      id="search-input"
+      placeholder="Search stocks, cryptos, companies..."
+      autocomplete="off"
+    />
+    <ul id="search-dropdown">
+      <!-- This will show even if empty -->
+    </ul>
+  </div>
+
+  <select class="currency-dropdown">
+    <option>USD</option>
+    <option>EUR</option>
+  </select>
+
+  <button
+    id="themeToggleBtn"
+    aria-label="Toggle dark mode"
+    class="theme-icon-toggle"
+  >
+    🌙
+  </button>
+
+  <!-- Hamburger for mobile -->
+  <div class="hamburger" id="hamburger">&#9776;</div>
+
+  <!-- Nav links -->
+  <nav id="nav-menu">
+    <a href="home.html" class="nav-link" data-page="home">Home</a>
+    <a href="transfer.html" class="nav-link" data-page="transfer">Transfer</a>
+    <a href="portfolio-watchlist.html" class="nav-link" data-page="portfolio"
+      >Portfolio</a
+    >
+    <a href="profile.html" class="nav-link" data-page="profile">Profile</a>
+  </nav>
+
+  <script src="../../web/scripts/header.js"></script>
+</header>
