@@ -84,6 +84,49 @@ footer .copyright {
   font-weight: 500;
 }
 
+.nav-link {
+  position: relative;
+  text-decoration: none;
+  padding: 6px 10px;
+  color: #333;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.nav-link:hover {
+  color: #14b866;
+}
+
+.nav-link::after {
+  content: "";
+  display: block;
+  width: 0%;
+  height: 2px;
+  background: #14b866;
+  transition: width 0.3s ease;
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+.active-link {
+  color: #14b866;
+  font-weight: 600;
+}
+
+.active-link::after {
+  width: 100%;
+}
+
+.header.scrolled {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transition: box-shadow 0.3s ease;
+}
+
 .footer-note {
   text-align: center;
   margin-top: 2rem;
@@ -163,4 +206,165 @@ footer .copyright {
   right: 10px;
   color: #444;
   pointer-events: none;
+}
+
+/* === HAMBURGER MENU === */
+.hamburger {
+  display: none;
+  font-size: 1.6rem;
+  cursor: pointer;
+  padding: 8px;
+  border: none;
+  border-radius: 6px;
+  background-color: #f0f0f0;
+  transition: background 0.2s ease;
+}
+
+.hamburger:hover {
+  background-color: #ddd;
+}
+
+/* Dark mode toggle switch */
+.theme-toggle {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 22px;
+  margin-left: 1rem;
+}
+
+.theme-toggle input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.theme-toggle .slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  border-radius: 22px;
+  transition: 0.4s;
+}
+
+.theme-toggle .slider::before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 4px;
+  bottom: 3px;
+  background-color: white;
+  border-radius: 50%;
+  transition: 0.4s;
+}
+
+.theme-toggle input:checked + .slider {
+  background-color: #10b981;
+}
+
+.theme-toggle input:checked + .slider::before {
+  transform: translateX(20px);
+}
+
+.theme-icon-toggle {
+  font-size: 1.2rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  margin-left: 1rem;
+  transition: transform 0.3s ease;
+}
+
+.theme-icon-toggle:hover {
+  transform: rotate(20deg) scale(1.2);
+}
+
+/* Dark mode class */
+body.dark-mode {
+  background-color: #121212;
+  color: #e5e5e5;
+}
+
+body {
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+.header,
+.search-wrapper input,
+.dropdown-list,
+.portfolio-section,
+.watchlist-section,
+.account-summary,
+footer {
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+body.dark-mode .header,
+body.dark-mode .snapshot-box,
+body.dark-mode .news-feed,
+body.dark-mode .mover,
+body.dark-mode .crypto,
+body.dark-mode .trade-panel,
+body.dark-mode .portfolio-section,
+body.dark-mode .watchlist-section,
+body.dark-mode .account-summary,
+body.dark-mode footer {
+  background-color: #1f1f1f !important;
+  color: #e5e5e5 !important;
+}
+
+body.dark-mode .nav-link,
+body.dark-mode a,
+body.dark-mode .news-source {
+  color: #ccc !important;
+}
+
+.dark-mode .btn,
+.dark-mode .buy-btn,
+.dark-mode .add-btn {
+  background-color: #2ecc71;
+  color: #fff;
+}
+
+.dark-mode button.view-all-news {
+  background-color: #10b981;
+}
+
+body.dark-mode .btn-upgrade {
+  background: #10b981;
+  color: #fff;
+}
+
+body.dark-mode .footer-note {
+  background-color: #222;
+}
+
+@media (max-width: 1668px) {
+  nav {
+    display: none;
+  }
+
+  .hamburger {
+    display: block;
+  }
+
+  #nav-menu {
+    display: none;
+    flex-direction: column;
+    gap: 12px;
+    background-color: white;
+    padding: 16px;
+    border-radius: 8px;
+    margin-top: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  }
+
+  #nav-menu.show {
+    display: flex;
+  }
 }

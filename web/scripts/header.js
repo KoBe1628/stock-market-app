@@ -5,6 +5,28 @@ let debounceTimeout;
 
 console.log("Header JS loaded!");
 
+// Highlight active page
+const currentPage = window.location.pathname
+  .split("/")
+  .pop()
+  .replace(".html", "");
+document.querySelectorAll(".nav-link").forEach((link) => {
+  if (link.dataset.page === currentPage) {
+    link.classList.add("active-link");
+  }
+});
+
+window.addEventListener("scroll", () => {
+  const header = document.querySelector(".header");
+  if (window.scrollY > 20) {
+    header.classList.add("scrolled");
+  } else {
+    header.classList.remove("scrolled");
+  }
+});
+
+// ---------------------------------------//
+
 if (searchInput && dropdown) {
   searchInput.addEventListener("input", () => {
     const query = searchInput.value.trim();
@@ -103,4 +125,31 @@ document.addEventListener("click", (e) => {
     dropdown.style.display = "none";
     currentIndex = -1;
   }
+});
+
+// Toggle nav menu on hamburger click
+document.getElementById("hamburger")?.addEventListener("click", () => {
+  const menu = document.getElementById("nav-menu");
+  menu.classList.toggle("show");
+});
+
+// Dark Mode ----------------------------------
+
+const themeToggleBtn = document.getElementById("themeToggleBtn");
+const prefersDark = localStorage.getItem("darkMode") === "true";
+
+// Apply saved theme
+if (prefersDark) {
+  document.body.classList.add("dark-mode");
+  themeToggleBtn.textContent = "☀️";
+} else {
+  themeToggleBtn.textContent = "🌙";
+}
+
+// Toggle theme on click
+themeToggleBtn.addEventListener("click", () => {
+  document.body.classList.toggle("dark-mode");
+  const isDark = document.body.classList.contains("dark-mode");
+  themeToggleBtn.textContent = isDark ? "☀️" : "🌙";
+  localStorage.setItem("darkMode", isDark);
 });
