@@ -47,8 +47,10 @@ function renderSuggestions(suggestions) {
     dropdown.innerHTML = suggestions
       .map(
         (item) => `
-        <li onclick="handleSuggestionClick('${item.symbol}')">
-          <strong>${item.symbol}</strong> — ${item.description}
+        <li>
+          <a href="detail.html?symbol=${item.symbol}">
+            <strong>${item.symbol}</strong> — ${item.description}
+          </a>
         </li>`
       )
       .join("");
@@ -57,7 +59,7 @@ function renderSuggestions(suggestions) {
 }
 
 function handleSuggestionClick(symbol) {
-  window.location.href = `detail.html?symbol=${symbol}`;
+  window.location.href = `detail.html?symbol=${symbol}&type=stock`;
 }
 
 let activeIndex = -1;
