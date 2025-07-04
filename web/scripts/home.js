@@ -16,10 +16,10 @@ const CRYPTO_NAME_MAP = {
 
 // === ICON MAPPINGS ===
 const stockLogoMap = {
-  AAPL: "../assets/icons/apple.png",
-  NFLX: "../assets/icons/netflix.png",
-  AMZN: "../assets/icons/amazon.png",
-  NKE: "../assets/icons/nike.png",
+  AAPL: "../assets/icons/aapl.png",
+  NFLX: "../assets/icons/nflx.png",
+  AMZN: "../assets/icons/amzn.png",
+  NKE: "../assets/icons/nke.png",
 };
 
 const cryptoLogoMap = {
@@ -153,11 +153,13 @@ function loadStockCards(stocks) {
     const symbol = stock.symbol;
     const logoUrl = stockLogoMap[symbol] || "assets/icons/default.png";
 
-    const card = document.createElement("div");
+    const card = document.createElement("a");
+    card.href = `detail.html?symbol=${symbol}&type=stock`; // 👈 include stock type
     card.className = "mover";
     card.innerHTML = `
       <img src="${logoUrl}" alt="${symbol}" class="coin-logo" />
-      ${symbol} <span class="${change >= 0 ? "green" : "red"}">${change.toFixed(
+      ${symbol}
+      <span class="${change >= 0 ? "green" : "red"}">${change.toFixed(
       3
     )}%</span>
     `;
@@ -194,15 +196,18 @@ function loadCryptoCards(data) {
   container.innerHTML = "";
 
   data.forEach((coin) => {
-    const symbol = CRYPTO_NAME_MAP[coin.symbol] || coin.symbol;
+    const symbol = coin.symbol;
+    const displayName = CRYPTO_NAME_MAP[symbol] || symbol;
     const change = ((coin.c - coin.pc) / coin.pc) * 100;
-    const logoUrl = cryptoLogoMap[symbol] || "assets/icons/default.png";
+    const logoUrl = cryptoLogoMap[displayName] || "assets/icons/default.png";
 
-    const card = document.createElement("div");
+    const card = document.createElement("a");
+    card.href = `detail.html?symbol=${symbol}&type=crypto`; // 👈 include crypto type
     card.className = "crypto";
     card.innerHTML = `
-      <img src="${logoUrl}" alt="${symbol}" class="coin-logo" />
-      ${symbol} <span class="${change >= 0 ? "green" : "red"}">${change.toFixed(
+      <img src="${logoUrl}" alt="${displayName}" class="coin-logo" />
+      ${displayName}
+      <span class="${change >= 0 ? "green" : "red"}">${change.toFixed(
       3
     )}%</span>
     `;

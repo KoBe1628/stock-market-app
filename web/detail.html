@@ -23,18 +23,43 @@
 
     <main class="detail-page">
       <!-- Back + Title -->
+      <!-- Warning for fallback -->
+      <div
+        id="fallback-warning"
+        style="
+          display: none;
+          background-color: #fff3cd;
+          color: #856404;
+          padding: 8px 16px;
+          border: 1px solid #ffeeba;
+          border-radius: 5px;
+          margin-bottom: 12px;
+        "
+      >
+        ⚠️ This data is from fallback (mock) data due to API error.
+      </div>
+
       <div class="detail-header">
-        <span class="back-btn">←</span>
-        <h2>Bitcoin</h2>
+        <h2>
+          <a href="home.html" id="back-link">←</a>
+          <span id="page-title">Detail Page</span>
+        </h2>
       </div>
 
       <!-- Coin Info -->
       <div class="coin-info">
-        <img src="/assets/icons/bitcoin.svg" alt="Bitcoin Icon" />
+        <img
+          src="/assets/icons/btc.png"
+          id="btc-logo"
+          alt="Asset Icon"
+          onerror="this.onerror=null;this.src='/assets/icons/default.png';"
+        />
         <h3 id="btc-name">BTC Bitcoin</h3>
         <span id="btc-price" class="price">$84,146.70</span>
         <span id="btc-change" class="price-change positive">+0.29%</span>
       </div>
+
+      <button id="watchlist-btn">Add to Watchlist</button>
 
       <!-- Chart -->
       <div class="chart">
@@ -91,6 +116,6 @@
     </main>
     <!-- Chart.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="scripts/btc-detail.js"></script>
+    <script src="scripts/detail.js"></script>
   </body>
 </html>

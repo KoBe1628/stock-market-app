@@ -651,6 +651,27 @@ footer {
   margin-bottom: 1rem;
 }
 
+/* Detail Page */
+#watchlist-btn {
+  margin-top: 12px;
+  padding: 10px 16px;
+  background-color: #14b866;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+#watchlist-btn:disabled {
+  background-color: gray;
+  cursor: not-allowed;
+}
+
+h2 a {
+  text-decoration: none;
+  color: black;
+}
+
 @media (max-width: 768px) {
   .search-wrapper {
     width: 100%;
@@ -678,6 +699,20 @@ footer {
   #search-dropdown li {
     padding: 14px 16px;
     border-bottom: 1px solid #eee;
+  }
+
+  #search-dropdown li a {
+    display: block;
+    padding: 8px;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  #search-dropdown li.active a {
+    background-color: #e0e0e0;
+    font-weight: bold;
+    text-decoration: none;
+    color: inherit;
   }
 
   #search-dropdown li:last-child {
