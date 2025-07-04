@@ -206,7 +206,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                       ...coinResults.map((c) => _buildCoinTile(c)),
                     ],
                     if (stockResults.isEmpty && coinResults.isEmpty && searchQuery.isNotEmpty)
-                      const Center(child: Text('No results found')),
+                      const Center(child: Text('No results found for now')),
                   ],
                 ),
               ),

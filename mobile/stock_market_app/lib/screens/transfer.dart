@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-// import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'dart:async'; // Added for debouncing
 import 'package:stock_market_app/secrets.dart';
-
 
 class TransferScreen extends StatefulWidget {
   final String symbol;
@@ -14,7 +13,8 @@ class TransferScreen extends StatefulWidget {
     super.key,
     required this.symbol,
     required this.isCrypto,
-    required this.action,});
+    required this.action,
+  });
 
   @override
   State<TransferScreen> createState() => _TransferScreenState();
@@ -22,16 +22,8 @@ class TransferScreen extends StatefulWidget {
 
 class _TransferScreenState extends State<TransferScreen> {
   final List<String> assets = [
-    'BTC',
-    'ETH',
-    'SOL',
-    'AAPL',
-    'TSLA',
-    'NFLX',
-    'GOOGL',
-    'META',
-    'MSFT',
-    'PFE'
+    'BTC', 'ETH', 'SOL',
+    'AAPL', 'TSLA', 'NFLX', 'GOOGL', 'META', 'MSFT', 'PFE'
   ];
   final List<String> fiats = ['USD', 'EUR'];
 
@@ -45,6 +37,8 @@ class _TransferScreenState extends State<TransferScreen> {
   Map<String, double> latestPrices = {};
   bool isLoading = true;
 
+  Timer? _debounce;
+
   @override
   void initState() {
     super.initState();
@@ -55,7 +49,15 @@ class _TransferScreenState extends State<TransferScreen> {
     try {
       const coingeckoUrl =
           'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana&vs_currencies=usd,eur';
-      final stockSymbols = ['AAPL', 'TSLA', 'NFLX', 'GOOGL', 'META', 'MSFT', 'PFE'];
+      final stockSymbols = [
+        'AAPL',
+        'TSLA',
+        'NFLX',
+        'GOOGL',
+        'META',
+        'MSFT',
+        'PFE'
+      ];
       final finnhubKey = finnhubApiKey;
 
       final res = await http.get(Uri.parse(coingeckoUrl));
@@ -68,27 +70,33 @@ class _TransferScreenState extends State<TransferScreen> {
       latestPrices['SOL_USD'] = coinData['solana']['usd'].toDouble();
       latestPrices['SOL_EUR'] = coinData['solana']['eur'].toDouble();
 
-      for (var symbol in stockSymbols) {
+      await Future.wait(stockSymbols.map((symbol) async {
         final uri = Uri.parse(
             'https://finnhub.io/api/v1/quote?symbol=$symbol&token=$finnhubKey');
         final stockRes = await http.get(uri);
         final data = jsonDecode(stockRes.body);
-        latestPrices['${symbol}_USD'] = data['c']?.toDouble() ?? 0.0;
-        latestPrices['${symbol}_EUR'] = (data['c'] * 0.93).toDouble(); // est.
-      }
+        final price = data['c']?.toDouble() ?? 0.0;
+        latestPrices['${symbol}_USD'] = price;
+        latestPrices['${symbol}_EUR'] = price * 0.93; // est.
+      }));
 
-      setState(() => isLoading = false);
+      setState(() {
+        isLoading = false;
+      });
     } catch (e) {
       debugPrint('❌ Error fetching prices: $e');
     }
   }
 
   void onAmountChanged(String value) {
-    setState(() {
-      enteredAmount = double.tryParse(value) ?? 0.0;
-      String key = '${fromAsset}_$toFiat';
-      double rate = latestPrices[key] ?? 0.0;
-      convertedAmount = enteredAmount * rate;
+    if (_debounce?.isActive ?? false) _debounce!.cancel();
+    _debounce = Timer(const Duration(milliseconds: 300), () {
+      setState(() {
+        enteredAmount = double.tryParse(value) ?? 0.0;
+        final key = '${fromAsset}_$toFiat';
+        final rate = latestPrices[key] ?? 0.0;
+        convertedAmount = enteredAmount * rate;
+      });
     });
   }
 
@@ -118,8 +126,6 @@ class _TransferScreenState extends State<TransferScreen> {
     }
   }
 
-
-
   Widget buildAssetDropdown() {
     return DropdownButton<String>(
       value: fromAsset,
@@ -140,15 +146,12 @@ class _TransferScreenState extends State<TransferScreen> {
       onChanged: (val) => setState(() => fromAsset = val!),
     );
   }
-
   Widget buildFiatDropdown() {
     return DropdownButton<String>(
       value: toFiat,
       isExpanded: true,
       items: fiats.map((e) {
-        final flagPath = e == 'USD'
-            ? 'assets/flags/us.png'
-            : 'assets/flags/germany.png';
+        final flagPath = e == 'USD' ? 'assets/flags/us.png' : 'assets/flags/germany.png';
         return DropdownMenuItem(
           value: e,
           child: Row(
@@ -169,7 +172,8 @@ class _TransferScreenState extends State<TransferScreen> {
     final theme = Theme.of(context);
 
     return Scaffold(
-      appBar: AppBar(title: Text('${widget.action.toUpperCase()} ${widget.symbol.toUpperCase()}'),
+      appBar: AppBar(
+        title: Text('${widget.action.toUpperCase()} ${widget.symbol.toUpperCase()}'),
       ),
       body: isLoading
           ? const Center(child: CircularProgressIndicator())
@@ -190,8 +194,7 @@ class _TransferScreenState extends State<TransferScreen> {
             const SizedBox(height: 16),
             TextField(
               keyboardType: TextInputType.number,
-              decoration: const InputDecoration(
-                  labelText: 'Enter amount'),
+              decoration: const InputDecoration(labelText: 'Enter amount'),
               onChanged: onAmountChanged,
             ),
             const SizedBox(height: 20),
@@ -210,7 +213,6 @@ class _TransferScreenState extends State<TransferScreen> {
               child: Text(
                 convertedAmount.toStringAsFixed(2),
                 style: theme.textTheme.titleLarge,
-
               ),
             ),
             const SizedBox(height: 20),
@@ -219,8 +221,8 @@ class _TransferScreenState extends State<TransferScreen> {
                 // Add action here
               },
               style: ElevatedButton.styleFrom(
-                  backgroundColor:
-                  isBuying ? Colors.green : Colors.red),
+                backgroundColor: isBuying ? Colors.green : Colors.red,
+              ),
               child: Text(isBuying ? 'Buy Now' : 'Sell Now'),
             ),
           ],
