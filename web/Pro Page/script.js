@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
   const pricingButtons = document.querySelectorAll(".pricing-button");
 
   pricingButtons.forEach((btn) => {
@@ -7,23 +7,16 @@ document.addEventListener("DOMContentLoaded", function () {
       btn.classList.add("selected");
     });
   });
-});
 
-document.addEventListener("DOMContentLoaded", () => {
-    const currentPage = document.body.dataset.page;
-    const navLinks = document.querySelectorAll('.nav-links a');
+  const locationEl = document.getElementById("location-display");
 
-    navLinks.forEach(link => {
-      const href = link.getAttribute('href') || '';
-      // Match based on known href parts and the page label
-      if (
-        (currentPage === "home" && href.includes("Main Page/homepage.html")) ||
-        (currentPage === "buy" && href.includes("Home Page/homepage.html")) ||
-        (currentPage === "pro" && href.includes("Pro Page/propage.html")) ||
-        (currentPage === "portfolio" && href.includes("portfolio")) ||
-        (currentPage === "profile" && href.includes("profile"))
-      ) {
-        link.classList.add("active-page");
-      }
+  fetch("https://api.country.is/")
+    .then(res => res.json())
+    .then(data => {
+      const flagUrl = `https://flagsapi.com/${data.country}/flat/24.png`;
+      locationEl.innerHTML = `<img src="${flagUrl}" alt="${data.country} flag" /> ${data.country}`;
+    })
+    .catch(() => {
+      locationEl.textContent = "Location unavailable";
     });
-  });
+});

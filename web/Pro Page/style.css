@@ -4,27 +4,14 @@ body {
   background-color: #f3f3f3;
 }
 
-.navbar {
-  background-color: white;
-  padding: 1rem 2rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid #ddd;
-}
 
-.logo {
-  font-weight: bold;
-  font-style: italic;
-  color: #2cb742;
-  font-size: 2rem;
-}
 
 .search-bar {
-  width: 500px;
-  padding: 0.6rem 0.8rem;
+  width: 400px;
+  padding: 0.4rem 0.6rem;
   border: 1px solid #ccc;
   border-radius: 4px;
+
 }
 
 .search-location-wrapper {
@@ -44,20 +31,12 @@ body {
 .location-info img {
   width: 20px;
   height: 14px;
-  object-fit: cover;
   margin-right: 4px;
 }
 
-.nav-links a {
-  margin-left: 1.5rem;
-  text-decoration: none;
-  color: #333;
-  font-weight: 500;
-}
 
-/* Main section */
+
 .pro-main {
-  padding: 2rem;
   display: flex;
   justify-content: center;
 }
@@ -66,7 +45,7 @@ body {
   background-color: #fff;
   padding: 2rem;
   border-radius: 12px;
-  max-width: 800px;
+  max-width: 850px;
   width: 100%;
   box-shadow: 0 2px 10px rgba(0,0,0,0.1);
   text-align: center;
@@ -94,28 +73,12 @@ body {
   font-weight: bold;
 }
 
-/* Features grid */
-.features-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
-  justify-items: center;
-  margin-bottom: 2rem;
-  width: 75%;
-  margin-left: auto;
-  margin-right: auto;
-}
-
 .feature-box {
   background: #fff;
   border: 1px solid #ccc;
   border-radius: 10px;
-  width: 200px;
   padding: 1rem;
   box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   font-weight: 500;
 }
 
@@ -125,7 +88,7 @@ body {
   margin-bottom: 10px;
 }
 
-/* Pricing */
+/* Pricing buttons */
 .pricing-options {
   display: flex;
   flex-direction: column;
@@ -160,11 +123,13 @@ body {
   color: white;
   border: 2px solid #d84343;
   font-weight: 600;
+  font-size: 15px;
+  padding: 10px 20px;
   box-shadow: 0 6px 16px rgba(255, 106, 106, 0.4);
 }
 
+
 .upgrade-button {
-  margin-top: 10px;
   padding: 12px 24px;
   background-color: #1e1f3f;
   color: white;
@@ -180,7 +145,6 @@ body {
   background-color: #2a2c5a;
 }
 
-/* Footer */
 footer {
   background: #fff;
   padding: 2rem;
@@ -209,4 +173,29 @@ footer {
   text-align: center;
   padding: 1rem;
   font-size: 0.85rem;
+}
+
+
+.logo {
+  font-weight: bold;
+  font-style: italic;
+  color: #2cb742;
+  font-size: 2rem;
+}
+
+.navbar {
+  background-color: #fff;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #333;
+  padding: 6px 10px;
+  border-radius: 4px;
+}
+
+.nav-links a.active {
+  color: #2cb742;
+  border: 1px solid #2cb742;
 }

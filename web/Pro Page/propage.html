@@ -2,55 +2,85 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>BeStox Pro</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
   <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
 </head>
 <body data-page="pro">
-  <header class="navbar">
-    <div class="logo">Be<span>Stox</span></div>
-    <div class="search-location-wrapper">
-  <input type="text" class="search-bar" placeholder="Search..." />
-  <div id="location-display" class="location-info">Detecting location...</div>
-    </div>
-    <nav class="nav-links">
-      <a href="../Main Page/homepage.html" data-page = "home">Home</a>
-      <a href="../Home Page/homepage.html" data-page = "buy">Buy USDC</a>
-      <a href="../Pro Page/propage.html" data-page="pro">Pro</a>
-      <a href="../portfolio-watchlist.html" data-page = "portfolio">Portfolio</a>
-      <a href="#">Profile</a>
-    </nav>
-  </header>
+<header class="navbar navbar-expand-lg px-3 py-2 bg-white">
+  <div class="container-fluid">
+    <div class="logo">BeStox</div>
 
-  <main class="pro-main">
-    <section class="pro-box">
-      <h2>UNLOCK <span class="pro-green">Be</span><span class="pro-green">Stox</span><span class="pro-red"> Pro</span></h2>
-      <p class="pro-sub">Take your investing to the next level with exclusive features and advanced insights</p>
+    <!-- Hamburger Toggler -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-      <div class="features-grid">
-        <div class="feature-box">
-          <img src="alert.png" alt="Alert Icon" class="feature-icon" />
-          Real-time price alerts
-        </div>
-        <div class="feature-box">
-          <img src="adfree.png" alt="Ad-Free Icon" class="feature-icon" />
-          Ad-Free experience
-        </div>
-        <div class="feature-box">
-          <img src="chart.png" alt="Chart Icon" class="feature-icon" />
-          Advanced charting tools
-        </div>
-        <div class="feature-box">
-          <img src="ai.png" alt="AI Icon" class="feature-icon" />
-          AI-Powered market analysis
+    <!-- Collapsible Content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <div class="d-flex align-items-center flex-grow-1 mx-3 gap-3 justify-content-center flex-wrap">
+        <input type="text" id="search-input" class="search-bar form-control" placeholder="Search..." autocomplete="off" />
+        <div id="location-display" class="location-info d-flex align-items-center gap-2">
+          <img id="flag" src="" alt="" style="width: 24px;" />
+          <span id="country-code">DE</span>
         </div>
       </div>
 
-      <div class="pricing-options">
-        <button class="pricing-button selected">Yearly 72.00 $ - Per month 6$<br><small>Save 50% off</small></button>
-        <button class="pricing-button">Monthly 9.99$</button>
-        <button class="upgrade-button">Upgrade</button>
+      <nav class="nav-links d-flex gap-4 flex-wrap ms-auto">
+        <a href="../Main Page/homepage.html" data-page="home">Home</a>
+        <a href="../Home Page/homepage.html" data-page="buy">Buy USDC</a>
+        <a href="../Pro Page/propage.html" data-page="pro">Pro</a>
+        <a href="../portfolio-watchlist.html" data-page="portfolio">Portfolio</a>
+        <a href="#" data-page="profile">Profile</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+
+
+  <main class="pro-main container py-5">
+    <section class="pro-box text-center">
+      <h2>UNLOCK <span class="text-success fw-semibold">BeStox</span><span class="text-danger fw-bold"> Pro</span></h2>
+      <p class="pro-sub mb-4">Take your investing to the next level with exclusive features and advanced insights</p>
+
+      <div class="row g-4 mb-5">
+        <div class="col-md-6 col-lg-3">
+          <div class="card h-100 shadow-sm p-3">
+            <img src="alert.png" alt="Alert Icon" class="feature-icon mb-2 mx-auto d-block" />
+            <div>Real-time price alerts</div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <div class="card h-100 shadow-sm p-3">
+            <img src="adfree.png" alt="Ad-Free Icon" class="feature-icon mb-2 mx-auto d-block" />
+            <div>Ad-Free experience</div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <div class="card h-100 shadow-sm p-3">
+            <img src="chart.png" alt="Chart Icon" class="feature-icon mb-2 mx-auto d-block" />
+            <div>Advanced charting tools</div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <div class="card h-100 shadow-sm p-3">
+            <img src="ai.png" alt="AI Icon" class="feature-icon mb-2 mx-auto d-block" />
+            <div>AI-Powered market analysis</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="d-flex flex-column align-items-center gap-3">
+        <button id="yearly-btn" class="btn btn-danger px-4 py-2 pricing-button selected">
+          <div class="fw-bold">Yearly 72.00 $ - Per month 6$</div>
+          <small class="text-white-50">Save 50% off</small>
+        </button>
+        <button id="monthly-btn" class="btn btn-outline-dark px-4 pricing-button">Monthly 9.99$</button>
+        <button class="btn btn-primary px-4">Upgrade</button>
       </div>
     </section>
   </main>
@@ -103,31 +133,50 @@
     </div>
   </footer>
 
-  <div class="copyright">
+  <div class="copyright text-center py-3">
     © 2025 BeStox. All rights reserved.
   </div>
 
   <script src="script.js"></script>
-<script>
-document.addEventListener("DOMContentLoaded", async () => {
-  const locationEl = document.getElementById("location-display");
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
 
-  try {
-    const res = await fetch("https://api.country.is/");
-    const data = await res.json();
-
-    const countryCode = data.country; // 2-letter code
-    const flagUrl = `https://flagsapi.com/${countryCode}/flat/24.png`;
-
-    locationEl.innerHTML = `
-      <img src="${flagUrl}" alt="${countryCode} flag" />
-      ${countryCode}
-    `;
-  } catch (err) {
-    locationEl.textContent = "Location unavailable";
-    console.error("Location detection error:", err);
-  }
+     // Highlight active nav link
+  const current = document.body.getAttribute("data-page");
+  document.querySelectorAll(".nav-links a").forEach(link => {
+    if (link.dataset.page === current) {
+      link.classList.add("active");
+    }
+  });
 });
-</script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      const locationEl = document.getElementById("location-display");
+
+      try {
+        const res = await fetch("https://api.country.is/");
+        const data = await res.json();
+
+        const countryCode = data.country;
+        const flagUrl = `https://flagsapi.com/${countryCode}/flat/24.png`;
+
+        locationEl.innerHTML = `<img src="${flagUrl}" alt="${countryCode} flag" class="me-1"/> ${countryCode}`;
+      } catch (err) {
+        locationEl.textContent = "Location unavailable";
+        console.error("Location detection error:", err);
+      }
+
+      // Pricing button toggle
+      const buttons = document.querySelectorAll('.pricing-button');
+      buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          buttons.forEach(b => b.classList.remove('selected', 'btn-danger', 'btn-outline-dark'));
+          btn.classList.add('selected', 'btn-danger');
+          buttons.forEach(b => {
+            if (b !== btn) b.classList.add('btn-outline-dark');
+          });
+        });
+      });
+    });
+  </script>
 </body>
 </html>
