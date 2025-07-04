@@ -5,23 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>BeStox - Portfolio</title>
     <link rel="stylesheet" href="styles/style.css" />
+    <link rel="stylesheet" href="styles/shared.css" />
   </head>
   <body>
-    <!-- Navigation -->
-    <header>
-      <nav class="navbar">
-        <div class="logo">BeStox</div>
-        <div class="search-container">
-          <input type="text" placeholder="Search..." />
-          <span class="search-icon">🔍</span>
-        </div>
-        <ul class="nav-links">
-          <li><a href="#">Transfer</a></li>
-          <li><a href="#">Portfolio</a></li>
-          <li><a href="#">Profile</a></li>
-        </ul>
-      </nav>
-    </header>
+    <!-- Header -->
+    <div id="header-placeholder"></div>
 
     <main class="portfolio-page">
       <!-- Account Overview -->
@@ -124,56 +112,28 @@
       </section>
     </main>
 
-    <footer>
-      <div class="footer-links">
-        <div>
-          <h5>About Us</h5>
-          <ul>
-            <li>Our Story</li>
-            <li>Press</li>
-            <li>Blog</li>
-            <li>Awards</li>
-          </ul>
-        </div>
-        <div>
-          <h5>Services</h5>
-          <ul>
-            <li>Stock Trading</li>
-            <li>Crypto Trading</li>
-            <li>Portfolio Tracking</li>
-            <li>Market Insights</li>
-          </ul>
-        </div>
-        <div>
-          <h5>Support</h5>
-          <ul>
-            <li>Help Center</li>
-            <li>FAQs</li>
-            <li>Contact Us</li>
-            <li>Live Chat</li>
-          </ul>
-        </div>
-        <div>
-          <h5>Legal</h5>
-          <ul>
-            <li>Privacy & Policy</li>
-            <li>Terms & Conditions</li>
-            <li>Security</li>
-            <li>Disclosures</li>
-          </ul>
-        </div>
-        <div>
-          <h5>Follow Us</h5>
-          <ul>
-            <li>Facebook</li>
-            <li>Twitter</li>
-            <li>LinkedIn</li>
-            <li>Instagram</li>
-          </ul>
-        </div>
-      </div>
-      <p class="footer-note">&copy; 2025 BeStox. All rights reserved.</p>
-    </footer>
+    <!-- Footer -->
+    <div id="footer-placeholder"></div>
+
+    <!-- Scripts -->
+    <script>
+      fetch("components/header.html")
+        .then((res) => res.text())
+        .then((data) => {
+          document.getElementById("header-placeholder").innerHTML = data;
+
+          // Load header.js AFTER injecting header HTML
+          const script = document.createElement("script");
+          script.src = "scripts/header.js";
+          document.body.appendChild(script);
+        });
+
+      fetch("components/footer.html")
+        .then((res) => res.text())
+        .then((data) => {
+          document.getElementById("footer-placeholder").innerHTML = data;
+        });
+    </script>
 
     <script src="scripts/portfolio-watchlist.js"></script>
   </body>
