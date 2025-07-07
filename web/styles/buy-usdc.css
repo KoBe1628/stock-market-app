@@ -1,0 +1,234 @@
+body {
+  font-family: "Inter", sans-serif;
+  background-color: #f2f2f2;
+  margin: 0;
+  padding: 0;
+  color: #333;
+}
+
+.popular-title {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 1.2rem;
+  text-align: left; /* Fix alignment */
+  padding-left: 1rem;
+}
+
+.container-main {
+  max-width: 1300px;
+  margin: 2rem auto;
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.left-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.right-section {
+  flex: 1;
+}
+
+.container-small {
+  background: #fff;
+  padding: 4rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.tabs {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 4rem;
+}
+
+.tabs button {
+  flex: 1;
+  padding: 0.7rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1rem;
+  background: #eee;
+}
+
+.tabs button.active.buy {
+  background: #28a745;
+  color: white;
+}
+
+.tabs button.active.sell {
+  background: #dc3545;
+  color: white;
+}
+
+label {
+  display: block;
+  margin: 1rem 0 0.3rem;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 0.6rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.supported-cards {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 1rem 0;
+}
+
+.supported-cards img {
+  height: 70px;
+  width: 70px;
+}
+
+.submit-btn {
+  background: #28a745;
+  color: white;
+  padding: 0.9rem;
+  width: 100%;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.popular-coins {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.coin {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  background: #fff;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 3px 6px rgba(0, 1, 1, 0.2);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.coin img {
+  width: 48px;
+  height: 48px;
+}
+
+.coin-row-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.coin:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 1, 1, 0.25);
+  cursor: pointer;
+}
+
+.coin-row-link:hover .coin-row {
+  background-color: #f4f4f4; /* Optional hover effect */
+  cursor: pointer;
+}
+
+.positive {
+  color: #28a745;
+  font-weight: bold;
+}
+
+.negative {
+  color: #dc3545;
+  font-weight: bold;
+}
+
+.info-box {
+  margin-top: auto;
+  background: #f9f9f9;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-top: 2rem; /* Increased spacing for better flow */
+  font-size: 0.95rem;
+  color: #444;
+  line-height: 1.5;
+}
+
+.info-box1 {
+  margin-top: 0.5rem;
+  font-size: 1rem;
+}
+.popular {
+  text-align: left;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+/* Fade-in animation */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeInUp 0.7s ease forwards;
+}
+
+/* Hover lift effect */
+.coin {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.coin:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* Button hover effect */
+.submit-btn {
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+.submit-btn:hover {
+  transform: scale(1.03);
+  background-color: #24933d;
+}
+
+/* Stagger animations */
+/* Base fade-in keyframes */
+@keyframes fadeInStaggered {
+  0% {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Base class to trigger animation */
+.stagger-fade {
+  opacity: 0;
+  animation: fadeInStaggered 0.6s ease forwards;
+}
+/* ------------------------- */

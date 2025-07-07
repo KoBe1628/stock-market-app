@@ -31,6 +31,17 @@
   max-width: 640px;
   width: 100%;
   text-align: center;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeUp 0.8s ease-out forwards;
+  animation-delay: 0.3s;
+}
+
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Title & subtitle */
@@ -63,19 +74,12 @@
 }
 
 /* CTA Button */
-.btn-upgrade-pro {
-  background-color: #10b981;
-  color: white;
-  font-size: 1.1rem;
-  padding: 14px 28px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+.btn-upgrade {
+  transition: transform 0.2s ease;
 }
 
-.btn-upgrade-pro:hover {
-  background-color: #0d946c;
+.btn-upgrade:hover {
+  transform: translateY(-3px);
 }
 
 .plan-note {
@@ -104,4 +108,42 @@ animation: fadeInUp 0.6s ease-out both: triggers the animation only once and kee
 .pro-card {
   /* existing styles... */
   animation: fadeInUp 0.6s ease-out both;
+}
+
+/* Animation keyframes */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Base animation class for all feature boxes */
+.feature-box {
+  opacity: 0;
+  animation: fadeUp 0.6s ease forwards;
+}
+
+/* Staggered delays */
+.feature-box:nth-child(1) {
+  animation-delay: 0.1s;
+}
+.feature-box:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.feature-box:nth-child(3) {
+  animation-delay: 0.3s;
+}
+.feature-box:nth-child(4) {
+  animation-delay: 0.4s;
+}
+.feature-box:nth-child(5) {
+  animation-delay: 0.5s;
+}
+.feature-box:nth-child(6) {
+  animation-delay: 0.6s;
 }
