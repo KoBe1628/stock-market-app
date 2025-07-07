@@ -264,13 +264,15 @@ window.addEventListener("load", renderChartWithFallback);
 
 function isInWatchlist(symbol) {
   const list = JSON.parse(localStorage.getItem("watchlist")) || [];
-  return list.includes(symbol);
+  return list.some((item) => item.symbol === symbol);
 }
 
 function addToWatchlist(symbol) {
   let list = JSON.parse(localStorage.getItem("watchlist")) || [];
+
+  // 🚫 Fix: Don't push object! ✅ Just the string symbol
   if (!list.includes(symbol)) {
-    list.push(symbol);
+    list.push(symbol); // ✅ only push string like 'AAPL'
     localStorage.setItem("watchlist", JSON.stringify(list));
   }
 }
@@ -285,7 +287,7 @@ function setupWatchlistButton() {
   }
 
   btn.addEventListener("click", () => {
-    addToWatchlist(symbol);
+    addToWatchlist(symbol, type); // 👈 pass `type` now
     btn.textContent = "In Watchlist";
     btn.disabled = true;
   });

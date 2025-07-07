@@ -335,30 +335,104 @@ footer .copyright {
   color: #bbb;
 }
 
-/* Tablet (601px to 1024px) */
-@media (max-width: 1024px) {
-  .main-container {
+/* Small Desktop (1025px to 1280px) */
+@media (max-width: 1280px) and (min-width: 1025px) {
+  .container {
+    padding: 24px 16px;
+  }
+
+  .snapshot-box,
+  .news-feed {
     padding: 20px;
   }
 
-  .section-flex {
+  .mover,
+  .crypto {
+    flex: 1 0 140px;
+  }
+
+  .header {
+    padding: 16px;
+  }
+
+  .footer {
+    padding: 32px 16px;
+  }
+}
+
+/* Tablet (601px to 1024px) */
+@media (max-width: 1024px) {
+  .header {
     flex-direction: column;
-    gap: 1.5rem;
+    align-items: flex-start;
+    gap: 12px;
   }
 
-  .snapshot,
-  .news {
+  .container {
+    padding: 24px 20px;
+  }
+
+  .snapshot-news-container {
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .snapshot-box,
+  .news-feed {
     width: 100%;
+    padding: 20px;
   }
 
-  .market-section {
-    flex-wrap: wrap;
+  .news-image {
+    width: 70px;
+    height: 70px;
+    margin-right: 10px;
+  }
+
+  .news-title {
+    font-size: 15px;
+  }
+
+  .news-source {
+    font-size: 0.8rem;
+  }
+
+  .movers-grid,
+  .crypto-grid {
     justify-content: center;
   }
 
-  .market-section .card {
-    width: 45%;
-    margin: 10px 0;
+  .mover,
+  .crypto {
+    flex: 1 0 45%;
+    max-width: 48%;
+  }
+
+  .promo {
+    padding: 24px;
+    font-size: 1rem;
+  }
+
+  .btn-upgrade {
+    padding: 8px 16px;
+    font-size: 0.95rem;
+  }
+
+  .footer {
+    padding: 32px 20px;
+  }
+
+  .footer-links {
+    gap: 32px;
+    justify-content: space-around;
+  }
+
+  .footer-links h5 {
+    font-size: 1rem;
+  }
+
+  .footer-links li {
+    font-size: 0.9rem;
   }
 }
 
@@ -366,63 +440,100 @@ footer .copyright {
 @media (max-width: 600px) {
   .header {
     flex-direction: column;
-    align-items: flex-start;
-    gap: 0.5rem;
+    align-items: stretch;
+    gap: 12px;
+    padding: 16px;
   }
 
   .header nav {
-    margin-left: 0;
-    justify-content: flex-start;
     flex-wrap: wrap;
+    gap: 12px;
+    margin-left: 0;
+    font-size: 0.95rem;
+  }
+
+  .container {
+    padding: 20px 16px;
   }
 
   .snapshot-news-container {
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 20px;
   }
 
   .snapshot-box,
   .news-feed {
     width: 100%;
+    padding: 16px;
   }
 
-  h1 {
-    font-size: 1.5rem;
+  .news-card {
+    flex-direction: column;
+    align-items: center;
     text-align: center;
   }
 
-  .snapshot,
-  .news {
-    padding: 15px;
-  }
-
-  .market-section .card {
+  .news-image {
     width: 100%;
+    height: auto;
+    margin: 0 0 10px 0;
   }
 
-  .market-section {
+  .news-title {
+    font-size: 1rem;
+  }
+
+  .news-source {
+    font-size: 0.8rem;
+  }
+
+  .movers-grid,
+  .crypto-grid {
     flex-direction: column;
     align-items: center;
+    gap: 16px;
   }
 
-  .upgrade-cta {
+  .mover,
+  .crypto {
+    width: 100%;
+    max-width: 320px;
+  }
+
+  .promo {
     padding: 20px;
+    text-align: center;
+    font-size: 1rem;
+    border-radius: 12px;
+  }
+
+  .btn-upgrade {
+    font-size: 0.95rem;
+    padding: 10px 14px;
+  }
+
+  .footer {
+    padding: 24px 16px;
     text-align: center;
   }
 
-  footer {
-    flex-direction: column;
-    text-align: center;
-    padding: 20px;
-  }
-
-  footer .footer-links {
+  .footer-links {
     flex-direction: column;
     align-items: center;
-    gap: 20px;
+    gap: 16px;
   }
 
-  .footer-note {
+  .footer-links h5 {
+    font-size: 1rem;
+  }
+
+  .footer-links li {
+    font-size: 0.85rem;
+  }
+
+  footer .copyright {
     margin-top: 20px;
+    font-size: 0.8rem;
+    color: #ccc;
   }
 }

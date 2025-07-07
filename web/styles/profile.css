@@ -247,3 +247,84 @@ footer .copyright {
   background-color: #ffe5e5;
   color: #b80000;
 }
+
+/* ========== Tablet (max-width: 1024px) ========== */
+@media (max-width: 1024px) {
+  main.profile-container {
+    padding: 1.5rem;
+  }
+
+  .profile-card {
+    padding: 1.5rem;
+  }
+
+  .summary-grid {
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .account-summary,
+  .portfolio-performance {
+    padding: 1rem 0;
+  }
+}
+
+/* ========== Mobile (max-width: 768px) ========== */
+@media (max-width: 768px) {
+  main.profile-container {
+    padding: 1rem;
+  }
+
+  .profile-card {
+    padding: 1rem;
+    box-shadow: none;
+    border-radius: 0;
+  }
+
+  .profile-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .profile-avatar {
+    width: 48px;
+    height: 48px;
+    font-size: 16px;
+  }
+
+  .edit-btn {
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 1rem;
+    text-align: center;
+  }
+
+  .summary-grid {
+    flex-direction: column;
+  }
+
+  .summary-grid > div {
+    width: 100%;
+  }
+
+  .chart-placeholder {
+    padding: 1.5rem;
+    font-size: 0.9rem;
+  }
+
+  .account-settings li {
+    font-size: 0.95rem;
+    padding: 0.75rem;
+  }
+
+  .footer-links {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  footer .copyright {
+    font-size: 0.8rem;
+    margin-top: 2rem;
+  }
+}

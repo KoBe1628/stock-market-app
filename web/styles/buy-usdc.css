@@ -232,3 +232,92 @@ select {
   animation: fadeInStaggered 0.6s ease forwards;
 }
 /* ------------------------- */
+
+/* ========== Tablet (max-width: 1024px) ========== */
+@media (max-width: 1024px) {
+  .container-main {
+    flex-direction: column;
+    padding: 0 2rem;
+  }
+
+  .container-small {
+    padding: 2.5rem;
+  }
+
+  .tabs {
+    flex-direction: row;
+    gap: 0.75rem;
+  }
+
+  .tabs button {
+    font-size: 0.95rem;
+  }
+
+  .popular-title {
+    font-size: 1.5rem;
+    padding-left: 0;
+  }
+
+  .coin {
+    gap: 1rem;
+  }
+}
+
+/* ========== Mobile (max-width: 768px) ========== */
+@media (max-width: 768px) {
+  .container-main {
+    padding: 0 1rem;
+    gap: 1.5rem;
+  }
+
+  .container-small {
+    padding: 1.5rem;
+  }
+
+  .tabs {
+    flex-direction: column;
+  }
+
+  .tabs button {
+    width: 100%;
+    font-size: 1rem;
+  }
+
+  .popular-title {
+    font-size: 1.3rem;
+    text-align: center;
+    padding: 0;
+    margin-bottom: 1rem;
+  }
+
+  .coin {
+    flex-direction: row;
+    align-items: center;
+    padding: 0.8rem;
+  }
+
+  .coin img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .supported-cards {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .supported-cards img {
+    height: 50px;
+    width: 50px;
+  }
+
+  .info-box {
+    font-size: 0.9rem;
+    padding: 0.75rem;
+  }
+
+  .submit-btn {
+    font-size: 0.95rem;
+    padding: 0.75rem;
+  }
+}

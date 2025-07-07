@@ -671,69 +671,118 @@ h2 a {
   text-decoration: none;
   color: black;
 }
+/* ========== Tablet (max-width: 1024px) ========== */
+@media (max-width: 1024px) {
+  .detail-page {
+    padding: 1.5rem;
+  }
 
-@media (max-width: 768px) {
-  .search-wrapper {
+  .coin-info {
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .chart img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .trade-panel {
     width: 100%;
-    margin: 0 auto;
-    padding: 0 16px;
-    position: relative;
+    max-width: none;
   }
 
-  .search-wrapper input {
-    width: 100%;
-    font-size: 16px;
-    padding: 12px;
-    border-radius: 12px;
+  .portfolio-metrics {
+    flex-direction: column;
+    gap: 1rem;
   }
 
-  #search-dropdown {
-    width: 100%;
-    top: 100%;
-    left: 0;
-    right: 0;
-    font-size: 16px;
-    border-radius: 12px;
-  }
-
-  #search-dropdown li {
-    padding: 14px 16px;
-    border-bottom: 1px solid #eee;
-  }
-
-  #search-dropdown li a {
-    display: block;
-    padding: 8px;
-    text-decoration: none;
-    color: inherit;
-  }
-
-  #search-dropdown li.active a {
-    background-color: #e0e0e0;
-    font-weight: bold;
-    text-decoration: none;
-    color: inherit;
-  }
-
-  #search-dropdown li:last-child {
-    border-bottom: none;
-  }
-
-  .portfolio-header,
-  .portfolio-metrics,
   .account-summary {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+
+/* ========== Mobile (max-width: 768px) ========== */
+@media (max-width: 768px) {
+  .detail-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .coin-info {
     flex-direction: column;
     align-items: flex-start;
   }
 
-  .add-btn,
-  .buy-btn {
+  .coin-info img {
+    width: 32px;
+    height: 32px;
+  }
+
+  .price {
+    font-size: 1.2rem;
+  }
+
+  .price-change {
+    font-size: 0.85rem;
+  }
+
+  .chart {
+    margin: 1rem 0;
+    border-radius: 8px;
+  }
+
+  .chart-intervals {
+    flex-direction: column;
+    gap: 4px;
+    font-size: 0.75rem;
+  }
+
+  .trade-options {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .trade-options button {
     width: 100%;
-    margin-top: 0.5rem;
+  }
+
+  .trade-panel input,
+  .trade-panel select {
+    font-size: 1rem;
+  }
+
+  .portfolio-section,
+  .watchlist-section {
+    padding: 1rem;
+  }
+
+  .stock-box {
+    margin: 1rem;
+    padding: 1rem;
+  }
+
+  .stats-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .virtual-card {
+    padding: 1rem;
+    font-size: 0.85rem;
   }
 
   .footer-links {
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 2rem;
+  }
+
+  #watchlist-btn {
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 1rem;
   }
 }
