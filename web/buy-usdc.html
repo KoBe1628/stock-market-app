@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Buy USDC - BeStox</title>
+    <link rel="stylesheet" href="styles/shared.css" />
+    <link rel="stylesheet" href="styles/style.css" />
+    <link rel="stylesheet" href="styles/buy-usdc.css" />
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet"> -->
+  </head>
+  <body data-page="buy">
+    <!-- Header -->
+    <div id="header-placeholder"></div>
+
+    <main class="container-main fade-in">
+      <!-- Left Section: Popular Coins and Info -->
+      <div class="left-section">
+        <h2 class="popular-title">Popular Coins</h2>
+
+        <div class="popular-coins">
+          <a href="/web/detail.html" class="coin-row-link">
+            <div class="coin">
+              <img src="/assets/icons/bitcoin.png" alt="Bitcoin" />
+              <div>
+                <div id="change-btc" class="change">--%</div>
+                <strong>Bitcoin</strong>
+              </div>
+            </div>
+          </a>
+          <div class="coin">
+            <img src="/assets/icons/dogecoin.png" alt="Dogecoin" />
+            <div>
+              <div id="change-doge" class="change">--%</div>
+              <strong>Doge Coin</strong>
+            </div>
+          </div>
+          <div class="coin">
+            <img src="/assets/icons/ethereum.png" alt="Ethereum" />
+            <div>
+              <div id="change-eth" class="change">--%</div>
+              <strong>Ethereum</strong>
+            </div>
+          </div>
+          <div class="coin">
+            <img src="/assets/icons/tether.png" alt="Tether" />
+            <div>
+              <div id="change-usdt" class="change">--%</div>
+              <strong>Tether</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- Info Section -->
+        <div class="info-box">
+          <h4>What is USDC?</h4>
+          <p>
+            USD Coin (USDC) is a stablecoin backed 1:1 by real USD. Use it to
+            store value or buy crypto safely. Selling USDC lets you withdraw EUR
+            directly to your payment method.
+          </p>
+        </div>
+      </div>
+
+      <!-- Right Section: Buy/Sell Form -->
+      <div class="right-section">
+        <div class="container-small">
+          <h2>Buy or Sell USDC</h2>
+
+          <div class="tabs">
+            <button class="active buy">Buy USDC</button>
+            <button class="sell">Sell USDC</button>
+          </div>
+
+          <p id="exchange-rate-text">Exchange Rate: 1 USDC ≈ ... EUR</p>
+
+          <label for="spend">You Spend</label>
+          <input type="number" id="spend" placeholder="10 - 10,000 EUR" />
+
+          <label for="receive">You Receive</label>
+          <input type="text" id="receive" disabled />
+
+          <label for="payment">Payment Method</label>
+          <select id="payment">
+            <option>Apple Pay</option>
+            <option>Visa / Mastercard</option>
+            <option>Bank Transfer</option>
+          </select>
+
+          <div class="supported-cards">
+            <img src="/assets/icons/visa.png" alt="Visa" />
+            <img src="/assets/icons/mastercard.png" alt="MasterCard" />
+            <img src="/assets/icons/discover.png" alt="Discover" />
+            <img src="/assets/icons/amex.png" alt="American Express" />
+          </div>
+
+          <button class="submit-btn">Buy USDC</button>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <div id="footer-placeholder"></div>
+
+    <script>
+      fetch("components/header.html")
+        .then((res) => res.text())
+        .then((data) => {
+          document.getElementById("header-placeholder").innerHTML = data;
+
+          // Load header.js AFTER injecting header HTML
+          const script = document.createElement("script");
+          script.src = "scripts/header.js";
+          document.body.appendChild(script);
+        });
+
+      fetch("components/footer.html")
+        .then((res) => res.text())
+        .then((data) => {
+          document.getElementById("footer-placeholder").innerHTML = data;
+
+          // Once footer is loaded, load location detection script
+          const locScript = document.createElement("script");
+          locScript.src = "scripts/location.js";
+          document.body.appendChild(locScript);
+        });
+    </script>
+
+    <script src="scripts/buy-usdc.js"></script>
+    <script>
+      // Animate each coin in sequence
+      document.addEventListener("DOMContentLoaded", () => {
+        const coinElements = document.querySelectorAll(".coin");
+        coinElements.forEach((el, index) => {
+          el.classList.add("stagger-fade");
+          el.style.animationDelay = `${index * 0.2}s`; // Delay by 0.2s each
+        });
+      });
+    </script>
+  </body>
+</html>
