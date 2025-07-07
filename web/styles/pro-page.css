@@ -1,0 +1,107 @@
+/* Container */
+#header-placeholder nav {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 24px;
+}
+
+#header-placeholder nav a {
+  white-space: nowrap;
+}
+
+.pro-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 16px; /* reduced top/bottom padding */
+  background-color: var(--page-bg, #f6f8fa);
+  min-height: calc(
+    100vh - 120px
+  ); /* subtracts estimated header/footer height */
+}
+
+/* Card */
+.pro-card {
+  background-color: white;
+  padding: 32px 24px;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  max-width: 640px;
+  width: 100%;
+  text-align: center;
+}
+
+/* Title & subtitle */
+.pro-title {
+  font-size: 2.4rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.pro-subtitle {
+  font-size: 1.2rem;
+  color: #555;
+  margin-bottom: 32px;
+}
+
+/* Features grid */
+.pro-features-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.pro-feature {
+  background-color: #f1f5f9;
+  padding: 16px;
+  border-radius: 12px;
+  font-size: 1rem;
+  text-align: left;
+}
+
+/* CTA Button */
+.btn-upgrade-pro {
+  background-color: #10b981;
+  color: white;
+  font-size: 1.1rem;
+  padding: 14px 28px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-upgrade-pro:hover {
+  background-color: #0d946c;
+}
+
+.plan-note {
+  font-size: 0.9rem;
+  color: #666;
+  margin-top: 16px;
+}
+
+/* -------------Fade-in animation--------------------- */
+
+/* @keyframes fadeInUp: smoothly fades in and slides upward.
+
+animation: fadeInUp 0.6s ease-out both: triggers the animation only once and keeps the final state. */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.pro-card {
+  /* existing styles... */
+  animation: fadeInUp 0.6s ease-out both;
+}
