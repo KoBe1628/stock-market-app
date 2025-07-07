@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile | BeStox</title>
+    <link rel="stylesheet" href="styles/shared.css" />
+    <link rel="stylesheet" href="styles/style.css" />
+    <link rel="stylesheet" href="styles/profile.css" />
+  </head>
+  <body>
+    <!-- Header -->
+    <div id="header-placeholder"></div>
+
+    <main class="profile-container">
+      <section class="profile-card">
+        <div class="profile-header">
+          <div class="profile-avatar">BK</div>
+          <div class="profile-info">
+            <h1>Bekhzod KODIROV</h1>
+            <p>@user1232004</p>
+          </div>
+          <button class="edit-btn ripple-btn">Edit Profile</button>
+        </div>
+
+        <section class="account-summary">
+          <h2>Account Summary</h2>
+          <div class="summary-grid">
+            <div>
+              <p class="label">Current Balance</p>
+              <p class="value balance">$0.00</p>
+            </div>
+            <div>
+              <p class="label">Member Since</p>
+              <p class="value join-date">-</p>
+            </div>
+
+            <div>
+              <p class="label">Account Type</p>
+              <p class="value">Registered User</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="portfolio-performance">
+          <h2>Portfolio Performance</h2>
+          <div class="chart-placeholder">
+            Simplified Chart Placeholder (Last 7 Days)
+          </div>
+          <p class="profit">+7.21% Profit in last 7 days</p>
+        </section>
+
+        <section class="account-settings">
+          <h2>Account & Settings</h2>
+          <ul>
+            <li>↺ Purchase History</li>
+            <li>$ Currency Settings</li>
+            <li>🔔 Notifications</li>
+            <li>🌙 Appearance (Dark Mode)</li>
+            <li>❓ Help & Support</li>
+            <li>⭐ Pro Version</li>
+            <li id="logout-btn">↩ Log Out</li>
+          </ul>
+        </section>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <div id="footer-placeholder"></div>
+
+    <script>
+      fetch("components/header.html")
+        .then((res) => res.text())
+        .then((data) => {
+          document.getElementById("header-placeholder").innerHTML = data;
+
+          // Load header.js AFTER injecting header HTML
+          const script = document.createElement("script");
+          script.src = "scripts/header.js";
+          document.body.appendChild(script);
+        });
+
+      fetch("components/footer.html")
+        .then((res) => res.text())
+        .then((data) => {
+          document.getElementById("footer-placeholder").innerHTML = data;
+        });
+    </script>
+    <script src="scripts/profile.js"></script>
+  </body>
+</html>

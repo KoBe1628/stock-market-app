@@ -1,0 +1,249 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background-color: #f5f7fa;
+}
+
+main.profile-container {
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.profile-card {
+  background-color: white;
+  border-radius: 10px;
+  padding: 2rem;
+  max-width: 600px;
+  width: 100%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.profile-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.profile-avatar {
+  background-color: #ccc;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.profile-info {
+  flex-grow: 1;
+  margin-left: 1rem;
+}
+
+.edit-btn {
+  background-color: #2a65ff;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.account-summary,
+.portfolio-performance,
+.account-settings {
+  margin-top: 2rem;
+}
+
+.summary-grid {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.summary-grid > div {
+  margin-top: 0.5rem;
+}
+
+.label {
+  font-weight: bold;
+  color: #555;
+}
+
+.value {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+/* Chart */
+.chart-placeholder {
+  background: linear-gradient(120deg, #a9d0ff 25%, #c3ddff 35%, #a9d0ff 45%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite linear;
+  padding: 2rem;
+  border-radius: 8px;
+  text-align: center;
+  color: #333;
+  font-size: 0.95rem;
+  font-style: italic;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* ------------------------------ */
+
+.profit {
+  color: green;
+  font-weight: bold;
+}
+
+.account-settings ul {
+  list-style: none;
+  padding: 0;
+}
+
+.account-settings li {
+  background-color: #f0f0f0;
+  margin: 0.3rem 0;
+  padding: 0.8rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.account-settings li:hover {
+  transform: scale(1.02);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* Footer */
+.footer {
+  background: #1c1e21;
+  color: #fff;
+  padding: 40px 24px;
+}
+
+.footer-links {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.footer-links h5 {
+  margin-bottom: 12px;
+  color: #e2e8f0;
+}
+
+footer .copyright {
+  text-align: center;
+  margin-top: 60px;
+  margin-bottom: auto;
+  font-size: 14px;
+  color: #bbb;
+}
+
+/* Ripple Effect */
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.6);
+  transform: scale(0);
+  animation: ripple 0.6s linear;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.ripple-btn {
+  position: relative;
+  overflow: hidden;
+}
+
+.ripple-btn::after {
+  content: "";
+  position: absolute;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 50%;
+  transform: scale(0);
+  animation: ripple 0.6s linear;
+  pointer-events: none;
+}
+
+@keyframes ripple {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+/* ---------- Animations ---------- */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.profile-card {
+  animation: fadeInUp 0.8s ease-out;
+  transition: transform 0.3s ease;
+}
+
+.profile-avatar {
+  transition: transform 0.3s ease;
+}
+
+.profile-avatar:hover {
+  transform: scale(1.05);
+}
+
+.edit-btn {
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.edit-btn:hover {
+  background-color: #1d4ed8;
+  transform: scale(1.05);
+}
+
+.chart-placeholder {
+  animation: fadeInUp 0.6s ease-out 0.2s;
+}
+
+.account-settings li {
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.account-settings li:hover {
+  background-color: #e0e0e0;
+  transform: translateX(5px);
+}
+
+#logout-btn {
+  color: #ff3b3b;
+  font-weight: bold;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+#logout-btn:hover {
+  background-color: #ffe5e5;
+  color: #b80000;
+}

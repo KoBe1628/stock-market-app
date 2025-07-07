@@ -344,6 +344,116 @@ body.dark-mode .footer-note {
   background-color: #222;
 }
 
+/* === Enhanced Dark Mode Support === */
+
+body.dark-mode .snapshot-box,
+body.dark-mode .news-feed,
+body.dark-mode .news-card,
+body.dark-mode .mover,
+body.dark-mode .crypto,
+body.dark-mode .promo,
+body.dark-mode .profile-card,
+body.dark-mode .account-summary,
+body.dark-mode .portfolio-performance,
+body.dark-mode .account-settings,
+body.dark-mode .portfolio-section,
+body.dark-mode .watchlist-section,
+body.dark-mode .portfolio-header,
+body.dark-mode .portfolio-metrics,
+body.dark-mode .asset-table,
+body.dark-mode .watchlist-table,
+body.dark-mode .virtual-card,
+body.dark-mode .balance-info,
+body.dark-mode .user-info,
+body.dark-mode .coin-info,
+body.dark-mode .trade-panel,
+body.dark-mode .stats,
+body.dark-mode .stats-row,
+body.dark-mode .chart,
+body.dark-mode .chart-intervals,
+body.dark-mode #fallback-warning {
+  background-color: #1f1f1f !important;
+  color: #e5e5e5 !important;
+}
+
+body.dark-mode input,
+body.dark-mode select,
+body.dark-mode textarea {
+  background-color: #2a2a2a;
+  color: #e5e5e5;
+  border: 1px solid #444;
+}
+
+body.dark-mode input::placeholder {
+  color: #888;
+}
+
+body.dark-mode table {
+  background-color: #1f1f1f;
+  color: #e5e5e5;
+  border-color: #333;
+}
+
+body.dark-mode th,
+body.dark-mode td {
+  border-bottom: 1px solid #333;
+}
+
+body.dark-mode a,
+body.dark-mode .nav-link,
+body.dark-mode .news-source,
+body.dark-mode .secondary,
+body.dark-mode .small-text {
+  color: #bbbbbb !important;
+}
+
+/* Portfolio dark mode fixes */
+body.dark-mode .portfolio-page,
+body.dark-mode .portfolio-page h2,
+body.dark-mode .portfolio-page h3,
+body.dark-mode .portfolio-page p,
+body.dark-mode .portfolio-page td,
+body.dark-mode .portfolio-page th {
+  color: #e5e5e5 !important;
+}
+
+/* Table borders and backgrounds */
+body.dark-mode .asset-table,
+body.dark-mode .watchlist-table {
+  background-color: #1f1f1f;
+  border-color: #444;
+}
+
+body.dark-mode .asset-table td,
+body.dark-mode .watchlist-table td {
+  border-top: 1px solid #444;
+}
+
+body.dark-mode .account-settings li {
+  background-color: #2b2b2b;
+  border: 1px solid #444;
+}
+
+/* Hover + Lift Visual Effects */
+.card,
+.news-card,
+.snapshot-box,
+.crypto,
+.trade-panel {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover,
+.news-card:hover,
+.snapshot-box:hover,
+.crypto:hover,
+.trade-panel:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* === End Dark Mode Enhancements === */
+
 @media (max-width: 1668px) {
   nav {
     display: none;
